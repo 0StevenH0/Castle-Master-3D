@@ -59,15 +59,9 @@ public class InterfaceControl : MonoBehaviour
 
 	private Transform febPickTerrain;
 
-	private bool isMouseDrag;
+	private bool isRightMouseDrag;
 
-	private float timeMouseDrag;
-
-	private int frameMouseDrag;
-
-	private bool cameraRotateDrag;
-
-	private Vector3 posMouseDragStart = new Vector3(0f, 0f, 0f);
+	private Vector3 posRightMouseDragStart = new Vector3(0f, 0f, 0f);
 
 	public Camera uiCamera
 	{
@@ -172,46 +166,47 @@ public class InterfaceControl : MonoBehaviour
 			}
 			return;
 		}
+		float axis = Input.GetAxis("Mouse ScrollWheel");
+		if (axis != 0f)
+		{
+			float num6 = camGame.fieldOfView - axis * 40f;
+			if (num6 < 30f)
+			{
+				num6 = 30f;
+			}
+			if (num6 > 60f)
+			{
+				num6 = 60f;
+			}
+			camGame.fieldOfView = num6;
+		}
+		if (Input.GetMouseButtonDown(1))
+		{
+			isRightMouseDrag = true;
+			posRightMouseDragStart = Input.mousePosition;
+		}
+		if (Input.GetMouseButtonUp(1))
+		{
+			isRightMouseDrag = false;
+		}
+		if (isRightMouseDrag && Input.GetMouseButton(1))
+		{
+			Vector3 mousePositionRight = Input.mousePosition;
+			float num4 = (mousePositionRight.x - posRightMouseDragStart.x) * 0.5f;
+			float num5 = (mousePositionRight.y - posRightMouseDragStart.y) * 0.5f;
+			if (num4 != 0f)
+			{
+				posRightMouseDragStart = mousePositionRight;
+				base.gameObject.GetComponent<CameraControl>().SetRotate(num4);
+			}
+			if (num5 != 0f)
+			{
+				posRightMouseDragStart = mousePositionRight;
+				base.gameObject.GetComponent<CameraControl>().SetPitch(num5);
+			}
+		}
 		dualTouchActive = false;
-		bool flag = false;
-		bool flag2 = false;
-		if (Input.GetMouseButtonDown(0))
-		{
-			isMouseDrag = true;
-			cameraRotateDrag = true;
-			timeMouseDrag = 0f;
-			frameMouseDrag = 0;
-			posMouseDragStart = Input.mousePosition;
-		}
-		if (isMouseDrag && cameraRotateDrag)
-		{
-			timeMouseDrag += Time.deltaTime;
-			frameMouseDrag++;
-			if (timeMouseDrag > 0.1f && frameMouseDrag > 1)
-			{
-				Vector3 mousePosition2 = Input.mousePosition;
-				float num3 = Vector3.Distance(mousePosition2, posMouseDragStart);
-				if (num3 > 20f)
-				{
-					flag = true;
-					cameraRotateDrag = false;
-				}
-			}
-		}
-		else if (isMouseDrag && !cameraRotateDrag)
-		{
-			flag = true;
-		}
 		if (Input.GetMouseButtonUp(0))
-		{
-			isMouseDrag = false;
-			cameraRotateDrag = false;
-			if (!flag)
-			{
-				flag2 = true;
-			}
-		}
-		if (flag2)
 		{
 			Vector3 mousePosition3 = Input.mousePosition;
 			if (camUI != null && uiArea.Count > 0)
@@ -265,22 +260,6 @@ public class InterfaceControl : MonoBehaviour
 				febPickTerrain.gameObject.SetActive(true);
 			}
 		}
-		if (flag && Input.GetMouseButton(0))
-		{
-			Vector3 mousePosition4 = Input.mousePosition;
-			float num4 = (mousePosition4.x - posMouseDragStart.x) * 0.5f;
-			float num5 = (mousePosition4.y - posMouseDragStart.y) * 0.5f;
-			if (num4 != 0f)
-			{
-				posMouseDragStart = mousePosition4;
-				base.gameObject.GetComponent<CameraControl>().SetRotate(num4);
-			}
-			if (num5 != 0f)
-			{
-				posMouseDragStart = mousePosition4;
-				base.gameObject.GetComponent<CameraControl>().SetPitch(num5);
-			}
-		}
 		if (targetUnit != null)
 		{
 			if (targetUnit.thisCtrl.isDie || targetUnit.thisCtrl.unitIdentify != ctrlUnit.targetIdentify)
@@ -296,25 +275,5 @@ public class InterfaceControl : MonoBehaviour
 				febTargetSelected.position = position;
 			}
 		}
-		if (Input.GetKeyDown(KeyCode.Alpha1))
-		{
-			PostKeyDown(KeyCode.Alpha1);
-		}
-		else if (Input.GetKeyDown(KeyCode.Alpha2))
-		{
-			PostKeyDown(KeyCode.Alpha2);
-		}
-		else if (Input.GetKeyDown(KeyCode.Alpha3))
-		{
-			PostKeyDown(KeyCode.Alpha3);
-		}
-		else if (Input.GetKeyDown(KeyCode.Tab))
-		{
-			PostKeyDown(KeyCode.Tab);
-		}
-	}
-
-	public void PostKeyDown(KeyCode key)
-	{
 	}
 }

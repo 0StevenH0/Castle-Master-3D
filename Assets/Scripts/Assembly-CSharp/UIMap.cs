@@ -295,6 +295,16 @@ public class UIMap : MonoBehaviour
 			return;
 		}
 		touchActive = false;
+		float axis = Input.GetAxis("Mouse ScrollWheel");
+		if (axis != 0f)
+		{
+			if ((axis > 0f && mapScale < mapScaleMax) || (axis < 0f && mapScale > mapScaleMin))
+			{
+				isMapScaling = true;
+				StartCoroutine("WaitForMapScaling");
+			}
+			return;
+		}
 		if (Input.GetMouseButtonDown(0))
 		{
 			if (popupCastleDetail.gameObject.activeInHierarchy)

@@ -167,6 +167,38 @@ public class MessageView : MonoBehaviour
 				HideMsg();
 			}
 		}
+		if (_visibleMsg && !_autoHide && Input.GetKeyDown(KeyCode.Escape))
+		{
+			if (HasVisibleButton(MsgButton.no))
+			{
+				OnNoClick(null);
+			}
+			else if (HasVisibleButton(MsgButton.cancel))
+			{
+				OnCancelClick(null);
+			}
+			else
+			{
+				HideMsg();
+			}
+		}
+	}
+
+	private bool HasVisibleButton(MsgButton button)
+	{
+		if (_visibleButtons == null)
+		{
+			return false;
+		}
+		MsgButton[] visibleButtons = _visibleButtons;
+		foreach (MsgButton msgButton in visibleButtons)
+		{
+			if (msgButton == button)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void OnYesClick(AuiButton sender)

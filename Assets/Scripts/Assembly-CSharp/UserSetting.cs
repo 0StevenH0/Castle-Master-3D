@@ -79,15 +79,15 @@ public class UserSetting
 		{
 			if (quality == GraphicsQuality.fast)
 			{
-				QualitySettings.currentLevel = QualityLevel.Fastest;
+				QualitySettings.SetQualityLevel(0, true);
 			}
 			else if (quality == GraphicsQuality.good)
 			{
-				QualitySettings.currentLevel = QualityLevel.Fast;
+				QualitySettings.SetQualityLevel(1, true);
 			}
 			else if (quality == GraphicsQuality.beautiful)
 			{
-				QualitySettings.currentLevel = QualityLevel.Good;
+				QualitySettings.SetQualityLevel(3, true);
 			}
 		}
 	}

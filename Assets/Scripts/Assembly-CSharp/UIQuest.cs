@@ -86,7 +86,7 @@ public class UIQuest : MonoBehaviour
 	public void RefreshQuestIcon()
 	{
 		QuestManager.Quest curQuest = PlayInfo.questManager.curQuest;
-		npcQuestIcon.gameObject.active = curQuest != null;
+		npcQuestIcon.gameObject.SetActive(curQuest != null);
 		if (curQuest != null)
 		{
 			if (PlayInfo.questManager.result == 1)
@@ -106,12 +106,12 @@ public class UIQuest : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 	}
 
 	public void Show()
 	{
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		PlayInfo.questManager.ProcessDaily(false);
 		Refresh();
 	}
@@ -125,14 +125,14 @@ public class UIQuest : MonoBehaviour
 		QuestManager.Quest curQuest = PlayInfo.questManager.curQuest;
 		if (curQuest == null)
 		{
-			panelReward.SetActiveRecursively(false);
+			panelReward.SetActive(false);
 			textMsg.text = StringContent.msgQuestSysNone;
-			panelButton.SetActiveRecursively(false);
+			panelButton.SetActive(false);
 			return;
 		}
 		int result = PlayInfo.questManager.result;
-		panelReward.SetActiveRecursively(true);
-		panelButton.SetActiveRecursively(true);
+		panelReward.SetActive(true);
+		panelButton.SetActive(true);
 		switch (result)
 		{
 		case 2:

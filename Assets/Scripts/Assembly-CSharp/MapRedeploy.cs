@@ -172,7 +172,7 @@ public class MapRedeploy : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 		AuiButton.topActive = false;
 		uiMap.DisableCastleTargetMode();
 		StopCoroutine("RefreshRedeployStatus");
@@ -252,7 +252,7 @@ public class MapRedeploy : MonoBehaviour
 		}
 		this.targetIndex = targetIndex;
 		uiMap.DisableCastleTargetMode();
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		AuiButton.topActive = true;
 		Refresh();
 		StartCoroutine("RefreshRedeployStatus");
@@ -279,7 +279,7 @@ public class MapRedeploy : MonoBehaviour
 		for (int j = 0; j < 5; j++)
 		{
 			bool flag = true;
-			units[j].gameObject.SetActiveRecursively(flag);
+			units[j].gameObject.SetActive(flag);
 			units[j].unitBlank.SetFrame(j);
 			units[j].unitBlank.visible = castleInfo.unitCount[j] == 0;
 			if (flag)
@@ -299,7 +299,7 @@ public class MapRedeploy : MonoBehaviour
 		{
 			buttonSubmit.visible = false;
 			buttonSubmitLabel.visible = false;
-			textRedeploying.gameObject.active = true;
+			textRedeploying.gameObject.SetActive(true);
 			int day = (int)castleInfo.redeployHour / 24;
 			int hour = (int)castleInfo.redeployHour % 24;
 			textRedeploying.text = StringContent.msgRedeployingNow.Replace(StringContent.strValue, PlayInfo.gameTime.GetDayString(day, hour));
@@ -314,15 +314,15 @@ public class MapRedeploy : MonoBehaviour
 			unitCur.text = num2.ToString();
 			instantlyGem.text = PlayInfo.gameRule.redeployInstantlyGem.ToString();
 			ObjectInstant.transform.position = buttonSubmit.transform.position;
-			objBefRedeploy.SetActiveRecursively(false);
-			objRedeploying.SetActiveRecursively(true);
+			objBefRedeploy.SetActive(false);
+			objRedeploying.SetActive(true);
 		}
 		else
 		{
 			buttonSubmit.visible = true;
 			buttonSubmitLabel.visible = true;
-			objBefRedeploy.SetActiveRecursively(true);
-			objRedeploying.SetActiveRecursively(false);
+			objBefRedeploy.SetActive(true);
+			objRedeploying.SetActive(false);
 		}
 	}
 

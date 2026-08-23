@@ -107,7 +107,7 @@ public class AuiSprite : MonoBehaviour
 			frameCount = materials.Length;
 		}
 		string text = base.name + "_sprite";
-		int childCount = base.transform.GetChildCount();
+		int childCount = base.transform.childCount;
 		for (int num = childCount - 1; num >= 0; num--)
 		{
 			GameObject obj = base.transform.GetChild(num).gameObject;
@@ -190,8 +190,8 @@ public class AuiSprite : MonoBehaviour
 			}
 			sprTrasform.localRotation = Quaternion.identity;
 			curFrame = frame;
-			sprObject.active = isVisible;
-			base.gameObject.active = isVisible;
+			sprObject.SetActive(isVisible);
+			base.gameObject.SetActive(isVisible);
 		}
 	}
 }

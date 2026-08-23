@@ -100,7 +100,7 @@ public class AuiButton : AuiSprite
 		ResetRect();
 		if (posScreen.x >= posMin.x && posScreen.x <= posMax.x && posScreen.y >= posMin.y && posScreen.y <= posMax.y)
 		{
-			if (base.gameObject.active)
+			if (base.gameObject.activeInHierarchy)
 			{
 				VisibleDown();
 				isWaitForButtonUp = true;

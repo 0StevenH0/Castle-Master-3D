@@ -100,6 +100,7 @@ public class StageManager : MonoBehaviour
 
 	private const float unitOffsetY = 0f;
 
+	[System.NonSerialized]
 	public StageInfo stageInfo;
 
 	public CharactorManager charactorManager;
@@ -699,7 +700,7 @@ public class StageManager : MonoBehaviour
 			int num4 = Random.Range(0, 5);
 			Vector3 position = stageInfo.regenPos[side, num4];
 			position.z += ((float)Random.Range(0, 20) - 10f) / 10f;
-			ctl.gameObject.SetActiveRecursively(true);
+			ctl.gameObject.SetActive(true);
 			ctl.Init(null);
 			ctl.SetPosition(position);
 			ctl.SetRotation((side != 0) ? 90 : (-90));
@@ -750,7 +751,7 @@ public class StageManager : MonoBehaviour
 			}
 			if (lordUnit != null && !lordUnit.isAwake)
 			{
-				lordUnit.gameObject.SetActiveRecursively(true);
+				lordUnit.gameObject.SetActive(true);
 				lordUnit.thisCtrl.unitState.curHp = lordUnit.thisCtrl.unitState.sumHp;
 				lordUnit.thisCtrl.isDie = false;
 				lordUnit.thisCtrl.isAwake = true;

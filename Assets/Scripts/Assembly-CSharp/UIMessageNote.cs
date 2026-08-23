@@ -118,7 +118,7 @@ public class UIMessageNote : MonoBehaviour
 		for (int i = topItem; i < num; i++)
 		{
 			int num3 = maxItem - (i + 1);
-			messages[num2].gameObject.SetActiveRecursively(true);
+			messages[num2].gameObject.SetActive(true);
 			int num4 = messageAll[num3].type;
 			if (num4 >= messages[num2].iconMsgType.materials.Length)
 			{
@@ -131,7 +131,7 @@ public class UIMessageNote : MonoBehaviour
 		}
 		for (int j = num2; j < itemPerPage; j++)
 		{
-			messages[j].gameObject.SetActiveRecursively(false);
+			messages[j].gameObject.SetActive(false);
 		}
 	}
 
@@ -152,7 +152,7 @@ public class UIMessageNote : MonoBehaviour
 
 	public void Show()
 	{
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		AuiButton.topActive = true;
 		if (messages == null)
 		{
@@ -177,7 +177,7 @@ public class UIMessageNote : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 		AuiButton.topActive = false;
 	}
 }

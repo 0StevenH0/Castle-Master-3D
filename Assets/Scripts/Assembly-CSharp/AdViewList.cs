@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class AdViewList : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class AdViewList : MonoBehaviour
 		this.adList = list;
 		procBannerClose = proc;
 		AuiButton.modalActive = true;
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		buttonClose.uiCamera = uiCamera;
 		buttonClose.isModal = true;
 		buttonClose.enabled = true;
@@ -63,10 +64,10 @@ public class AdViewList : MonoBehaviour
 		AlphaAd.AdList[] array = this.adList;
 		foreach (AlphaAd.AdList adList in array)
 		{
-			linkList[num].gameObject.SetActiveRecursively(true);
-			linkList[num].imgBanner.active = false;
-			linkList[num].textMessage.gameObject.active = true;
-			linkList[num].textReward.gameObject.active = true;
+			linkList[num].gameObject.SetActive(true);
+			linkList[num].imgBanner.SetActive(false);
+			linkList[num].textMessage.gameObject.SetActive(true);
+			linkList[num].textReward.gameObject.SetActive(true);
 			linkList[num].textMessage.text = adList.explain.Replace("<br/>", "\n");
 			linkList[num].textReward.text = adList.item_cnt.ToString();
 			switch (adList.item_code)
@@ -89,7 +90,7 @@ public class AdViewList : MonoBehaviour
 		}
 		for (int k = num; k < linkList.Length; k++)
 		{
-			linkList[k].gameObject.SetActiveRecursively(false);
+			linkList[k].gameObject.SetActive(false);
 		}
 		isLinking = false;
 		StartCoroutine("LoadBannerImage");
@@ -104,13 +105,13 @@ public class AdViewList : MonoBehaviour
 		{
 			if (item.adv_img.Length > 0)
 			{
-				WWW web = new WWW(item.adv_img);
-				yield return web;
-				if (web.error == null && web.texture != null)
+				UnityWebRequest web = UnityWebRequestTexture.GetTexture(item.adv_img);
+				yield return web.SendWebRequest();
+				if (web.result == UnityWebRequest.Result.Success)
 				{
-					linkList[num].imgBanner.GetComponent<Renderer>().material.mainTexture = web.texture;
-					linkList[num].imgBanner.gameObject.active = true;
-					linkList[num].textMessage.gameObject.active = false;
+					linkList[num].imgBanner.GetComponent<Renderer>().material.mainTexture = ((DownloadHandlerTexture)web.downloadHandler).texture;
+					linkList[num].imgBanner.gameObject.SetActive(true);
+					linkList[num].textMessage.gameObject.SetActive(false);
 				}
 			}
 			num++;
@@ -155,7 +156,7 @@ public class AdViewList : MonoBehaviour
 	{
 		AuiButton.modalActive = false;
 		StopAllCoroutines();
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 		if (procBannerClose != null)
 		{
 			procBannerClose();

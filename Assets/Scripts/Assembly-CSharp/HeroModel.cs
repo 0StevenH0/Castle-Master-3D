@@ -76,7 +76,7 @@ public class HeroModel : MonoBehaviour
 			Transform transform = base.transform.Find(text);
 			if (transform != null)
 			{
-				transform.gameObject.active = idx == i;
+				transform.gameObject.SetActive(idx == i);
 			}
 		}
 	}

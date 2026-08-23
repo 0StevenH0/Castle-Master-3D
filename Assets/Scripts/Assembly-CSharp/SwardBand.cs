@@ -103,7 +103,7 @@ public class SwardBand : MonoBehaviour
 		{
 			SetTrailObject();
 		}
-		swardTrail.active = false;
+		swardTrail.SetActive(false);
 		Visible = false;
 	}
 
@@ -174,13 +174,13 @@ public class SwardBand : MonoBehaviour
 	private void StartTrail()
 	{
 		ResetSwardTrail();
-		swardTrail.active = true;
+		swardTrail.SetActive(true);
 	}
 
 	private void HideTrail()
 	{
 		ResetSwardTrail();
-		swardTrail.active = false;
+		swardTrail.SetActive(false);
 	}
 
 	private void Update()

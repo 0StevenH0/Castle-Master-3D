@@ -28,7 +28,7 @@ public class PopLordReward : MonoBehaviour
 		buttonClose.isTop = true;
 		buttonSubmit.enabled = true;
 		buttonClose.enabled = true;
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		curlord = revalue;
 		textMessage.text = StringContent.msgQuestRewardLord;
 		incLoyalty = 10;
@@ -50,7 +50,7 @@ public class PopLordReward : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 		uiLord.SetButtonEnableAll(true);
 	}
 

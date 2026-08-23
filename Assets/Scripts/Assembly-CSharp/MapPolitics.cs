@@ -231,22 +231,22 @@ public class MapPolitics : MonoBehaviour
 
 	private void ShowPanel(GameObject panel)
 	{
-		panelAppoint.SetActiveRecursively(panelAppoint == panel);
-		panelCurrent.SetActiveRecursively(panelCurrent == panel);
-		panelSearch.SetActiveRecursively(panelSearch == panel);
-		panelSearching.SetActiveRecursively(panelSearching == panel);
-		panelLord.SetActiveRecursively(panelAppoint == panel || panelCurrent == panel);
+		panelAppoint.SetActive(panelAppoint == panel);
+		panelCurrent.SetActive(panelCurrent == panel);
+		panelSearch.SetActive(panelSearch == panel);
+		panelSearching.SetActive(panelSearching == panel);
+		panelLord.SetActive(panelAppoint == panel || panelCurrent == panel);
 	}
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 		AuiButton.topActive = false;
 	}
 
 	public void Show(CastleInfo info)
 	{
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		AuiButton.topActive = true;
 		this.info = info;
 		textRewardCmdPts.text = PlayInfo.gameRule.cmdPtsManageLord.ToString();

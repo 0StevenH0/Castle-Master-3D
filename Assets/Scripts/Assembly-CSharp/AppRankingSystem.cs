@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class AppRankingSystem : MonoBehaviour
 {
@@ -68,11 +69,11 @@ public class AppRankingSystem : MonoBehaviour
 		sendmsg6 = text + "score" + '\t' + score + '\n';
 		WWWForm webForm = new WWWForm();
 		webForm.AddField("data", Base64Hash(sendmsg6));
-		WWW web = new WWW("http://m.castlemaster.co.kr/ranking/updaterank.aspx", webForm);
-		yield return web;
-		if (web.error == null)
+		UnityWebRequest web = UnityWebRequest.Post("http://m.castlemaster.co.kr/ranking/updaterank.aspx", webForm);
+		yield return web.SendWebRequest();
+		if (web.result == UnityWebRequest.Result.Success)
 		{
-			string recvtext = Base64Decode(web.text);
+			string recvtext = Base64Decode(web.downloadHandler.text);
 			string[] lines = recvtext.Split('\n');
 			int num = 0;
 			bool isHeader = FindHeader(lines, ref num);
@@ -123,13 +124,13 @@ public class AppRankingSystem : MonoBehaviour
 		sendmsg = text + "listcount" + '\t' + listCount + '\n';
 		WWWForm webForm = new WWWForm();
 		webForm.AddField("data", Base64Hash(sendmsg));
-		WWW web = new WWW("http://m.castlemaster.co.kr/ranking/ranklist.aspx", webForm);
-		yield return web;
-		if (web.error == null && procRankingList != null)
+		UnityWebRequest web = UnityWebRequest.Post("http://m.castlemaster.co.kr/ranking/ranklist.aspx", webForm);
+		yield return web.SendWebRequest();
+		if (web.result == UnityWebRequest.Result.Success && procRankingList != null)
 		{
 			try
 			{
-				string recvtext = Base64Decode(web.text);
+				string recvtext = Base64Decode(web.downloadHandler.text);
 				string[] lines = recvtext.Split('\n');
 				int num = 0;
 				bool isHeader = FindHeader(lines, ref num);

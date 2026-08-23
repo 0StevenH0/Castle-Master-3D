@@ -229,7 +229,7 @@ public class UIInventory : MonoBehaviour
 		isReset = true;
 		for (int i = 1; i < itemList.Count; i++)
 		{
-			Object.DestroyObject(itemList[i].gameObject);
+			Object.Destroy(itemList[i].gameObject);
 		}
 		itemList.Clear();
 		UnitItem[] array = PlayInfo.inventory.GetItemList(selectedItemType);
@@ -308,7 +308,7 @@ public class UIInventory : MonoBehaviour
 		for (int k = 0; k < buttonItemList.Length; k++)
 		{
 			buttonItemList[k].enabled = false;
-			objectQuantity[k].gameObject.SetActiveRecursively(false);
+			objectQuantity[k].gameObject.SetActive(false);
 		}
 		for (int l = 0; l < itemList.Count; l++)
 		{
@@ -325,11 +325,11 @@ public class UIInventory : MonoBehaviour
 				if (unitItem != null && unitItem.quantity > 1)
 				{
 					textQuantity[num3].text = unitItem.quantity.ToString();
-					objectQuantity[num3].gameObject.SetActiveRecursively(true);
+					objectQuantity[num3].gameObject.SetActive(true);
 				}
 				else
 				{
-					objectQuantity[num3].gameObject.SetActiveRecursively(false);
+					objectQuantity[num3].gameObject.SetActive(false);
 				}
 				if (selectedItem != null && unitItem.code == selectedItem.code)
 				{
@@ -433,7 +433,7 @@ public class UIInventory : MonoBehaviour
 			}
 		}
 		iconItemSlotHP.visible = playerData.slotHp != null;
-		objectEquipQuantity[0].SetActiveRecursively(playerData.slotHp != null);
+		objectEquipQuantity[0].SetActive(playerData.slotHp != null);
 		if (playerData.slotHp != null)
 		{
 			int num3 = FindItemIndex(playerData.slotHp.code);
@@ -444,7 +444,7 @@ public class UIInventory : MonoBehaviour
 			textEquipQuantity[0].text = playerData.slotHp.quantity.ToString();
 		}
 		iconItemSlotMP.visible = playerData.slotMp != null;
-		objectEquipQuantity[1].SetActiveRecursively(playerData.slotMp != null);
+		objectEquipQuantity[1].SetActive(playerData.slotMp != null);
 		if (playerData.slotMp != null)
 		{
 			int num4 = FindItemIndex(playerData.slotMp.code);
@@ -469,20 +469,20 @@ public class UIInventory : MonoBehaviour
 	{
 		UnitItem unitItem = selectedItem;
 		bool flag = unitItem != null;
-		textItemName.gameObject.active = flag;
-		textRequireLv.gameObject.active = flag;
+		textItemName.gameObject.SetActive(flag);
+		textRequireLv.gameObject.SetActive(flag);
 		buttonEquip.visible = flag;
 		buttonEquipLabel.visible = flag;
 		buttonDelete.visible = flag;
 		TextMesh[] array = textAttrName;
 		foreach (TextMesh textMesh in array)
 		{
-			textMesh.gameObject.active = false;
+			textMesh.gameObject.SetActive(false);
 		}
 		TextMesh[] array2 = textAttrValue;
 		foreach (TextMesh textMesh2 in array2)
 		{
-			textMesh2.gameObject.active = false;
+			textMesh2.gameObject.SetActive(false);
 		}
 		if (flag)
 		{
@@ -501,81 +501,81 @@ public class UIInventory : MonoBehaviour
 			if (num < num2 && unitItem.ability.attack != 0f)
 			{
 				textAttrName[num].text = "ATK";
-				textAttrName[num].gameObject.active = true;
+				textAttrName[num].gameObject.SetActive(true);
 				textAttrValue[num].text = "+" + unitItem.ability.attack;
-				textAttrValue[num].gameObject.active = true;
+				textAttrValue[num].gameObject.SetActive(true);
 				num++;
 			}
 			if (num < num2 && unitItem.ability.defense != 0f)
 			{
 				textAttrName[num].text = "DEF";
-				textAttrName[num].gameObject.active = true;
+				textAttrName[num].gameObject.SetActive(true);
 				textAttrValue[num].text = "+" + unitItem.ability.defense;
-				textAttrValue[num].gameObject.active = true;
+				textAttrValue[num].gameObject.SetActive(true);
 				num++;
 			}
 			if (num < num2 && unitItem.ability.strength != 0f)
 			{
 				textAttrName[num].text = "STR";
-				textAttrName[num].gameObject.active = true;
+				textAttrName[num].gameObject.SetActive(true);
 				textAttrValue[num].text = "+" + unitItem.ability.strength;
-				textAttrValue[num].gameObject.active = true;
+				textAttrValue[num].gameObject.SetActive(true);
 				num++;
 			}
 			if (num < num2 && unitItem.ability.intellectual != 0f)
 			{
 				textAttrName[num].text = "INT";
-				textAttrName[num].gameObject.active = true;
+				textAttrName[num].gameObject.SetActive(true);
 				textAttrValue[num].text = "+" + unitItem.ability.intellectual;
-				textAttrValue[num].gameObject.active = true;
+				textAttrValue[num].gameObject.SetActive(true);
 				num++;
 			}
 			if (num < num2 && unitItem.ability.constitution != 0f)
 			{
 				textAttrName[num].text = "CON";
-				textAttrName[num].gameObject.active = true;
+				textAttrName[num].gameObject.SetActive(true);
 				textAttrValue[num].text = "+" + unitItem.ability.constitution;
-				textAttrValue[num].gameObject.active = true;
+				textAttrValue[num].gameObject.SetActive(true);
 				num++;
 			}
 			if (num < num2 && unitItem.ability.critical != 0f)
 			{
 				textAttrName[num].text = "CRI";
-				textAttrName[num].gameObject.active = true;
+				textAttrName[num].gameObject.SetActive(true);
 				textAttrValue[num].text = "+" + unitItem.ability.critical;
-				textAttrValue[num].gameObject.active = true;
+				textAttrValue[num].gameObject.SetActive(true);
 				num++;
 			}
 			if (num < num2 && unitItem.ability.hp != 0f)
 			{
 				textAttrName[num].text = ((unitItem.code < 400) ? "Max HP" : "HP");
-				textAttrName[num].gameObject.active = true;
+				textAttrName[num].gameObject.SetActive(true);
 				textAttrValue[num].text = "+" + unitItem.ability.hp;
-				textAttrValue[num].gameObject.active = true;
+				textAttrValue[num].gameObject.SetActive(true);
 				num++;
 			}
 			if (num < num2 && unitItem.ability.mp != 0f)
 			{
 				textAttrName[num].text = ((unitItem.code < 400) ? "Max MP" : "MP");
-				textAttrName[num].gameObject.active = true;
+				textAttrName[num].gameObject.SetActive(true);
 				textAttrValue[num].text = "+" + unitItem.ability.mp;
-				textAttrValue[num].gameObject.active = true;
+				textAttrValue[num].gameObject.SetActive(true);
 				num++;
 			}
 			if (num < num2 && unitItem.ability.speed != 0f)
 			{
 				textAttrName[num].text = "Speed";
-				textAttrName[num].gameObject.active = true;
+				textAttrName[num].gameObject.SetActive(true);
 				textAttrValue[num].text = ((!(unitItem.ability.speed > 0f)) ? string.Empty : "+") + unitItem.ability.speed * 100f + "%";
-				textAttrValue[num].gameObject.active = true;
+				textAttrValue[num].gameObject.SetActive(true);
 				num++;
 			}
 			if (num < num2 && unitItem.ability.colltime != 0f)
 			{
 				textAttrName[num].text = "Cooltime";
-				textAttrName[num].gameObject.active = true;
+				textAttrName[num].gameObject.SetActive(true);
 				textAttrValue[num].text = unitItem.ability.colltime + "sec";
-				textAttrValue[num].gameObject.active = true;
+				textAttrValue[num].gameObject.SetActive(true);
 				num++;
 			}
 		}
@@ -596,7 +596,7 @@ public class UIInventory : MonoBehaviour
 	public void Show()
 	{
 		LoadIcon();
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		AuiButton.topActive = true;
 		if (isReset)
 		{
@@ -607,7 +607,7 @@ public class UIInventory : MonoBehaviour
 			RefreshPreview();
 		}
 		RefreshStatsAlarm();
-		panelStatsUp.gameObject.SetActiveRecursively(false);
+		panelStatsUp.gameObject.SetActive(false);
 	}
 
 	private void RefreshPreview()
@@ -632,7 +632,7 @@ public class UIInventory : MonoBehaviour
 	private void RefreshStatsAlarm()
 	{
 		bool flag = PlayInfo.heroState.statsPoint > 0;
-		panelStatsAlarm.gameObject.SetActiveRecursively(flag);
+		panelStatsAlarm.gameObject.SetActive(flag);
 		if (flag)
 		{
 			remainStats.text = PlayInfo.heroState.statsPoint.ToString();
@@ -642,7 +642,7 @@ public class UIInventory : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 		AuiButton.topActive = false;
 	}
 
@@ -876,13 +876,13 @@ public class UIInventory : MonoBehaviour
 			incStats[j] = 0;
 		}
 		RefreshStatsTemp();
-		panelStatsUp.gameObject.SetActiveRecursively(true);
+		panelStatsUp.gameObject.SetActive(true);
 	}
 
 	private void HideStatsUp()
 	{
 		AuiButton.SetEnableAll(base.transform, true);
-		panelStatsUp.gameObject.SetActiveRecursively(false);
+		panelStatsUp.gameObject.SetActive(false);
 		RefreshPlayerInfo();
 	}
 

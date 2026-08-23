@@ -124,14 +124,14 @@ public class UITraining : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 		AuiButton.topActive = false;
 		StopCoroutine("RefreshTrainingStatus");
 	}
 
 	public void Show()
 	{
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		AuiButton.topActive = true;
 		Refresh();
 		StartCoroutine("RefreshTrainingStatus");
@@ -184,8 +184,8 @@ public class UITraining : MonoBehaviour
 		textRequires.text = wordCastleLevel;
 		if (PlayInfo.unitUpgrade.unitUpgrading[num])
 		{
-			panelTrain.SetActiveRecursively(false);
-			panelInstant.SetActiveRecursively(true);
+			panelTrain.SetActive(false);
+			panelInstant.SetActive(true);
 			int upgradeInstantlyGem = PlayInfo.humanMilitary.GetUnitState(num).upgradeInstantlyGem;
 			float num2 = PlayInfo.unitUpgrade.unitUpgradeHour[num];
 			textTraining.text = StringContent.msgNowTraining.Replace(StringContent.strValue, PlayInfo.gameTime.GetDayString((int)num2 / 24, (int)num2 % 24));
@@ -197,8 +197,8 @@ public class UITraining : MonoBehaviour
 			return;
 		}
 		bool flag = unitState.level >= 50;
-		panelTrain.SetActiveRecursively(!flag);
-		panelInstant.SetActiveRecursively(false);
+		panelTrain.SetActive(!flag);
+		panelInstant.SetActive(false);
 		if (!flag)
 		{
 			int level = unitState.level;

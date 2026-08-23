@@ -204,7 +204,7 @@ public class MapAttack : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 		AuiButton.topActive = false;
 	}
 
@@ -213,7 +213,7 @@ public class MapAttack : MonoBehaviour
 		this.castleIndex = castleIndex;
 		targetCastleIndex = targetCastle;
 		uiMap.DisableCastleTargetMode();
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		AuiButton.topActive = true;
 		CastleInfo castleInfo = PlayInfo.castleManager.castle[castleIndex];
 		castleNameFrom.text = castleInfo.castleName;
@@ -239,8 +239,8 @@ public class MapAttack : MonoBehaviour
 			objUnit[j].unitBlank.SetFrame(j);
 			objUnit[j].unitBlank.visible = !flag;
 			objUnit[j].unitIcon.visible = flag;
-			objUnit[j].unitLevel.gameObject.active = flag;
-			objUnit[j].unitCount.gameObject.active = flag;
+			objUnit[j].unitLevel.gameObject.SetActive(flag);
+			objUnit[j].unitCount.gameObject.SetActive(flag);
 			objUnit[j].buttonCount.visible = flag;
 			if (flag)
 			{

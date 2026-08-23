@@ -319,7 +319,7 @@ public class UICmdPtsShop : MonoBehaviour
 
 	public void Show()
 	{
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		labelCurrent.text = StringContent.wordCurrent;
 		labelRecharge.text = StringContent.msgCmdPtsRecharge100;
 		labelRechargeDesc.text = StringContent.msgCmdPtsRechargeDesc;
@@ -332,7 +332,7 @@ public class UICmdPtsShop : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 		AuiButton.mostTopActive = false;
 		PlayInfo.gameTime.pause = false;
 	}

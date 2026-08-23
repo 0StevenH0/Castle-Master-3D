@@ -297,7 +297,7 @@ public class UIMap : MonoBehaviour
 		touchActive = false;
 		if (Input.GetMouseButtonDown(0))
 		{
-			if (popupCastleDetail.gameObject.active)
+			if (popupCastleDetail.gameObject.activeInHierarchy)
 			{
 				return;
 			}
@@ -310,7 +310,7 @@ public class UIMap : MonoBehaviour
 		}
 		else if (Input.GetMouseButtonUp(0))
 		{
-			if (popupCastleDetail.gameObject.active)
+			if (popupCastleDetail.gameObject.activeInHierarchy)
 			{
 				return;
 			}
@@ -457,7 +457,7 @@ public class UIMap : MonoBehaviour
 
 	public void Show()
 	{
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		RefershCastleInfo();
 		popupAttack.Hide();
 		popupRedeploy.Hide();
@@ -477,7 +477,7 @@ public class UIMap : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 	}
 
 	public void DisableCastleTargetMode()

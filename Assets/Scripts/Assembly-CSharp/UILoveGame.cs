@@ -207,19 +207,19 @@ public class UILoveGame : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 	}
 
 	public void Show()
 	{
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		viewMode = QuestViewMode.quest;
 		textLoveInc.text = string.Empty;
 		textLoveDec.text = string.Empty;
 		aniHeart.visible = false;
-		panelClose.SetActiveRecursively(false);
-		panelReward.SetActiveRecursively(false);
-		panelRequired.SetActiveRecursively(false);
+		panelClose.SetActive(false);
+		panelReward.SetActive(false);
+		panelRequired.SetActive(false);
 		for (int i = 0; i < aniRewardWeapon.Length; i++)
 		{
 			aniRewardWeapon[i].visible = false;
@@ -238,8 +238,8 @@ public class UILoveGame : MonoBehaviour
 			viewMode = QuestViewMode.finish;
 		}
 		RefreshGauge();
-		panelClose.SetActiveRecursively(false);
-		panelReward.SetActiveRecursively(false);
+		panelClose.SetActive(false);
+		panelReward.SetActive(false);
 		switch (viewMode)
 		{
 		case QuestViewMode.quest:
@@ -253,7 +253,7 @@ public class UILoveGame : MonoBehaviour
 					buttonAnswer[0].visible = true;
 					buttonAnswer[1].visible = true;
 					textRequiredGem.text = "-" + heartPoint[PlayInfo.playerData.countHeart].requireGem;
-					panelRequired.SetActiveRecursively(true);
+					panelRequired.SetActive(true);
 				}
 				else
 				{
@@ -272,7 +272,7 @@ public class UILoveGame : MonoBehaviour
 				textAnswerB.text = string.Empty;
 				buttonAnswer[0].visible = false;
 				buttonAnswer[1].visible = false;
-				panelClose.SetActiveRecursively(true);
+				panelClose.SetActive(true);
 			}
 			break;
 		case QuestViewMode.first:
@@ -288,7 +288,7 @@ public class UILoveGame : MonoBehaviour
 			textAnswerB.text = string.Empty;
 			buttonAnswer[0].visible = false;
 			buttonAnswer[1].visible = false;
-			panelClose.SetActiveRecursively(true);
+			panelClose.SetActive(true);
 			break;
 		case QuestViewMode.result:
 			break;
@@ -371,7 +371,7 @@ public class UILoveGame : MonoBehaviour
 						PlayInfo.playerData.gem = 0;
 					}
 				}
-				panelRequired.SetActiveRecursively(false);
+				panelRequired.SetActive(false);
 			}
 			if (flag)
 			{
@@ -385,7 +385,7 @@ public class UILoveGame : MonoBehaviour
 					if (PlayInfo.playerData.countHeart < 9)
 					{
 						textRewardGold.text = "+" + heartPoint[num].rewardGold;
-						panelReward.SetActiveRecursively(true);
+						panelReward.SetActive(true);
 						textDesc.text = StringContent.msgLoveGameGetHeart;
 						PlayInfo.playerData.gold += heartPoint[num].rewardGold;
 						PlayInfo.Save();
@@ -439,7 +439,7 @@ public class UILoveGame : MonoBehaviour
 			textAnswerB.text = string.Empty;
 			buttonAnswer[0].visible = false;
 			buttonAnswer[1].visible = false;
-			panelClose.SetActiveRecursively(true);
+			panelClose.SetActive(true);
 			isAllowQuest = false;
 			npcQuestIcon.GetComponent<Renderer>().material = npcQuestMtr[isAllowQuest ? 1 : 0];
 		}

@@ -71,7 +71,7 @@ public class MapSpy : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 		AuiButton.topActive = false;
 	}
 
@@ -81,7 +81,7 @@ public class MapSpy : MonoBehaviour
 		labelSpy.text = StringContent.msgSendSpy.Replace(StringContent.strValue, PlayInfo.castleManager.castle[castleIndex].castleName);
 		costGold.text = PlayInfo.gameRule.spyCostGold.ToString();
 		commandPtr.text = PlayInfo.gameRule.cmdPtsSpy.ToString();
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		AuiButton.topActive = true;
 	}
 

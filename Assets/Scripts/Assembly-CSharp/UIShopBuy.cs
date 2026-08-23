@@ -233,7 +233,7 @@ public class UIShopBuy : MonoBehaviour
 		for (int k = 0; k < itemPerPage; k++)
 		{
 			buttonItem[k].visible = false;
-			objectQuantity[k].SetActiveRecursively(false);
+			objectQuantity[k].SetActive(false);
 		}
 		for (int l = 0; l < itemPerPage; l++)
 		{
@@ -247,11 +247,11 @@ public class UIShopBuy : MonoBehaviour
 			if (saleCount[num] > 1)
 			{
 				textQuantity[l].text = saleCount[num].ToString();
-				objectQuantity[l].SetActiveRecursively(true);
+				objectQuantity[l].SetActive(true);
 			}
 			else
 			{
-				objectQuantity[l].SetActiveRecursively(false);
+				objectQuantity[l].SetActive(false);
 			}
 			num++;
 			if (num >= itemIcon.Length)
@@ -267,22 +267,22 @@ public class UIShopBuy : MonoBehaviour
 
 	private void ClearItemDetail()
 	{
-		textItemName.gameObject.active = false;
-		textRequireLv.gameObject.active = false;
+		textItemName.gameObject.SetActive(false);
+		textRequireLv.gameObject.SetActive(false);
 		TextMesh[] array = textAttrName;
 		foreach (TextMesh textMesh in array)
 		{
-			textMesh.gameObject.active = false;
+			textMesh.gameObject.SetActive(false);
 		}
 		TextMesh[] array2 = textAttrValue;
 		foreach (TextMesh textMesh2 in array2)
 		{
-			textMesh2.gameObject.active = false;
+			textMesh2.gameObject.SetActive(false);
 		}
 		itemSelected.visible = false;
-		textCost.gameObject.active = false;
+		textCost.gameObject.SetActive(false);
 		iconCurrency.visible = false;
-		previewPanel.SetActiveRecursively(false);
+		previewPanel.SetActive(false);
 		buttonBuy.visible = false;
 		buttonBuyLabel.visible = false;
 		buttonPreview.visible = false;
@@ -309,10 +309,10 @@ public class UIShopBuy : MonoBehaviour
 		if (unitItem != null)
 		{
 			textItemName.text = unitItem.name;
-			textItemName.gameObject.active = true;
+			textItemName.gameObject.SetActive(true);
 			textRequireLv.text = "Lv. " + unitItem.requireLevel;
-			textRequireLv.gameObject.active = true;
-			textCost.gameObject.active = true;
+			textRequireLv.gameObject.SetActive(true);
+			textCost.gameObject.SetActive(true);
 			iconCurrency.visible = true;
 			if (unitItem.costGold > 0)
 			{
@@ -329,81 +329,81 @@ public class UIShopBuy : MonoBehaviour
 			if (num2 < num3 && unitItem.ability.attack != 0f)
 			{
 				textAttrName[num2].text = "ATK";
-				textAttrName[num2].gameObject.active = true;
+				textAttrName[num2].gameObject.SetActive(true);
 				textAttrValue[num2].text = "+" + unitItem.ability.attack;
-				textAttrValue[num2].gameObject.active = true;
+				textAttrValue[num2].gameObject.SetActive(true);
 				num2++;
 			}
 			if (num2 < num3 && unitItem.ability.defense != 0f)
 			{
 				textAttrName[num2].text = "DEF";
-				textAttrName[num2].gameObject.active = true;
+				textAttrName[num2].gameObject.SetActive(true);
 				textAttrValue[num2].text = "+" + unitItem.ability.defense;
-				textAttrValue[num2].gameObject.active = true;
+				textAttrValue[num2].gameObject.SetActive(true);
 				num2++;
 			}
 			if (num2 < num3 && unitItem.ability.strength != 0f)
 			{
 				textAttrName[num2].text = "STR";
-				textAttrName[num2].gameObject.active = true;
+				textAttrName[num2].gameObject.SetActive(true);
 				textAttrValue[num2].text = "+" + unitItem.ability.strength;
-				textAttrValue[num2].gameObject.active = true;
+				textAttrValue[num2].gameObject.SetActive(true);
 				num2++;
 			}
 			if (num2 < num3 && unitItem.ability.intellectual != 0f)
 			{
 				textAttrName[num2].text = "INT";
-				textAttrName[num2].gameObject.active = true;
+				textAttrName[num2].gameObject.SetActive(true);
 				textAttrValue[num2].text = "+" + unitItem.ability.intellectual;
-				textAttrValue[num2].gameObject.active = true;
+				textAttrValue[num2].gameObject.SetActive(true);
 				num2++;
 			}
 			if (num2 < num3 && unitItem.ability.constitution != 0f)
 			{
 				textAttrName[num2].text = "CON";
-				textAttrName[num2].gameObject.active = true;
+				textAttrName[num2].gameObject.SetActive(true);
 				textAttrValue[num2].text = "+" + unitItem.ability.constitution;
-				textAttrValue[num2].gameObject.active = true;
+				textAttrValue[num2].gameObject.SetActive(true);
 				num2++;
 			}
 			if (num2 < num3 && unitItem.ability.critical != 0f)
 			{
 				textAttrName[num2].text = "CRI";
-				textAttrName[num2].gameObject.active = true;
+				textAttrName[num2].gameObject.SetActive(true);
 				textAttrValue[num2].text = "+" + unitItem.ability.critical;
-				textAttrValue[num2].gameObject.active = true;
+				textAttrValue[num2].gameObject.SetActive(true);
 				num2++;
 			}
 			if (num2 < num3 && unitItem.ability.hp != 0f)
 			{
 				textAttrName[num2].text = ((unitItem.code < 400) ? "Max HP" : "HP");
-				textAttrName[num2].gameObject.active = true;
+				textAttrName[num2].gameObject.SetActive(true);
 				textAttrValue[num2].text = "+" + unitItem.ability.hp;
-				textAttrValue[num2].gameObject.active = true;
+				textAttrValue[num2].gameObject.SetActive(true);
 				num2++;
 			}
 			if (num2 < num3 && unitItem.ability.mp != 0f)
 			{
 				textAttrName[num2].text = ((unitItem.code < 400) ? "Max MP" : "MP");
-				textAttrName[num2].gameObject.active = true;
+				textAttrName[num2].gameObject.SetActive(true);
 				textAttrValue[num2].text = "+" + unitItem.ability.mp;
-				textAttrValue[num2].gameObject.active = true;
+				textAttrValue[num2].gameObject.SetActive(true);
 				num2++;
 			}
 			if (num2 < num3 && unitItem.ability.speed != 0f)
 			{
 				textAttrName[num2].text = "Speed";
-				textAttrName[num2].gameObject.active = true;
+				textAttrName[num2].gameObject.SetActive(true);
 				textAttrValue[num2].text = ((!(unitItem.ability.speed > 0f)) ? string.Empty : "+") + unitItem.ability.speed * 100f + "%";
-				textAttrValue[num2].gameObject.active = true;
+				textAttrValue[num2].gameObject.SetActive(true);
 				num2++;
 			}
 			if (num2 < num3 && unitItem.ability.colltime != 0f)
 			{
 				textAttrName[num2].text = "Cooltime";
-				textAttrName[num2].gameObject.active = true;
+				textAttrName[num2].gameObject.SetActive(true);
 				textAttrValue[num2].text = unitItem.ability.colltime + "sec";
-				textAttrValue[num2].gameObject.active = true;
+				textAttrValue[num2].gameObject.SetActive(true);
 				num2++;
 			}
 			buttonBuy.visible = true;
@@ -433,7 +433,7 @@ public class UIShopBuy : MonoBehaviour
 	{
 		if (itemType != ItemManager.ItemType.misc)
 		{
-			previewPanel.SetActiveRecursively(true);
+			previewPanel.SetActive(true);
 			if (previewUnit == null)
 			{
 				GameObject gameObject = Object.Instantiate(ResourceManager.Load("Character/prefeb/character", "feb_hero01", typeof(GameObject))) as GameObject;
@@ -465,12 +465,12 @@ public class UIShopBuy : MonoBehaviour
 
 	private void OnPreviewCloseClick(AuiButton sender)
 	{
-		previewPanel.SetActiveRecursively(false);
+		previewPanel.SetActive(false);
 	}
 
 	private void Update()
 	{
-		if (!previewPanel.gameObject.active)
+		if (!previewPanel.gameObject.activeInHierarchy)
 		{
 			return;
 		}
@@ -567,7 +567,7 @@ public class UIShopBuy : MonoBehaviour
 	public void Show()
 	{
 		LoadIcon();
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		AuiSprite[] array = iconList;
 		foreach (AuiSprite auiSprite in array)
 		{
@@ -579,7 +579,7 @@ public class UIShopBuy : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 	}
 
 	private void ShowGotoGoldShop()

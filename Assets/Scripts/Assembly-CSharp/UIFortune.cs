@@ -216,9 +216,9 @@ public class UIFortune : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 		AuiButton.mostTopActive = false;
-		if (procCastle.uiMap.gameObject.active)
+		if (procCastle.uiMap.gameObject.activeInHierarchy)
 		{
 			procCastle.bgmMap.volume = (float)UserSetting.volumeBgm / 100.9f;
 			UserSetting.currentBgmSound = procCastle.bgmMap;
@@ -236,7 +236,7 @@ public class UIFortune : MonoBehaviour
 
 	public void Show()
 	{
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		AuiButton.mostTopActive = true;
 		buttonSubmit.visible = false;
 		buttonSubmitLabel.visible = false;

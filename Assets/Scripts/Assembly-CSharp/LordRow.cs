@@ -34,11 +34,11 @@ public class LordRow : MonoBehaviour
 	{
 		get
 		{
-			return base.gameObject.active;
+			return base.gameObject.activeInHierarchy;
 		}
 		set
 		{
-			base.gameObject.SetActiveRecursively(value);
+			base.gameObject.SetActive(value);
 		}
 	}
 

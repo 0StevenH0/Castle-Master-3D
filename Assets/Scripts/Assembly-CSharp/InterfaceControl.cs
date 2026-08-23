@@ -84,12 +84,12 @@ public class InterfaceControl : MonoBehaviour
 		feNpcSelectEffect = Object.Instantiate(ResourceManager.Load("Character/prefeb/effect", "feb_npc_select_effect", typeof(GameObject))) as GameObject;
 		feNpcSelectEffect.AddComponent<AdjustAnimationSpeed>();
 		febTargetSelected = febMonsterSelectEffect.transform;
-		feNpcSelectEffect.active = false;
-		febMonsterSelectEffect.active = false;
+		feNpcSelectEffect.SetActive(false);
+		febMonsterSelectEffect.SetActive(false);
 		GameObject gameObject = Object.Instantiate(ResourceManager.Load("Character/prefeb/effect", "feb_pick_terrain_effect", typeof(GameObject))) as GameObject;
 		gameObject.AddComponent<AdjustAnimationSpeed>();
 		febPickTerrain = gameObject.transform;
-		gameObject.SetActiveRecursively(false);
+		gameObject.SetActive(false);
 	}
 
 	public void SetTargetSelected(UnitCharactor unit)
@@ -99,14 +99,14 @@ public class InterfaceControl : MonoBehaviour
 		if (targetUnit.charType == UnitCharactor.CharactorType.npc)
 		{
 			febTargetSelected = feNpcSelectEffect.transform;
-			febMonsterSelectEffect.active = false;
+			febMonsterSelectEffect.SetActive(false);
 		}
 		else
 		{
 			febTargetSelected = febMonsterSelectEffect.transform;
-			feNpcSelectEffect.active = false;
+			feNpcSelectEffect.SetActive(false);
 		}
-		febTargetSelected.gameObject.active = true;
+		febTargetSelected.gameObject.SetActive(true);
 	}
 
 	public void SetUnit(UnitControl unit)
@@ -154,7 +154,7 @@ public class InterfaceControl : MonoBehaviour
 			float num = Vector3.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
 			if (dualTouchActive)
 			{
-				float num2 = camGame.fov * dualTouchLen / num;
+				float num2 = camGame.fieldOfView * dualTouchLen / num;
 				if (num2 < 30f)
 				{
 					num2 = 30f;
@@ -163,7 +163,7 @@ public class InterfaceControl : MonoBehaviour
 				{
 					num2 = 60f;
 				}
-				camGame.fov = num2;
+				camGame.fieldOfView = num2;
 			}
 			else
 			{
@@ -262,7 +262,7 @@ public class InterfaceControl : MonoBehaviour
 				febPickTerrain.position = point;
 				febPickTerrain.GetComponent<Animation>().Rewind();
 				febPickTerrain.GetComponent<Animation>().Play();
-				febPickTerrain.gameObject.SetActiveRecursively(true);
+				febPickTerrain.gameObject.SetActive(true);
 			}
 		}
 		if (flag && Input.GetMouseButton(0))
@@ -287,7 +287,7 @@ public class InterfaceControl : MonoBehaviour
 			{
 				targetUnit = null;
 				targetTrans = null;
-				febTargetSelected.gameObject.active = false;
+				febTargetSelected.gameObject.SetActive(false);
 			}
 			else
 			{

@@ -26,13 +26,13 @@ public class UIFortuneResult : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 		AuiButton.mostTopActive = false;
 	}
 
 	public void Show(int fortuneEventIndex, int targetCastle)
 	{
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		AuiButton.mostTopActive = true;
 		FortuneSystem.FortuneEvent fortuneEvent = FortuneSystem.fortuneEvent[fortuneEventIndex];
 		string text = string.Empty;

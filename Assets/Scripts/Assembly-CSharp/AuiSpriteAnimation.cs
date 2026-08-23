@@ -85,7 +85,7 @@ public class AuiSpriteAnimation : AuiSprite
 		isVisible = true;
 		if (sprObject != null)
 		{
-			sprObject.active = true;
+			sprObject.SetActive(true);
 		}
 	}
 
@@ -101,7 +101,7 @@ public class AuiSpriteAnimation : AuiSprite
 		{
 			if (sprObject != null)
 			{
-				sprObject.active = false;
+				sprObject.SetActive(false);
 			}
 			isVisible = false;
 		}

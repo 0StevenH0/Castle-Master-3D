@@ -115,13 +115,13 @@ public class BoobyTrap : MonoBehaviour
 		{
 			if (preTrapIcon[i] != null)
 			{
-				preTrapIcon[i].SetActiveRecursively(false);
+				preTrapIcon[i].SetActive(false);
 			}
 			if (preTrapObject[i] != null)
 			{
 				for (int j = 0; j < preTrapObject[i].Length; j++)
 				{
-					preTrapObject[i][j].SetActiveRecursively(false);
+					preTrapObject[i][j].SetActive(false);
 				}
 			}
 		}
@@ -134,7 +134,7 @@ public class BoobyTrap : MonoBehaviour
 		Vector3 position = heroTrans.position;
 		if (trapPoint != null)
 		{
-			trapPoint.SetActiveRecursively(false);
+			trapPoint.SetActive(false);
 		}
 		trapPoint = preTrapIcon[(int)type];
 		TrapAttr trapAttr = BoobyTrap.trapAttr[(int)curTrapType];
@@ -171,7 +171,7 @@ public class BoobyTrap : MonoBehaviour
 		}
 		trapPos = vector;
 		trapPoint.transform.position = vector;
-		trapPoint.SetActiveRecursively(true);
+		trapPoint.SetActive(true);
 		uiIngameView.SetTrapTransform(trapPoint.transform, type);
 		StartCoroutine("CheckForHeroPos");
 	}
@@ -185,7 +185,7 @@ public class BoobyTrap : MonoBehaviour
 			float len = Vector3.Distance(trapPoint.transform.position, heroTrans.position);
 			if (len < 1f)
 			{
-				trapPoint.SetActiveRecursively(false);
+				trapPoint.SetActive(false);
 				ActiveBoobyTrap();
 				break;
 			}
@@ -193,7 +193,7 @@ public class BoobyTrap : MonoBehaviour
 			pass += step;
 			if (pass > trapAttr[(int)curTrapType].iconWaitTime)
 			{
-				trapPoint.SetActiveRecursively(false);
+				trapPoint.SetActive(false);
 				break;
 			}
 		}
@@ -266,7 +266,7 @@ public class BoobyTrap : MonoBehaviour
 			pos.x += Random.Range(0f - attr.appearLength, attr.appearLength);
 			pos.z += Random.Range(0f - attr.appearLength, attr.appearLength);
 			obj.transform.position = pos;
-			obj.SetActiveRecursively(true);
+			obj.SetActive(true);
 			PlayAllChild(obj);
 			StartCoroutine(HideDelay(obj, trapAnimationTime[(int)curTrapType]));
 			PlayInfo.soundManager.Play(efSound, pos);
@@ -284,7 +284,7 @@ public class BoobyTrap : MonoBehaviour
 	private IEnumerator HideDelay(GameObject obj, float delay)
 	{
 		yield return new WaitForSeconds(delay);
-		obj.SetActiveRecursively(false);
+		obj.SetActive(false);
 	}
 
 	private IEnumerator RunGhost()
@@ -303,7 +303,7 @@ public class BoobyTrap : MonoBehaviour
 			posBorn.z = startZ + (float)Random.Range(0, 20);
 			obj.transform.position = posBorn;
 			obj.transform.localRotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
-			obj.SetActiveRecursively(true);
+			obj.SetActive(true);
 		}
 		while (true)
 		{
@@ -336,7 +336,7 @@ public class BoobyTrap : MonoBehaviour
 		GameObject[] array3 = trapEffect;
 		foreach (GameObject obj3 in array3)
 		{
-			obj3.SetActiveRecursively(false);
+			obj3.SetActive(false);
 		}
 	}
 

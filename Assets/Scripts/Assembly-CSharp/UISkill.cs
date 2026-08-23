@@ -126,21 +126,21 @@ public class UISkill : MonoBehaviour
 
 	private void ClearSkillDetail()
 	{
-		textSkillName.gameObject.active = false;
-		textRequireLv.gameObject.active = false;
-		textSkillLevel.gameObject.active = false;
+		textSkillName.gameObject.SetActive(false);
+		textRequireLv.gameObject.SetActive(false);
+		textSkillLevel.gameObject.SetActive(false);
 		TextMesh[] array = textAttrName;
 		foreach (TextMesh textMesh in array)
 		{
-			textMesh.gameObject.active = false;
+			textMesh.gameObject.SetActive(false);
 		}
 		TextMesh[] array2 = textAttrValue;
 		foreach (TextMesh textMesh2 in array2)
 		{
-			textMesh2.gameObject.active = false;
+			textMesh2.gameObject.SetActive(false);
 		}
 		skillSelected.visible = false;
-		textCost.gameObject.active = false;
+		textCost.gameObject.SetActive(false);
 		iconCurrency.visible = false;
 		buttonEquip.visible = false;
 		buttonEquipLabel.visible = false;
@@ -163,12 +163,12 @@ public class UISkill : MonoBehaviour
 			return;
 		}
 		textSkillName.text = skillLevelSpec.name;
-		textSkillName.gameObject.active = true;
+		textSkillName.gameObject.SetActive(true);
 		textSkillLevel.text = "Lv. " + skillLevelSpec.skillLevel;
-		textSkillLevel.gameObject.active = true;
+		textSkillLevel.gameObject.SetActive(true);
 		textRequireLv.text = StringContent.msgRequireHeroLevel.Replace(StringContent.strValue, skillLevelSpec.requireLevel.ToString());
-		textRequireLv.gameObject.active = true;
-		textCost.gameObject.active = true;
+		textRequireLv.gameObject.SetActive(true);
+		textCost.gameObject.SetActive(true);
 		iconCurrency.visible = true;
 		textCost.text = skillLevelSpec.price.ToString();
 		iconCurrency.SetFrame(skillLevelSpec.currency);
@@ -177,57 +177,57 @@ public class UISkill : MonoBehaviour
 		if (num5 < num6 && skillLevelSpec.attack != 0)
 		{
 			textAttrName[num5].text = "ATK";
-			textAttrName[num5].gameObject.active = true;
+			textAttrName[num5].gameObject.SetActive(true);
 			textAttrValue[num5].text = "+" + skillLevelSpec.attack;
-			textAttrValue[num5].gameObject.active = true;
+			textAttrValue[num5].gameObject.SetActive(true);
 			num5++;
 		}
 		if (num5 < num6 && skillLevelSpec.hp != 0)
 		{
 			textAttrName[num5].text = "HP";
-			textAttrName[num5].gameObject.active = true;
+			textAttrName[num5].gameObject.SetActive(true);
 			textAttrValue[num5].text = "+" + skillLevelSpec.hp;
-			textAttrValue[num5].gameObject.active = true;
+			textAttrValue[num5].gameObject.SetActive(true);
 			num5++;
 		}
 		if (num5 < num6 && skillLevelSpec.defense != 0)
 		{
 			textAttrName[num5].text = "DEF";
-			textAttrName[num5].gameObject.active = true;
+			textAttrName[num5].gameObject.SetActive(true);
 			textAttrValue[num5].text = "+" + skillLevelSpec.defense;
-			textAttrValue[num5].gameObject.active = true;
+			textAttrValue[num5].gameObject.SetActive(true);
 			num5++;
 		}
 		if (num5 < num6 && skillLevelSpec.length != 0f)
 		{
 			textAttrName[num5].text = "Length";
-			textAttrName[num5].gameObject.active = true;
+			textAttrName[num5].gameObject.SetActive(true);
 			textAttrValue[num5].text = skillLevelSpec.length + "m";
-			textAttrValue[num5].gameObject.active = true;
+			textAttrValue[num5].gameObject.SetActive(true);
 			num5++;
 		}
 		if (num5 < num6 && skillLevelSpec.mp != 0)
 		{
 			textAttrName[num5].text = "MP";
-			textAttrName[num5].gameObject.active = true;
+			textAttrName[num5].gameObject.SetActive(true);
 			textAttrValue[num5].text = "-" + skillLevelSpec.mp;
-			textAttrValue[num5].gameObject.active = true;
+			textAttrValue[num5].gameObject.SetActive(true);
 			num5++;
 		}
 		if (num5 < num6 && skillLevelSpec.colldown != 0f)
 		{
 			textAttrName[num5].text = "Cooldown";
-			textAttrName[num5].gameObject.active = true;
+			textAttrName[num5].gameObject.SetActive(true);
 			textAttrValue[num5].text = skillLevelSpec.colldown.ToString();
-			textAttrValue[num5].gameObject.active = true;
+			textAttrValue[num5].gameObject.SetActive(true);
 			num5++;
 		}
 		if (num5 < num6 && skillLevelSpec.duration != 0f)
 		{
 			textAttrName[num5].text = "Duration";
-			textAttrName[num5].gameObject.active = true;
+			textAttrName[num5].gameObject.SetActive(true);
 			textAttrValue[num5].text = skillLevelSpec.duration.ToString();
-			textAttrValue[num5].gameObject.active = true;
+			textAttrValue[num5].gameObject.SetActive(true);
 			num5++;
 		}
 		buttonEquip.visible = true;
@@ -294,14 +294,14 @@ public class UISkill : MonoBehaviour
 
 	public void Show()
 	{
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		AuiButton.topActive = true;
 		SetWeaponType(WeaponManager.HeroWeaponType.onehand);
 	}
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 		AuiButton.topActive = false;
 	}
 }

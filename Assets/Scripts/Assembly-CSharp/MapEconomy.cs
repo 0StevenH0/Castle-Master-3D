@@ -211,7 +211,7 @@ public class MapEconomy : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 		AuiButton.topActive = false;
 		StopCoroutine("RefreshBuildStatus");
 	}
@@ -219,7 +219,7 @@ public class MapEconomy : MonoBehaviour
 	public void Show(int castleIndex)
 	{
 		this.castleIndex = castleIndex;
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		AuiButton.topActive = true;
 		Refresh();
 		StartCoroutine("RefreshBuildStatus");
@@ -258,20 +258,20 @@ public class MapEconomy : MonoBehaviour
 		iconSelected.transform.position = bldgs[index].bldgDetail.transform.position;
 		if (castleInfo.buildingStatus[index] == CastleInfo.BuildingStatus.none)
 		{
-			objForConstruct.SetActiveRecursively(true);
-			objUnderConst.SetActiveRecursively(false);
+			objForConstruct.SetActive(true);
+			objUnderConst.SetActive(false);
 			commandPts.text = PlayInfo.gameRule.cmdPtsConstruct.ToString();
 			int constructPeriod = CastleInfo.buildingAttribute[index].constructPeriod;
 			buildDays.text = constructPeriod + " " + ((constructPeriod <= 1) ? StringContent.wordDay : StringContent.wordDays);
 			buildGold.text = buildingAttribute.constructGold.ToString();
 			buildGem.text = buildingAttribute.constructInstantlyGem.ToString();
-			objForConstruct.SetActiveRecursively(!isConstructing);
-			objUnderConst.SetActiveRecursively(false);
+			objForConstruct.SetActive(!isConstructing);
+			objUnderConst.SetActive(false);
 		}
 		else if (castleInfo.buildingStatus[index] == CastleInfo.BuildingStatus.constructing)
 		{
-			objForConstruct.SetActiveRecursively(false);
-			objUnderConst.SetActiveRecursively(true);
+			objForConstruct.SetActive(false);
+			objUnderConst.SetActive(true);
 			int day = (int)castleInfo.constructBuildingHour[index] / 24;
 			int hour = (int)castleInfo.constructBuildingHour[index] % 24;
 			buildGem.text = buildingAttribute.constructInstantlyGem.ToString();
@@ -279,8 +279,8 @@ public class MapEconomy : MonoBehaviour
 		}
 		else
 		{
-			objForConstruct.SetActiveRecursively(false);
-			objUnderConst.SetActiveRecursively(false);
+			objForConstruct.SetActive(false);
+			objUnderConst.SetActive(false);
 		}
 		if (castleInfo.buildingStatus[1] == CastleInfo.BuildingStatus.activate)
 		{

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class AdViewBanner : MonoBehaviour
 {
@@ -29,13 +30,13 @@ public class AdViewBanner : MonoBehaviour
 		this.list = list;
 		procBannerClose = proc;
 		AuiButton.modalActive = true;
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		buttonClose.uiCamera = uiCamera;
 		buttonClose.enabled = true;
 		buttonClose.onButtonClick = OnCloseClick;
 		buttonClose.isModal = true;
-		objBanner.gameObject.active = false;
-		textMessage.gameObject.active = true;
+		objBanner.gameObject.SetActive(false);
+		textMessage.gameObject.SetActive(true);
 		textMessage.text = list.explain.Replace("<br/>", "\n");
 		textReward.text = list.item_cnt.ToString();
 		switch (list.item_code)
@@ -91,7 +92,7 @@ public class AdViewBanner : MonoBehaviour
 		}
 		pos.y = 380f;
 		base.transform.position = pos;
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 		if (procBannerClose != null)
 		{
 			procBannerClose();
@@ -100,13 +101,13 @@ public class AdViewBanner : MonoBehaviour
 
 	private IEnumerator LoadBannerImage(string url)
 	{
-		WWW web = new WWW(url);
-		yield return web;
-		if (web.error == null && web.texture != null)
+		UnityWebRequest web = UnityWebRequestTexture.GetTexture(url);
+		yield return web.SendWebRequest();
+		if (web.result == UnityWebRequest.Result.Success)
 		{
-			objBanner.GetComponent<Renderer>().material.mainTexture = web.texture;
-			objBanner.gameObject.active = true;
-			textMessage.gameObject.active = false;
+			objBanner.GetComponent<Renderer>().material.mainTexture = ((DownloadHandlerTexture)web.downloadHandler).texture;
+			objBanner.gameObject.SetActive(true);
+			textMessage.gameObject.SetActive(false);
 		}
 	}
 

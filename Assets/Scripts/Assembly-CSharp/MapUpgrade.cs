@@ -182,7 +182,7 @@ public class MapUpgrade : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 		AuiButton.topActive = false;
 		StopCoroutine("RefreshUpgradeStatus");
 	}
@@ -190,7 +190,7 @@ public class MapUpgrade : MonoBehaviour
 	public void Show(int castleIndex)
 	{
 		this.castleIndex = castleIndex;
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		AuiButton.topActive = true;
 		Refresh();
 		StartCoroutine("RefreshUpgradeStatus");
@@ -260,8 +260,8 @@ public class MapUpgrade : MonoBehaviour
 		}
 		if (flag)
 		{
-			objForUpgrade.SetActiveRecursively(false);
-			objUpgrading.SetActiveRecursively(false);
+			objForUpgrade.SetActive(false);
+			objUpgrading.SetActive(false);
 			aniUpgrading.StopAnimation(true);
 		}
 		else if (info.isUpgrading)
@@ -270,15 +270,15 @@ public class MapUpgrade : MonoBehaviour
 			int hour = (int)info.upgradeHour % 24;
 			textUpgrading.text = StringContent.msgUpgradingNow.Replace(StringContent.strValue, PlayInfo.gameTime.GetDayString(day, hour));
 			costGem.text = CastleInfo.levelDefault[info.level].upgradeInstantlyGem.ToString();
-			objForUpgrade.SetActiveRecursively(false);
-			objUpgrading.SetActiveRecursively(true);
+			objForUpgrade.SetActive(false);
+			objUpgrading.SetActive(true);
 			aniUpgrading.visible = true;
 			aniUpgrading.StartAnimation(0, true, false);
 		}
 		else
 		{
-			objForUpgrade.SetActiveRecursively(true);
-			objUpgrading.SetActiveRecursively(false);
+			objForUpgrade.SetActive(true);
+			objUpgrading.SetActive(false);
 			aniUpgrading.StopAnimation(true);
 		}
 	}

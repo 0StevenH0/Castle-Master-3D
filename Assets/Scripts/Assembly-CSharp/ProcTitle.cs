@@ -58,8 +58,8 @@ public class ProcTitle : ProcBase
 		}
 		else
 		{
-			bgiLogo.active = false;
-			iconPlus.gameObject.active = PlusType.isPlus;
+			bgiLogo.SetActive(false);
+			iconPlus.gameObject.SetActive(PlusType.isPlus);
 		}
 		StartCoroutine("WaitForStartAd");
 	}
@@ -85,10 +85,10 @@ public class ProcTitle : ProcBase
 
 	private IEnumerator OverlapLogo()
 	{
-		panelMenu.gameObject.SetActiveRecursively(false);
+		panelMenu.gameObject.SetActive(false);
 		Color colorLogo = new Color(1f, 1f, 1f, 1f);
 		Material mtrLogo = bgiLogo.GetComponent<Renderer>().material;
-		bgiLogo.active = true;
+		bgiLogo.SetActive(true);
 		mtrLogo.SetColor("_Color", colorLogo);
 		yield return new WaitForSeconds(0.5f);
 		while (colorLogo.a > 0f)
@@ -101,16 +101,16 @@ public class ProcTitle : ProcBase
 			}
 			mtrLogo.SetColor("_Color", colorLogo);
 		}
-		bgiLogo.active = false;
-		panelMenu.gameObject.SetActiveRecursively(true);
+		bgiLogo.SetActive(false);
+		panelMenu.gameObject.SetActive(true);
 		if (Application.platform == RuntimePlatform.IPhonePlayer)
 		{
 			buttonExit.visible = false;
 		}
-		iconPlus.gameObject.active = PlusType.isPlus;
+		iconPlus.gameObject.SetActive(PlusType.isPlus);
 		if (StoreType.store != StoreType.Store.tstore && StoreType.store != StoreType.Store.olleh)
 		{
-			iconGrade.active = false;
+			iconGrade.SetActive(false);
 		}
 		ProcBase.ChangeTextMeshLanguage();
 	}
@@ -139,7 +139,7 @@ public class ProcTitle : ProcBase
 
 	private IEnumerator WaitForTutorialClose()
 	{
-		while (uiTutorial.gameObject.active || uiUserSetting.gameObject.active)
+		while (uiTutorial.gameObject.activeInHierarchy || uiUserSetting.gameObject.activeInHierarchy)
 		{
 			yield return new WaitForSeconds(0.1f);
 		}

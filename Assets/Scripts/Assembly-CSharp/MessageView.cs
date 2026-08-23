@@ -77,7 +77,7 @@ public class MessageView : MonoBehaviour
 
 	public void MsgVisible(bool visible)
 	{
-		base.gameObject.SetActiveRecursively(visible);
+		base.gameObject.SetActive(visible);
 	}
 
 	public void ButtonVisible(bool visible)
@@ -85,12 +85,12 @@ public class MessageView : MonoBehaviour
 		GameObject[] buttonObj = _buttonObj;
 		foreach (GameObject gameObject in buttonObj)
 		{
-			gameObject.SetActiveRecursively(false);
+			gameObject.SetActive(false);
 		}
 		AuiButton[] buttonSpr = _buttonSpr;
 		foreach (AuiButton auiButton in buttonSpr)
 		{
-			auiButton.gameObject.SetActiveRecursively(false);
+			auiButton.gameObject.SetActive(false);
 			auiButton.visible = false;
 		}
 		if (_visibleButtons == null)
@@ -108,8 +108,8 @@ public class MessageView : MonoBehaviour
 		{
 			if (visible)
 			{
-				_buttonObj[(int)msgButton].SetActiveRecursively(true);
-				_buttonSpr[(int)msgButton].gameObject.SetActiveRecursively(true);
+				_buttonObj[(int)msgButton].SetActive(true);
+				_buttonSpr[(int)msgButton].gameObject.SetActive(true);
 				_buttonSpr[(int)msgButton].visible = true;
 				Vector3 position = _buttonObj[(int)msgButton].transform.position;
 				position.x = num2;

@@ -30,7 +30,7 @@ public class UIStatus : MonoBehaviour
 	private void Start()
 	{
 		StartCoroutine("UpdateStatus");
-		panelAlert.SetActiveRecursively(false);
+		panelAlert.SetActive(false);
 		ProcBase.ChangeTextMeshLanguageAllChild(base.transform);
 	}
 
@@ -57,7 +57,7 @@ public class UIStatus : MonoBehaviour
 
 	public void BlinkAlert()
 	{
-		panelAlert.SetActiveRecursively(true);
+		panelAlert.SetActive(true);
 		uiMap.noClickArea[3] = ProcBase.GetGameObjectRect(panelAlert.gameObject);
 		StartCoroutine("LoopBlinkAlert");
 	}
@@ -66,7 +66,7 @@ public class UIStatus : MonoBehaviour
 	{
 		while (true)
 		{
-			textAlert.gameObject.active = !textAlert.gameObject.active;
+			textAlert.gameObject.SetActive(!textAlert.gameObject.activeInHierarchy);
 			yield return new WaitForSeconds(0.25f);
 		}
 	}

@@ -139,7 +139,7 @@ public class ScreenSize
 		{
 			return;
 		}
-		Camera[] array = Object.FindObjectsOfType(typeof(Camera)) as Camera[];
+		Camera[] array = Object.FindObjectsByType<Camera>();
 		Camera[] array2 = array;
 		foreach (Camera camera in array2)
 		{

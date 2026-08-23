@@ -86,7 +86,6 @@ public class WeaponManager : MonoBehaviour
 
 	public GameObject CreateShield(int code)
 	{
-		GameObject gameObject = null;
 		int num = -1;
 		for (int i = 0; i < weaponCodeList.Length; i++)
 		{

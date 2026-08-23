@@ -21,7 +21,7 @@ public class AuiButtonController : MonoBehaviour
 			Vector3 mousePosition = Input.mousePosition;
 			foreach (AuiButton button in AuiButton.buttonList)
 			{
-				if (button.visible && button.enabled && button.gameObject.active && button.CheckButtonDown(mousePosition))
+				if (button.visible && button.enabled && button.gameObject.activeInHierarchy && button.CheckButtonDown(mousePosition))
 				{
 					selectedButton = button;
 					break;
@@ -43,7 +43,7 @@ public class AuiButtonController : MonoBehaviour
 	{
 		foreach (AuiButton button in AuiButton.buttonList)
 		{
-			if (button.visible && button.enabled && button.gameObject.active && button.CheckButtonInSide(x, y))
+			if (button.visible && button.enabled && button.gameObject.activeInHierarchy && button.CheckButtonInSide(x, y))
 			{
 				return true;
 			}

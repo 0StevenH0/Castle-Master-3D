@@ -256,14 +256,14 @@ public class UIGemShop : MonoBehaviour
 
 	public void Show()
 	{
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		AuiButton.mostTopActive = true;
 		PlayInfo.gameTime.pause = true;
 	}
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 		AuiButton.mostTopActive = false;
 		PlayInfo.gameTime.pause = false;
 	}

@@ -282,7 +282,7 @@ public class CharactorManager : MonoBehaviour
 		{
 			rigidbody.constraints = (RigidbodyConstraints)116;
 		}
-		rigidbody.drag = 10f;
+		rigidbody.linearDamping = 10f;
 		rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
 		UnitCharactor unitCharactor = gameObject.AddComponent<UnitCharactor>();
 		unitCharactor.charactorManager = this;

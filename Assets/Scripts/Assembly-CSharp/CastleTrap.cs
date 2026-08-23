@@ -60,7 +60,7 @@ public class CastleTrap : MonoBehaviour
 		trapEffect = Object.Instantiate(ResourceManager.Load("Misc/prefeb", "feb_enermytrap", typeof(GameObject))) as GameObject;
 		trapEffect.transform.position = centerPos;
 		trapEffect.transform.localRotation = Quaternion.Euler(new Vector3(0f, 90f, 0f));
-		trapEffect.SetActiveRecursively(false);
+		trapEffect.SetActive(false);
 		StartCoroutine("CheckForUnitPos");
 	}
 
@@ -90,7 +90,7 @@ public class CastleTrap : MonoBehaviour
 
 	private IEnumerator LaunchCastleTrap()
 	{
-		trapEffect.SetActiveRecursively(true);
+		trapEffect.SetActive(true);
 		Animation[] componentsInChildren = trapEffect.GetComponentsInChildren<Animation>();
 		foreach (Animation ani in componentsInChildren)
 		{
@@ -112,7 +112,7 @@ public class CastleTrap : MonoBehaviour
 			}
 		}
 		yield return new WaitForSeconds(0.5f);
-		trapEffect.SetActiveRecursively(false);
+		trapEffect.SetActive(false);
 	}
 
 	public static void LoadDefault()

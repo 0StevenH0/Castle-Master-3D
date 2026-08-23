@@ -15,6 +15,9 @@ public class ProcLoading : MonoBehaviour
 
 	public AuiSprite imgDesc;
 
+	[System.NonSerialized]
+	public AsyncOperation loadingOperation;
+
 	private static GameObject befLoading;
 
 	private StoreLib storeLib;
@@ -27,7 +30,7 @@ public class ProcLoading : MonoBehaviour
 	{
 		if (befLoading != null)
 		{
-			Object.DestroyObject(befLoading);
+			Object.Destroy(befLoading);
 		}
 		befLoading = base.gameObject;
 		switch (mode)
@@ -61,7 +64,7 @@ public class ProcLoading : MonoBehaviour
 
 	private void Update()
 	{
-		if (!Application.isLoadingLevel)
+		if (loadingOperation == null || loadingOperation.isDone)
 		{
 			isLoaded = true;
 		}
@@ -71,7 +74,7 @@ public class ProcLoading : MonoBehaviour
 			if (loadTime > 0.5f)
 			{
 				befLoading = null;
-				Object.DestroyObject(base.gameObject);
+				Object.Destroy(base.gameObject);
 				storeLib.HideAd();
 			}
 		}

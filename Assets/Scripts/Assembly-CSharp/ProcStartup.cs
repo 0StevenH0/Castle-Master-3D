@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ProcStartup : MonoBehaviour
 {
 	private void Start()
 	{
-		Application.LoadLevel("Scene Title");
+		SceneManager.LoadScene("Scene Title");
 	}
 }

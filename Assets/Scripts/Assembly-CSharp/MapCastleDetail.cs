@@ -230,12 +230,12 @@ public class MapCastleDetail : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 	}
 
 	public void Show(int castleIndex)
 	{
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		this.castleIndex = castleIndex;
 		Refresh();
 		for (int i = 0; i < PlayInfo.castleManager.castle.Length; i++)
@@ -288,8 +288,8 @@ public class MapCastleDetail : MonoBehaviour
 					unitIconBlank[k].visible = false;
 				}
 				unitIcon[k].visible = flag;
-				unitLevel[k].gameObject.active = flag;
-				unitCount[k].gameObject.active = flag;
+				unitLevel[k].gameObject.SetActive(flag);
+				unitCount[k].gameObject.SetActive(flag);
 				if (flag)
 				{
 					if (castleInfo.side == 0)
@@ -335,8 +335,8 @@ public class MapCastleDetail : MonoBehaviour
 			{
 				bool visible = false;
 				unitIcon[l].visible = visible;
-				unitLevel[l].gameObject.active = visible;
-				unitCount[l].gameObject.active = visible;
+				unitLevel[l].gameObject.SetActive(visible);
+				unitCount[l].gameObject.SetActive(visible);
 			}
 			castleUnitTotal.text = "??";
 			castleDefense.text = "??";

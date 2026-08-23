@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ProcBase : MonoBehaviour
 {
@@ -41,7 +42,7 @@ public class ProcBase : MonoBehaviour
 		gameObject2 = Object.Instantiate(gameObject) as GameObject;
 		ProcLoading component = gameObject2.GetComponent<ProcLoading>();
 		component.Show(mode);
-		Application.LoadLevelAsync(sceneName);
+		component.loadingOperation = SceneManager.LoadSceneAsync(sceneName);
 	}
 
 	public static void ShowMsg(string st, MessageView.MsgIcon icon, bool autoHide, MessageView.MsgButton[] buttons, bool alertSound, MessageView.OnMessageClickDelegate procResult)
@@ -208,7 +209,7 @@ public class ProcBase : MonoBehaviour
 		if (UserSetting.language != 0 && UserSetting.language != Language.korean)
 		{
 			ResetTextMeshMaterial();
-			TextMesh[] array = Object.FindObjectsOfType(typeof(TextMesh)) as TextMesh[];
+			TextMesh[] array = Object.FindObjectsByType<TextMesh>();
 			TextMesh[] array2 = array;
 			foreach (TextMesh textObj in array2)
 			{

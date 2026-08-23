@@ -23,7 +23,7 @@ public class UIPlayMessage : MonoBehaviour
 		TextMesh[] array = textMessage;
 		foreach (TextMesh textMesh in array)
 		{
-			textMesh.gameObject.active = false;
+			textMesh.gameObject.SetActive(false);
 		}
 		AuiSprite[] array2 = backMessage;
 		foreach (AuiSprite auiSprite in array2)
@@ -50,7 +50,7 @@ public class UIPlayMessage : MonoBehaviour
 					TextMesh[] array = textMessage;
 					foreach (TextMesh tx in array)
 					{
-						if (tx.gameObject.active)
+						if (tx.gameObject.activeInHierarchy)
 						{
 							curMsg++;
 						}
@@ -66,7 +66,7 @@ public class UIPlayMessage : MonoBehaviour
 						{
 							textMessage[move].text = textMessage[j].text;
 							textMessage[move].GetComponent<Renderer>().material = textMessage[j].GetComponent<Renderer>().material;
-							textMessage[move].gameObject.active = true;
+							textMessage[move].gameObject.SetActive(true);
 							backMessage[move].visible = true;
 							Vector3 pos = backMessage[move].transform.localPosition;
 							pos.x = 400f - textMessage[move].GetComponent<Renderer>().bounds.size.x / base.transform.localScale.x;
@@ -82,7 +82,7 @@ public class UIPlayMessage : MonoBehaviour
 					{
 						textMessage[k].text = msg[k].shortMsg;
 						textMessage[k].GetComponent<Renderer>().material = fontColor[(int)msg[k].level];
-						textMessage[k].gameObject.active = true;
+						textMessage[k].gameObject.SetActive(true);
 						backMessage[k].visible = true;
 						Vector3 pos2 = backMessage[k].transform.localPosition;
 						pos2.x = 400f - textMessage[k].GetComponent<Renderer>().bounds.size.x / base.transform.localScale.x;
@@ -99,12 +99,12 @@ public class UIPlayMessage : MonoBehaviour
 			}
 			for (int i = 0; i < textMessage.Length; i++)
 			{
-				if (textMessage[i].gameObject.active)
+				if (textMessage[i].gameObject.activeInHierarchy)
 				{
 					timeDelay[i]++;
 					if (timeDelay[i] > 20)
 					{
-						textMessage[i].gameObject.active = false;
+						textMessage[i].gameObject.SetActive(false);
 						backMessage[i].visible = false;
 					}
 				}

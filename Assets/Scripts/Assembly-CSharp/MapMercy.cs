@@ -75,7 +75,7 @@ public class MapMercy : MonoBehaviour
 
 	public void Show(int castleIndex)
 	{
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		AuiButton.topActive = true;
 		textDesc.text = StringContent.msgMercyCitizenLoyalty;
 		info = PlayInfo.castleManager.castle[castleIndex];
@@ -88,7 +88,7 @@ public class MapMercy : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 		AuiButton.topActive = false;
 	}
 }

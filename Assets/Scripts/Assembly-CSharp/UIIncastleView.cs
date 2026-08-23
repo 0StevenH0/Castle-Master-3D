@@ -54,13 +54,13 @@ public class UIIncastleView : MonoBehaviour
 					nameLabel.textName.transform.localPosition = localPosition;
 					localPosition.z += 0.5f;
 					nameLabel.backName.transform.localPosition = localPosition;
-					nameLabel.textName.gameObject.active = true;
-					nameLabel.backName.gameObject.SetActiveRecursively(true);
+					nameLabel.textName.gameObject.SetActive(true);
+					nameLabel.backName.gameObject.SetActive(true);
 				}
 				else
 				{
-					nameLabel.textName.gameObject.active = false;
-					nameLabel.backName.gameObject.SetActiveRecursively(false);
+					nameLabel.textName.gameObject.SetActive(false);
+					nameLabel.backName.gameObject.SetActive(false);
 				}
 			}
 		}
@@ -94,8 +94,8 @@ public class UIIncastleView : MonoBehaviour
 				nameLabel.textName.transform.position = position3;
 				position3.z = nameLabel.backName.transform.position.z;
 				nameLabel.backName.transform.position = position3;
-				nameLabel.textName.gameObject.active = true;
-				nameLabel.backName.gameObject.SetActiveRecursively(true);
+				nameLabel.textName.gameObject.SetActive(true);
+				nameLabel.backName.gameObject.SetActive(true);
 			}
 		}
 	}
@@ -112,15 +112,15 @@ public class UIIncastleView : MonoBehaviour
 			nameLabel.textName = Object.Instantiate(textName) as TextMesh;
 			nameLabel.textName.transform.parent = textName.transform.parent;
 			nameLabel.textName.transform.position = textName.transform.position;
-			nameLabel.textName.gameObject.active = false;
+			nameLabel.textName.gameObject.SetActive(false);
 			nameLabel.backName = Object.Instantiate(backName) as AuiSprite;
 			nameLabel.backName.transform.parent = backName.transform.parent;
 			nameLabel.backName.transform.position = backName.transform.position;
-			nameLabel.backName.gameObject.SetActiveRecursively(false);
+			nameLabel.backName.gameObject.SetActive(false);
 			nameLabels[i] = nameLabel;
 		}
-		backName.gameObject.SetActiveRecursively(false);
-		textName.gameObject.active = false;
+		backName.gameObject.SetActive(false);
+		textName.gameObject.SetActive(false);
 		ProcBase.ChangeTextMeshLanguageAllChild(base.transform);
 	}
 

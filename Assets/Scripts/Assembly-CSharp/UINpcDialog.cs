@@ -21,7 +21,7 @@ public class UINpcDialog : MonoBehaviour
 
 	public void Show(string message, DialogAlign align, AuiButton.OnButtonClick onYes, AuiButton.OnButtonClick onNo)
 	{
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		buttonYes.onButtonClick = onYes;
 		buttonNo.onButtonClick = onNo;
 		buttonYes.visible = onYes != null;
@@ -51,6 +51,6 @@ public class UINpcDialog : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 	}
 }

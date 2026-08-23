@@ -14,12 +14,12 @@ public class UIGameMenu : MonoBehaviour
 
 	public void Show()
 	{
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		ProcBase.ChangeTextMeshLanguageAllChild(base.transform);
 	}
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 	}
 }

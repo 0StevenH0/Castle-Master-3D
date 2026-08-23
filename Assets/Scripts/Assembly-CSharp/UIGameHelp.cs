@@ -44,13 +44,13 @@ public class UIGameHelp : MonoBehaviour
 
 	public void Show()
 	{
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		RefreshDesc();
 	}
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 	}
 
 	private void OnCloseClick(AuiButton sender)

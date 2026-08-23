@@ -1,3 +1,4 @@
+[System.Serializable]
 public class UnitState
 {
 	public int side;
@@ -64,6 +65,7 @@ public class UnitState
 
 	public int curWeaponSlot;
 
+	[System.NonSerialized]
 	public PlayerData playerData;
 
 	public int price

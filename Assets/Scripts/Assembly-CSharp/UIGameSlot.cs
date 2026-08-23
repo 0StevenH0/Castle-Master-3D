@@ -69,7 +69,7 @@ public class UIGameSlot : MonoBehaviour
 			flag = false;
 		}
 		iconItem[0].visible = flag;
-		itemQuantity[0].SetActiveRecursively(flag);
+		itemQuantity[0].SetActive(flag);
 		if (flag)
 		{
 			iconItem[0].SetFrame((PlayInfo.playerData.slotHp.code == 401) ? 1 : 0);
@@ -81,7 +81,7 @@ public class UIGameSlot : MonoBehaviour
 			flag = false;
 		}
 		iconItem[1].visible = flag;
-		itemQuantity[1].SetActiveRecursively(flag);
+		itemQuantity[1].SetActive(flag);
 		if (flag)
 		{
 			iconItem[1].SetFrame((PlayInfo.playerData.slotMp.code != 411) ? 2 : 3);
@@ -97,13 +97,13 @@ public class UIGameSlot : MonoBehaviour
 			{
 				num2++;
 			}
-			objSkill[i].SetActiveRecursively(false);
+			objSkill[i].SetActive(false);
 		}
 		num3 = objSkill.Length - num2;
 		for (int j = 0; j < 3; j++)
 		{
 			int num5 = PlayInfo.playerData.equipSkill[num][j];
-			objSkill[j].SetActiveRecursively(num5 > -1);
+			objSkill[j].SetActive(num5 > -1);
 			if (num5 > -1)
 			{
 				num3++;
@@ -176,7 +176,7 @@ public class UIGameSlot : MonoBehaviour
 		if (PlayInfo.playerData.slotHp.quantity == 0)
 		{
 			iconItem[0].visible = false;
-			itemQuantity[0].SetActiveRecursively(false);
+			itemQuantity[0].SetActive(false);
 		}
 	}
 
@@ -215,7 +215,7 @@ public class UIGameSlot : MonoBehaviour
 		if (PlayInfo.playerData.slotMp.quantity == 0)
 		{
 			iconItem[1].visible = false;
-			itemQuantity[1].SetActiveRecursively(false);
+			itemQuantity[1].SetActive(false);
 		}
 	}
 
@@ -242,7 +242,7 @@ public class UIGameSlot : MonoBehaviour
 
 	public void Show()
 	{
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		Vector3 localScale = new Vector3(1f, 1f, 1f);
 		if (!UserSetting.tabletMode)
 		{
@@ -269,7 +269,7 @@ public class UIGameSlot : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 	}
 
 	private void Update()

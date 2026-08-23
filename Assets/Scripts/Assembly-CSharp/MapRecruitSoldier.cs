@@ -165,7 +165,7 @@ public class MapRecruitSoldier : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 		AuiButton.topActive = false;
 		StopCoroutine("RefreshRecruitStatus");
 	}
@@ -233,7 +233,7 @@ public class MapRecruitSoldier : MonoBehaviour
 	public void Show(int castleIndex)
 	{
 		this.castleIndex = castleIndex;
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		AuiButton.topActive = true;
 		Refresh();
 		CastleInfo castleInfo = PlayInfo.castleManager.castle[castleIndex];
@@ -265,7 +265,7 @@ public class MapRecruitSoldier : MonoBehaviour
 			{
 				flag2 = true;
 			}
-			units[i].gameObject.SetActiveRecursively(flag);
+			units[i].gameObject.SetActive(flag);
 			units[i].unitBlank.SetFrame(i);
 			units[i].unitBlank.visible = flag2;
 			if (flag)
@@ -285,11 +285,11 @@ public class MapRecruitSoldier : MonoBehaviour
 				units[i].buttonCount.transform.localPosition = localPosition;
 			}
 		}
-		panelRecruit.gameObject.SetActiveRecursively(!alreadyRecruit);
-		panelInstant.gameObject.SetActiveRecursively(alreadyRecruit);
+		panelRecruit.gameObject.SetActive(!alreadyRecruit);
+		panelInstant.gameObject.SetActive(alreadyRecruit);
 		if (alreadyRecruit)
 		{
-			textRecruiting.gameObject.active = true;
+			textRecruiting.gameObject.SetActive(true);
 			int day = (int)castleInfo.recruitHour / 24;
 			int hour = (int)castleInfo.recruitHour % 24;
 			textRecruiting.text = StringContent.msgRecruitingNow.Replace(StringContent.strValue, PlayInfo.gameTime.GetDayString(day, hour));
@@ -318,8 +318,8 @@ public class MapRecruitSoldier : MonoBehaviour
 				recruitUnitCount[k] = 0;
 				recruitUnitPrice[k] = 0;
 			}
-			objTerms.SetActiveRecursively(true);
-			textRecruiting.gameObject.active = false;
+			objTerms.SetActive(true);
+			textRecruiting.gameObject.SetActive(false);
 		}
 	}
 

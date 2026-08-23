@@ -131,12 +131,12 @@ public class UINpcAction : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActiveRecursively(false);
+		base.gameObject.SetActive(false);
 	}
 
 	public void Show(NpcActionType type)
 	{
-		base.gameObject.SetActiveRecursively(true);
+		base.gameObject.SetActive(true);
 		actionType = type;
 		labelLoyalty.text = StringContent.wordLoyalty;
 		if (actionType == NpcActionType.priest)
@@ -152,8 +152,8 @@ public class UINpcAction : MonoBehaviour
 			}
 			textGem.text = "-" + priestList[currentIdx].gemCount;
 			textDesc.text = StringContent.msgNpcQuestCitizenLoyalty;
-			panelAfter.SetActiveRecursively(false);
-			panelBefore.SetActiveRecursively(true);
+			panelAfter.SetActive(false);
+			panelBefore.SetActive(true);
 		}
 		else
 		{
@@ -172,8 +172,8 @@ public class UINpcAction : MonoBehaviour
 			}
 			textGem.text = "-" + secretaryList[currentIdx].gemCount;
 			textDesc.text = StringContent.msgNpcQuestLordLoyalty;
-			panelAfter.SetActiveRecursively(false);
-			panelBefore.SetActiveRecursively(true);
+			panelAfter.SetActive(false);
+			panelBefore.SetActive(true);
 		}
 	}
 
@@ -202,8 +202,8 @@ public class UINpcAction : MonoBehaviour
 			}
 			textLoyalty.text = "+" + num;
 			textDesc.text = StringContent.msgNpcRiseCitizenLoyalty;
-			panelAfter.SetActiveRecursively(true);
-			panelBefore.SetActiveRecursively(false);
+			panelAfter.SetActive(true);
+			panelBefore.SetActive(false);
 			PlayInfo.Save();
 		}
 		else
@@ -232,8 +232,8 @@ public class UINpcAction : MonoBehaviour
 			}
 			textLoyalty.text = "+" + num2;
 			textDesc.text = StringContent.msgNpcRiseLordLoyalty;
-			panelAfter.SetActiveRecursively(true);
-			panelBefore.SetActiveRecursively(false);
+			panelAfter.SetActive(true);
+			panelBefore.SetActive(false);
 			PlayInfo.Save();
 		}
 	}

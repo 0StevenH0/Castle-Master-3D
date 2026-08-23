@@ -1,0 +1,396 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1194912921505787}
+  m_IsPrefabParent: 1
+  m_IsExploded: 0
+--- !u!1 &1194912921505787
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4911084094858564}
+  - 111: {fileID: 111030661348025683}
+  m_Layer: 0
+  m_Name: msh_bigswordskill05_effect
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4911084094858564
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1194912921505787}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+  m_Children:
+  - {fileID: 4334411556483141}
+  - {fileID: 4378472459854408}
+  - {fileID: 4838436984609845}
+  - {fileID: 4048357432266663}
+  - {fileID: 4847807261916735}
+  - {fileID: 4062457998208744}
+  m_Father: {fileID: 0}
+--- !u!111 &111030661348025683
+Animation:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1194912921505787}
+  m_Enabled: 1
+  m_Animation: {fileID: 7400000, guid: b4d8e79f79e6df043992f44589fbd8d6, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: b4d8e79f79e6df043992f44589fbd8d6, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+  m_UserAABB:
+    m_Center: {x: 0.060239315, y: 1.8431234, z: 1.4598627}
+    m_Extent: {x: 4.193173, y: 2.3440275, z: 4.1931734}
+--- !u!1 &1165814135514620
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4334411556483141}
+  - 33: {fileID: 33616635821534670}
+  - 23: {fileID: 23047420789150704}
+  m_Layer: 0
+  m_Name: msh_bigswordskill_effect00
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4334411556483141
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1165814135514620}
+  m_LocalRotation: {x: -0.6762767, y: -0.20651856, z: 0.20651856, w: 0.6762767}
+  m_LocalPosition: {x: 0, y: 1.5427079, z: 0.8683451}
+  m_LocalScale: {x: 0.001, y: 0.0009999999, z: 0.0009999998}
+  m_LocalEulerAnglesHint: {x: -90, y: -0, z: -33.96281}
+  m_Children: []
+  m_Father: {fileID: 4911084094858564}
+--- !u!33 &33616635821534670
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1165814135514620}
+  m_Mesh: {fileID: 4300000, guid: 22a442b08c10f6b4eb9ffb96c3b8da23, type: 2}
+--- !u!23 &23047420789150704
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1165814135514620}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 0}
+  m_SubsetIndices: []
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ScaleInLightmap: 1
+--- !u!1 &1886722517472311
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4378472459854408}
+  - 33: {fileID: 33306807288702551}
+  - 23: {fileID: 23328750419689046}
+  m_Layer: 0
+  m_Name: msh_bigswordskill_effect01
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4378472459854408
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1886722517472311}
+  m_LocalRotation: {x: -0.6798916, y: -0.19428705, z: 0.19428705, w: 0.6798916}
+  m_LocalPosition: {x: 0, y: 2.2376292, z: 0.9069089}
+  m_LocalScale: {x: 0.001, y: 0.001, z: 0.001}
+  m_LocalEulerAnglesHint: {x: -90, y: -0, z: -31.895828}
+  m_Children: []
+  m_Father: {fileID: 4911084094858564}
+--- !u!33 &33306807288702551
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1886722517472311}
+  m_Mesh: {fileID: 4300000, guid: b09c18536a3d0e94384798081bf190fc, type: 2}
+--- !u!23 &23328750419689046
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1886722517472311}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 0}
+  m_SubsetIndices: []
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ScaleInLightmap: 1
+--- !u!1 &1852890128733255
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4838436984609845}
+  - 33: {fileID: 33259504850230438}
+  - 23: {fileID: 23710187295151685}
+  m_Layer: 0
+  m_Name: msh_bigswordskill_effect02
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4838436984609845
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1852890128733255}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.024251098, y: -0.45845744, z: 1.4792905}
+  m_LocalScale: {x: 0.018880676, y: 0.018880673, z: 0.018880673}
+  m_LocalEulerAnglesHint: {x: -90, y: -0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4911084094858564}
+--- !u!33 &33259504850230438
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1852890128733255}
+  m_Mesh: {fileID: 4300000, guid: 148de5f48d39d564caf2576b03a98a65, type: 2}
+--- !u!23 &23710187295151685
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1852890128733255}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 0}
+  m_SubsetIndices: []
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ScaleInLightmap: 1
+--- !u!1 &1362621528845341
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4048357432266663}
+  - 33: {fileID: 33494160276256781}
+  - 23: {fileID: 23127927212885197}
+  m_Layer: 0
+  m_Name: msh_bigswordskill_effect03
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4048357432266663
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1362621528845341}
+  m_LocalRotation: {x: -0.6389915, y: -0.30280346, z: -0.30280346, w: 0.6389915}
+  m_LocalPosition: {x: 0.024251098, y: -0.47505146, z: 1.4792905}
+  m_LocalScale: {x: 0.01888325, y: 0.01888325, z: 0.01888325}
+  m_LocalEulerAnglesHint: {x: -90, y: 50.710407, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4911084094858564}
+--- !u!33 &33494160276256781
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1362621528845341}
+  m_Mesh: {fileID: 4300000, guid: 2060ec1f365322b44b527def5b2ee937, type: 2}
+--- !u!23 &23127927212885197
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1362621528845341}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 0}
+  m_SubsetIndices: []
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ScaleInLightmap: 1
+--- !u!1 &1660960468476806
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4847807261916735}
+  - 33: {fileID: 33705153831512707}
+  - 23: {fileID: 23664234923804575}
+  m_Layer: 0
+  m_Name: msh_bigswordskill_effect04
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4847807261916735
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660960468476806}
+  m_LocalRotation: {x: -0.6082225, y: 0.36064583, z: 0.36064583, w: 0.6082225}
+  m_LocalPosition: {x: 0.024251098, y: -0.5002701, z: 1.4792905}
+  m_LocalScale: {x: 0.018886372, y: 0.018886374, z: 0.018886372}
+  m_LocalEulerAnglesHint: {x: -90, y: -61.331688, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4911084094858564}
+--- !u!33 &33705153831512707
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660960468476806}
+  m_Mesh: {fileID: 4300000, guid: 03108d9fb38e5484eaa341659dadfa1f, type: 2}
+--- !u!23 &23664234923804575
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660960468476806}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 0}
+  m_SubsetIndices: []
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ScaleInLightmap: 1
+--- !u!1 &1703244967457836
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4062457998208744}
+  - 33: {fileID: 33880658177112846}
+  - 23: {fileID: 23504488283463910}
+  m_Layer: 0
+  m_Name: msh_bigswordskill_effect05
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4062457998208744
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1703244967457836}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.060239255, y: 0.033339746, z: 1.4598624}
+  m_LocalScale: {x: 0.0270975, y: 0.027097495, z: 0.027097495}
+  m_LocalEulerAnglesHint: {x: -90, y: -0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4911084094858564}
+--- !u!33 &33880658177112846
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1703244967457836}
+  m_Mesh: {fileID: 4300000, guid: 2f58370f41df21a49a7e9a1c857db0dd, type: 2}
+--- !u!23 &23504488283463910
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1703244967457836}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 0}
+  m_SubsetIndices: []
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ScaleInLightmap: 1

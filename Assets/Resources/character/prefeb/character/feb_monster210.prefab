@@ -1,0 +1,716 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1823477722959386}
+  m_IsPrefabParent: 1
+  m_IsExploded: 0
+--- !u!1 &1823477722959386
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4297446435295386}
+  - 111: {fileID: 111120783326490015}
+  - 65: {fileID: 65944536767347136}
+  m_Layer: 0
+  m_Name: feb_monster210
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4297446435295386
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1823477722959386}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+  m_Children:
+  - {fileID: 4332676206414999}
+  - {fileID: 4259115819522726}
+  m_Father: {fileID: 0}
+--- !u!111 &111120783326490015
+Animation:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1823477722959386}
+  m_Enabled: 1
+  m_Animation: {fileID: 7400000, guid: 3e0ac0c34fdd2b84598e438f08c65662, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: f2c19698f1979b64b902146d6e3d213c, type: 2}
+  - {fileID: 7400000, guid: 52af020d04bde4945b010ac2023ae3ec, type: 2}
+  - {fileID: 7400000, guid: de313aefd8b027949b8e0030217c57a4, type: 2}
+  - {fileID: 7400000, guid: 263f55588592c014e900eaee205602eb, type: 2}
+  - {fileID: 7400000, guid: 399c915da2e26e248b461cde24f3fa84, type: 2}
+  - {fileID: 7400000, guid: b1fd5b08c49495b4db5ed71c2f0a9e50, type: 2}
+  - {fileID: 7400000, guid: cb9605e7597404046a594b6ff3b3ce07, type: 2}
+  - {fileID: 7400000, guid: efadcc2c2d42ef540b5d2b8e24cf27e8, type: 2}
+  - {fileID: 7400000, guid: 03cb15fc0b7f42f4da38e8489fa4c873, type: 2}
+  - {fileID: 7400000, guid: 6482f8d47c452ee438403588e13e1c62, type: 2}
+  - {fileID: 7400000, guid: 8d91a0d77662ae2438343196416630c5, type: 2}
+  - {fileID: 7400000, guid: 3e0ac0c34fdd2b84598e438f08c65662, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 1
+  m_UserAABB:
+    m_Center: {x: 0.2664107, y: 1.6589843, z: 0.11047995}
+    m_Extent: {x: 2.3641467, y: 1.9359328, z: 2.4986506}
+--- !u!65 &65944536767347136
+BoxCollider:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1823477722959386}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Size: {x: 1.5804062, y: 3.071806, z: 1.4578456}
+  m_Center: {x: 0, y: 1.4165416, z: 0.07242639}
+--- !u!1 &1247205866129044
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4332676206414999}
+  m_Layer: 0
+  m_Name: Bip001
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4332676206414999
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1247205866129044}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 0.7164914, z: -0.08859546}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: -90, y: -90, z: 0}
+  m_Children:
+  - {fileID: 4227386994490923}
+  - {fileID: 4242350402018273}
+  m_Father: {fileID: 4297446435295386}
+--- !u!1 &1465484960134479
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4227386994490923}
+  m_Layer: 0
+  m_Name: Bip001 Pelvis
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4227386994490923
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1465484960134479}
+  m_LocalRotation: {x: -0.49999964, y: 0.50000036, z: 0.49999964, w: 0.50000036}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: -89.999916, y: -90, z: 0}
+  m_Children:
+  - {fileID: 4393078803263586}
+  m_Father: {fileID: 4332676206414999}
+--- !u!1 &1162362444378831
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4393078803263586}
+  m_Layer: 0
+  m_Name: Bip001 Spine
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4393078803263586
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1162362444378831}
+  m_LocalRotation: {x: -2.1338592E-06, y: 7.526117E-07, z: -0.08939722, w: 0.99599606}
+  m_LocalPosition: {x: -0.033444367, y: 0.033116482, z: -5.6799035E-08}
+  m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 1}
+  m_LocalEulerAnglesHint: {x: -0.00025125308, y: -6.4038024E-05, z: 10.257861}
+  m_Children:
+  - {fileID: 4815351612987987}
+  - {fileID: 4023205664721649}
+  - {fileID: 4315099547458498}
+  m_Father: {fileID: 4227386994490923}
+--- !u!1 &1428369117182098
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4815351612987987}
+  m_Layer: 0
+  m_Name: Bip001 L Thigh
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4815351612987987
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1428369117182098}
+  m_LocalRotation: {x: -0.16335167, y: 0.98121953, z: 0.042580582, w: 0.093334675}
+  m_LocalPosition: {x: 0.03880722, y: -0.026632117, z: 0.25617817}
+  m_LocalScale: {x: 1, y: 1.0000002, z: 1}
+  m_LocalEulerAnglesHint: {x: 176.89703, y: -11.365954, z: 161.40523}
+  m_Children:
+  - {fileID: 4291433584938652}
+  m_Father: {fileID: 4393078803263586}
+--- !u!1 &1562123777492504
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4291433584938652}
+  m_Layer: 0
+  m_Name: Bip001 L Calf
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4291433584938652
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1562123777492504}
+  m_LocalRotation: {x: 3.69445E-09, y: 4.783589E-10, z: 0.12840848, w: 0.9917214}
+  m_LocalPosition: {x: -0.3249565, y: 9.536743E-09, z: 0}
+  m_LocalScale: {x: 1.0000001, y: 0.99999994, z: 1}
+  m_LocalEulerAnglesHint: {x: 4.268868E-07, y: -6.3084477E-15, z: -14.755266}
+  m_Children:
+  - {fileID: 4879613000640715}
+  m_Father: {fileID: 4815351612987987}
+--- !u!1 &1806050458794523
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4879613000640715}
+  m_Layer: 0
+  m_Name: Bip001 L Foot
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4879613000640715
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1806050458794523}
+  m_LocalRotation: {x: -0.06373876, y: 0.09688433, z: -0.04257279, w: 0.99233985}
+  m_LocalPosition: {x: -0.23260376, y: 4.7683715E-09, z: 0}
+  m_LocalScale: {x: 0.9999999, y: 0.9999999, z: 0.99999994}
+  m_LocalEulerAnglesHint: {x: -7.8838997, y: -10.769436, z: 5.6574187}
+  m_Children: []
+  m_Father: {fileID: 4291433584938652}
+--- !u!1 &1386445985883412
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4023205664721649}
+  m_Layer: 0
+  m_Name: Bip001 R Thigh
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4023205664721649
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1386445985883412}
+  m_LocalRotation: {x: -0.16335191, y: 0.98121965, z: -0.042577863, w: -0.09333431}
+  m_LocalPosition: {x: 0.03880722, y: -0.026630707, z: -0.25617826}
+  m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
+  m_LocalEulerAnglesHint: {x: -176.89734, y: 11.365864, z: 161.40517}
+  m_Children:
+  - {fileID: 4756108479124638}
+  m_Father: {fileID: 4393078803263586}
+--- !u!1 &1239507963641098
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4756108479124638}
+  m_Layer: 0
+  m_Name: Bip001 R Calf
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4756108479124638
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1239507963641098}
+  m_LocalRotation: {x: -5.5416747E-09, y: -7.175382E-10, z: 0.12840848, w: 0.9917214}
+  m_LocalPosition: {x: -0.3249565, y: 4.7683715E-09, z: 0}
+  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1}
+  m_LocalEulerAnglesHint: {x: -6.4033014E-07, y: -2.928109E-15, z: -14.755266}
+  m_Children:
+  - {fileID: 4020307423855065}
+  m_Father: {fileID: 4023205664721649}
+--- !u!1 &1753301652491099
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4020307423855065}
+  m_Layer: 0
+  m_Name: Bip001 R Foot
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4020307423855065
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1753301652491099}
+  m_LocalRotation: {x: 0.063738756, y: -0.09688444, z: -0.04257279, w: 0.99233985}
+  m_LocalPosition: {x: -0.23260376, y: -9.536743E-09, z: -3.8146972E-08}
+  m_LocalScale: {x: 0.9999999, y: 0.9999998, z: 0.9999999}
+  m_LocalEulerAnglesHint: {x: 7.8838997, y: 10.769448, z: 5.6574197}
+  m_Children: []
+  m_Father: {fileID: 4756108479124638}
+--- !u!1 &1121435544701134
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4315099547458498}
+  m_Layer: 0
+  m_Name: Bip001 Spine1
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4315099547458498
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1121435544701134}
+  m_LocalRotation: {x: -6.4776514E-15, y: -5.7207057E-09, z: 0.0020625412, w: 0.9999979}
+  m_LocalPosition: {x: -0.55484635, y: -0.000864563, z: -2.39801E-09}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: -1.3528298E-09, y: 6.5554315E-07, z: -0.23634996}
+  m_Children:
+  - {fileID: 4368264634855479}
+  m_Father: {fileID: 4393078803263586}
+--- !u!1 &1361140243495293
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4368264634855479}
+  m_Layer: 0
+  m_Name: Bip001 Neck
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4368264634855479
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1361140243495293}
+  m_LocalRotation: {x: 6.607589E-14, y: 2.5877835E-09, z: -0.0009330068, w: 0.9999996}
+  m_LocalPosition: {x: -1.1380928, y: -0.14505175, z: -2.0231549E-07}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: -2.6910038E-10, y: -2.9653805E-07, z: 0.10691472}
+  m_Children:
+  - {fileID: 4530473483544529}
+  - {fileID: 4859100035472634}
+  m_Father: {fileID: 4315099547458498}
+--- !u!1 &1128699125249762
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4530473483544529}
+  m_Layer: 0
+  m_Name: Bip001 L Clavicle
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4530473483544529
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1128699125249762}
+  m_LocalRotation: {x: -0.4892038, y: -0.00065242214, z: 0.8721685, w: -0.0011603013}
+  m_LocalPosition: {x: 0.4990663, y: -0.06890857, z: 0.4005377}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: -0.00030732158, y: -58.576584, z: 179.84772}
+  m_Children:
+  - {fileID: 4650484974260078}
+  m_Father: {fileID: 4368264634855479}
+--- !u!1 &1053532272374810
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4650484974260078}
+  m_Layer: 0
+  m_Name: Bip001 L UpperArm
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4650484974260078
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1053532272374810}
+  m_LocalRotation: {x: 0.099433325, y: -0.254192, z: 0.025882764, w: 0.9616806}
+  m_LocalPosition: {x: -0.22094116, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1.0000001, z: 1}
+  m_LocalEulerAnglesHint: {x: 11.819668, y: 29.607141, z: 0.05063816}
+  m_Children:
+  - {fileID: 4803291667457951}
+  m_Father: {fileID: 4530473483544529}
+--- !u!1 &1775227796214192
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4803291667457951}
+  m_Layer: 0
+  m_Name: Bip001 L Forearm
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4803291667457951
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1775227796214192}
+  m_LocalRotation: {x: -2.6912872E-09, y: -6.000818E-08, z: 0.07945254, w: 0.9968387}
+  m_LocalPosition: {x: -0.53059524, y: 0, z: 1.5258789E-07}
+  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1}
+  m_LocalEulerAnglesHint: {x: -8.5377366E-07, y: 6.830189E-06, z: -9.114196}
+  m_Children:
+  - {fileID: 4661269296908255}
+  m_Father: {fileID: 4650484974260078}
+--- !u!1 &1590733501302775
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4661269296908255}
+  m_Layer: 0
+  m_Name: Bip001 L Hand
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4661269296908255
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1590733501302775}
+  m_LocalRotation: {x: -0.7073278, y: -0.050834395, z: -0.08737924, w: 0.69962}
+  m_LocalPosition: {x: -0.461064, y: 0, z: 0}
+  m_LocalScale: {x: 1.0000001, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: -90.338425, y: 11.229597, z: 2.9425251}
+  m_Children: []
+  m_Father: {fileID: 4803291667457951}
+--- !u!1 &1072559305648244
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4859100035472634}
+  m_Layer: 0
+  m_Name: Bip001 R Clavicle
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4859100035472634
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1072559305648244}
+  m_LocalRotation: {x: 0.4892038, y: 0.0006500089, z: 0.8721685, w: -0.0011616686}
+  m_LocalPosition: {x: 0.4990663, y: -0.06890636, z: -0.40053847}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: -0.0003023066, y: 58.576584, z: 179.8472}
+  m_Children:
+  - {fileID: 4868499098195253}
+  m_Father: {fileID: 4368264634855479}
+--- !u!1 &1957137183605318
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4868499098195253}
+  m_Layer: 0
+  m_Name: Bip001 R UpperArm
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4868499098195253
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1957137183605318}
+  m_LocalRotation: {x: -0.09943334, y: 0.254192, z: 0.025882758, w: 0.9616806}
+  m_LocalPosition: {x: -0.22094116, y: 3.8146972E-08, z: 0}
+  m_LocalScale: {x: 1.0000001, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: -11.81967, y: -29.607141, z: 0.05063937}
+  m_Children:
+  - {fileID: 4477741563234887}
+  m_Father: {fileID: 4859100035472634}
+--- !u!1 &1323604046534550
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4477741563234887}
+  m_Layer: 0
+  m_Name: Bip001 R Forearm
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4477741563234887
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1323604046534550}
+  m_LocalRotation: {x: -1.5203458E-08, y: 7.353031E-08, z: 0.07945255, w: 0.9968387}
+  m_LocalPosition: {x: -0.53059536, y: 0, z: 0}
+  m_LocalScale: {x: 1.0000001, y: 1.0000002, z: 1}
+  m_LocalEulerAnglesHint: {x: -1.0672168E-06, y: -8.537736E-06, z: -9.114198}
+  m_Children:
+  - {fileID: 4973781157206976}
+  m_Father: {fileID: 4868499098195253}
+--- !u!1 &1523630142707186
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4973781157206976}
+  m_Layer: 0
+  m_Name: Bip001 R Hand
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4973781157206976
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1523630142707186}
+  m_LocalRotation: {x: 0.7073278, y: 0.050834414, z: -0.087379254, w: 0.69962}
+  m_LocalPosition: {x: -0.4610641, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
+  m_LocalEulerAnglesHint: {x: 90.338425, y: -11.229599, z: 2.9425247}
+  m_Children: []
+  m_Father: {fileID: 4477741563234887}
+--- !u!1 &1797437975133630
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4242350402018273}
+  m_Layer: 0
+  m_Name: Bip001 Prop1
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4242350402018273
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1797437975133630}
+  m_LocalRotation: {x: 2.1073426E-08, y: -0.7071068, z: 2.1073426E-08, w: 0.7071068}
+  m_LocalPosition: {x: 0.07860175, y: -1.1059291, z: -0.1878521}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 3.4150946E-06, y: 90, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4332676206414999}
+--- !u!1 &1534419497453725
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4259115819522726}
+  - 137: {fileID: 137118456793241405}
+  m_Layer: 0
+  m_Name: msh_monster210
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4259115819522726
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1534419497453725}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 1.4244034E-07}
+  m_LocalScale: {x: 1, y: 0.9999998, z: 0.9999998}
+  m_LocalEulerAnglesHint: {x: -90, y: -0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4297446435295386}
+--- !u!137 &137118456793241405
+SkinnedMeshRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1534419497453725}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: f884c94d7578ffb4fb8fd858cf20d0e9, type: 2}
+  m_SubsetIndices: []
+  m_StaticBatchRoot: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_Mesh: {fileID: 4300000, guid: 2fabec7ecfde2c448a5675c33a9c7e48, type: 2}
+  m_Bones:
+  - {fileID: 4315099547458498}
+  - {fileID: 4393078803263586}
+  - {fileID: 4530473483544529}
+  - {fileID: 4227386994490923}
+  - {fileID: 4879613000640715}
+  - {fileID: 4291433584938652}
+  - {fileID: 4242350402018273}
+  - {fileID: 4815351612987987}
+  - {fileID: 4661269296908255}
+  - {fileID: 4803291667457951}
+  - {fileID: 4650484974260078}
+  - {fileID: 4859100035472634}
+  - {fileID: 4020307423855065}
+  - {fileID: 4756108479124638}
+  - {fileID: 4023205664721649}
+  - {fileID: 4973781157206976}
+  - {fileID: 4477741563234887}
+  - {fileID: 4868499098195253}
+  m_AABB:
+    m_Center: {x: 0.2664107, y: -0.11048007, z: 1.6589844}
+    m_Extent: {x: 2.3641467, y: 2.498651, z: 1.9359329}
+  m_DirtyAABB: 0

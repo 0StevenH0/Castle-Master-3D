@@ -1,0 +1,341 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1213971664510072}
+  m_IsPrefabParent: 1
+  m_IsExploded: 0
+--- !u!1 &1213971664510072
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4497755427043699}
+  - 111: {fileID: 111530693375792005}
+  m_Layer: 0
+  m_Name: msh_pick_terrain_effect
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4497755427043699
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1213971664510072}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+  m_Children:
+  - {fileID: 4443618867812080}
+  - {fileID: 4481142341971939}
+  - {fileID: 4949306791336972}
+  - {fileID: 4151627991297317}
+  - {fileID: 4807648724807018}
+  m_Father: {fileID: 0}
+--- !u!111 &111530693375792005
+Animation:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1213971664510072}
+  m_Enabled: 1
+  m_Animation: {fileID: 7400000, guid: a7cfe387a72af814196b549775996d82, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: a7cfe387a72af814196b549775996d82, type: 2}
+  - {fileID: 7400000, guid: e79551133e4229446a3f77044ba0ccb6, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+  m_UserAABB:
+    m_Center: {x: 0.0002078414, y: -0.3058741, z: 0.09428406}
+    m_Extent: {x: 0.7499998, y: 0.7322284, z: 0.7499999}
+--- !u!1 &1020928395629853
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4443618867812080}
+  - 33: {fileID: 33385726590176037}
+  - 23: {fileID: 23675358004287073}
+  m_Layer: 0
+  m_Name: msh_pick_terrain00
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4443618867812080
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1020928395629853}
+  m_LocalRotation: {x: -0.21263124, y: 0.62721133, z: 0.6743797, w: 0.3265056}
+  m_LocalPosition: {x: 0.28165743, y: -0.022815017, z: 0.37595415}
+  m_LocalScale: {x: 1.377325, y: 1.377325, z: 1.377325}
+  m_LocalEulerAnglesHint: {x: 80.14892, y: -44.136044, z: -165.99806}
+  m_Children: []
+  m_Father: {fileID: 4497755427043699}
+--- !u!33 &33385726590176037
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1020928395629853}
+  m_Mesh: {fileID: 4300000, guid: 230d0b8e269c0c5409eb6c6a904f6eac, type: 2}
+--- !u!23 &23675358004287073
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1020928395629853}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 0}
+  m_SubsetIndices: []
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ScaleInLightmap: 1
+--- !u!1 &1260254246179735
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4481142341971939}
+  - 33: {fileID: 33167133532566094}
+  - 23: {fileID: 23177684199797447}
+  m_Layer: 0
+  m_Name: msh_pick_terrain01
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4481142341971939
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1260254246179735}
+  m_LocalRotation: {x: -0.6272114, y: 0.21263106, z: 0.3265055, w: 0.67437977}
+  m_LocalPosition: {x: -0.28124273, y: -0.022815017, z: 0.37595427}
+  m_LocalScale: {x: 1.377325, y: 1.377325, z: 1.3773249}
+  m_LocalEulerAnglesHint: {x: -80.148926, y: -44.13602, z: -14.00194}
+  m_Children: []
+  m_Father: {fileID: 4497755427043699}
+--- !u!33 &33167133532566094
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1260254246179735}
+  m_Mesh: {fileID: 4300000, guid: f154502f1b1d7e44aba19fcb7964295f, type: 2}
+--- !u!23 &23177684199797447
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1260254246179735}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 0}
+  m_SubsetIndices: []
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ScaleInLightmap: 1
+--- !u!1 &1241920818313936
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4949306791336972}
+  - 33: {fileID: 33065385770446616}
+  - 23: {fileID: 23154588525058077}
+  m_Layer: 0
+  m_Name: msh_pick_terrain02
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4949306791336972
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1241920818313936}
+  m_LocalRotation: {x: -0.67437977, y: -0.32650557, z: -0.21263105, w: 0.62721145}
+  m_LocalPosition: {x: -0.28124282, y: -0.02281498, z: -0.18694593}
+  m_LocalScale: {x: 1.377325, y: 1.3773252, z: 1.3773249}
+  m_LocalEulerAnglesHint: {x: -99.851074, y: 44.13602, z: -14.001945}
+  m_Children: []
+  m_Father: {fileID: 4497755427043699}
+--- !u!33 &33065385770446616
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1241920818313936}
+  m_Mesh: {fileID: 4300000, guid: c8a6e740011a4d34b84f8f096a9dfb23, type: 2}
+--- !u!23 &23154588525058077
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1241920818313936}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 0}
+  m_SubsetIndices: []
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ScaleInLightmap: 1
+--- !u!1 &1497317592870987
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4151627991297317}
+  - 33: {fileID: 33665007922234171}
+  - 23: {fileID: 23708440175706641}
+  m_Layer: 0
+  m_Name: msh_pick_terrain03
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4151627991297317
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1497317592870987}
+  m_LocalRotation: {x: 0.3265057, y: 0.6743797, z: 0.62721133, w: -0.21263115}
+  m_LocalPosition: {x: 0.28165734, y: -0.02281498, z: -0.18694597}
+  m_LocalScale: {x: 1.377325, y: 1.377325, z: 1.3773249}
+  m_LocalEulerAnglesHint: {x: 99.85109, y: 44.13604, z: -165.99805}
+  m_Children: []
+  m_Father: {fileID: 4497755427043699}
+--- !u!33 &33665007922234171
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1497317592870987}
+  m_Mesh: {fileID: 4300000, guid: a9ffaccf9ffcd58498a48af3e6ed6f0a, type: 2}
+--- !u!23 &23708440175706641
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1497317592870987}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 0}
+  m_SubsetIndices: []
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ScaleInLightmap: 1
+--- !u!1 &1217806044474972
+GameObject:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - 4: {fileID: 4807648724807018}
+  - 33: {fileID: 33705138755049086}
+  - 23: {fileID: 23665734464329015}
+  m_Layer: 0
+  m_Name: msh_pick_terrain04
+  m_TagString: Untagged
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+  m_Icon: {fileID: 0}
+--- !u!4 &4807648724807018
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1217806044474972}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.00020786776, y: -0.12389408, z: 0.0945041}
+  m_LocalScale: {x: 0.001, y: 0.0009999998, z: 0.0009999998}
+  m_LocalEulerAnglesHint: {x: -90, y: -0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4497755427043699}
+--- !u!33 &33705138755049086
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1217806044474972}
+  m_Mesh: {fileID: 4300000, guid: de737d77616b8054f9561571bfb7a94d, type: 2}
+--- !u!23 &23665734464329015
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1217806044474972}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 0}
+  m_SubsetIndices: []
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ScaleInLightmap: 1

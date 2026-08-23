@@ -35,6 +35,11 @@ public class DataRegistry
 
 	private static bool usePlayerPrefs = true;
 
+	private static string SavePath(int slot)
+	{
+		return Path.Combine(Application.persistentDataPath, "DataSlot" + slot + ".sav");
+	}
+
 	private static int currentSlot = 0;
 
 	private static KeyData dataList = new KeyData();
@@ -56,7 +61,11 @@ public class DataRegistry
 
 	public static void DeleteSlot(int slot)
 	{
-		PlayerPrefs.DeleteKey("DataSlot" + slot);
+		string path = SavePath(slot);
+		if (File.Exists(path))
+		{
+			File.Delete(path);
+		}
 		if (slot == currentSlot)
 		{
 			ClearAll();
@@ -277,8 +286,7 @@ public class DataRegistry
 			memoryStream.Read(array, 0, (int)memoryStream.Length);
 			string @string = Encoding.UTF8.GetString(array);
 			@string = Encrypt(@string);
-			PlayerPrefs.SetString("DataSlot" + currentSlot, @string);
-			PlayerPrefs.Save();
+			File.WriteAllText(SavePath(currentSlot), @string);
 		}
 	}
 
@@ -306,7 +314,8 @@ public class DataRegistry
 		{
 			return;
 		}
-		string @string = PlayerPrefs.GetString("DataSlot" + currentSlot);
+		string path = SavePath(currentSlot);
+		string @string = File.Exists(path) ? File.ReadAllText(path) : string.Empty;
 		if (@string.Length != 0)
 		{
 			@string = Decrypt(@string);

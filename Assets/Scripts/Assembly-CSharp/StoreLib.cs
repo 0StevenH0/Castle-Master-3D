@@ -195,14 +195,14 @@ public class StoreLib : PlugInNetServer
 	public void BuyItem(ProductType type, int idx, OnResultDelegate proc)
 	{
 		onResult = proc;
-		if (Application.isEditor)
-		{
-			onResult(true, type, idx);
-			return;
-		}
-		prodType = type;
-		prodIndex = idx;
-		StartCoroutine("WaitForStoreInit");
+		onResult(false, type, idx);
+		StartCoroutine("ShowDisabledMsg");
+	}
+
+	private IEnumerator ShowDisabledMsg()
+	{
+		yield return null;
+		ProcBase.ShowMsg("In-app purchases are disabled in this build.", MessageView.MsgIcon.alert);
 	}
 
 	private IEnumerator WaitForStoreInit()

@@ -393,6 +393,8 @@ public class StringContent
 
 	public static string msgFreeChargeFailed = string.Empty;
 
+	public static string msgFreeChargeWaitInfo = string.Empty;
+
 	public static string wordLoyalty = string.Empty;
 
 	public static string wordFame = string.Empty;
@@ -1163,6 +1165,9 @@ public class StringContent
 					break;
 				case "493":
 					msgFreeChargeFailed = text3;
+					break;
+				case "494":
+					msgFreeChargeWaitInfo = text3;
 					break;
 				case "500":
 					wordLoyalty = text3;

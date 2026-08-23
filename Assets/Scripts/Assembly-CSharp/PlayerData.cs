@@ -191,6 +191,15 @@ public class PlayerData
 		return false;
 	}
 
+	public int GetMinutesUntilFreeCharge()
+	{
+		TimeSpan timeSpan = DateTime.UtcNow.Subtract(timeBefCmdPtsInc);
+		int autoIncCmdPts = PlayInfo.gameRule.autoIncCmdPts;
+		int elapsedPts = (int)timeSpan.TotalMinutes / autoIncCmdPts;
+		int minutesLeft = (5 - elapsedPts) * autoIncCmdPts - (int)timeSpan.TotalMinutes % autoIncCmdPts;
+		return (minutesLeft > 0) ? minutesLeft : 0;
+	}
+
 	public int GetCommandPointInc()
 	{
 		TimeSpan timeSpan = DateTime.UtcNow.Subtract(timeBefCmdPtsInc);

@@ -14,8 +14,8 @@ public class AppUtcTime : MonoBehaviour
 
 	public void UpdateUtcTime(OnUpdateUtcTime rst)
 	{
-		procUpdateUtcTime = rst;
-		StartCoroutine("ProcUpdateUtcTime");
+		utcNow = DateTime.UtcNow;
+		rst(true);
 	}
 
 	private IEnumerator ProcUpdateUtcTime()

@@ -257,7 +257,8 @@ public class UICmdPtsShop : MonoBehaviour
 		int commandPointInc = PlayInfo.playerData.GetCommandPointInc();
 		if (commandPointInc == 0)
 		{
-			ProcBase.ShowMsg(StringContent.msgFreeChargeNoPoint, MessageView.MsgIcon.alert);
+			int minutesLeft = PlayInfo.playerData.GetMinutesUntilFreeCharge();
+			ProcBase.ShowMsg(StringContent.msgFreeChargeWaitInfo.Replace(StringContent.strValue, minutesLeft.ToString()), MessageView.MsgIcon.alert);
 			return;
 		}
 		ProcBase.ShowMsg(StringContent.msgFreeChargePoint.Replace(StringContent.strValue, commandPointInc.ToString()), MessageView.MsgIcon.question, false, new MessageView.MsgButton[2]

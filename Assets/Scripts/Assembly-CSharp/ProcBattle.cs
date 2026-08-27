@@ -82,7 +82,7 @@ public class ProcBattle : ProcBase
 			gameObject2 = Object.Instantiate(gameObject) as GameObject;
 		}
 		AuiButton.SetCameraAllChild(gameObject2.transform, interControl.uiCamera);
-		gameObject2.SetActive(false);
+		gameObject2.SetActiveRecursive(false);
 		uiPlayMenu = gameObject2.GetComponent<UIPlayMenu>();
 		uiPlayMenu.procBattle = this;
 		gameObject2 = GameObject.Find("feb_usersetting");
@@ -92,7 +92,7 @@ public class ProcBattle : ProcBase
 			gameObject2 = Object.Instantiate(gameObject) as GameObject;
 		}
 		AuiButton.SetCameraAllChild(gameObject2.transform, interControl.uiCamera);
-		gameObject2.SetActive(false);
+		gameObject2.SetActiveRecursive(false);
 		uiUserSetting = gameObject2.GetComponent<UIUserSetting>();
 		gameObject2 = GameObject.Find("feb_gamehelp");
 		if (gameObject2 == null)
@@ -101,7 +101,7 @@ public class ProcBattle : ProcBase
 			gameObject2 = Object.Instantiate(gameObject) as GameObject;
 		}
 		AuiButton.SetCameraAllChild(gameObject2.transform, interControl.uiCamera);
-		gameObject2.SetActive(false);
+		gameObject2.SetActiveRecursive(false);
 		uiGameHelp = gameObject2.GetComponent<UIGameHelp>();
 		gameObject = ResourceManager.Load("interface/prefabs", "feb_ingameview", typeof(GameObject)) as GameObject;
 		gameObject2 = Object.Instantiate(gameObject) as GameObject;

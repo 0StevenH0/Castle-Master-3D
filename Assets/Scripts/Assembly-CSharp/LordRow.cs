@@ -38,7 +38,7 @@ public class LordRow : MonoBehaviour
 		}
 		set
 		{
-			base.gameObject.SetActive(value);
+			base.gameObject.SetActiveRecursive(value);
 		}
 	}
 

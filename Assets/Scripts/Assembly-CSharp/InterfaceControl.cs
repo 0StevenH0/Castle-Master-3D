@@ -83,7 +83,7 @@ public class InterfaceControl : MonoBehaviour
 		GameObject gameObject = Object.Instantiate(ResourceManager.Load("Character/prefeb/effect", "feb_pick_terrain_effect", typeof(GameObject))) as GameObject;
 		gameObject.AddComponent<AdjustAnimationSpeed>();
 		febPickTerrain = gameObject.transform;
-		gameObject.SetActive(false);
+		gameObject.SetActiveRecursive(false);
 	}
 
 	public void SetTargetSelected(UnitCharactor unit)
@@ -257,7 +257,7 @@ public class InterfaceControl : MonoBehaviour
 				febPickTerrain.position = point;
 				febPickTerrain.GetComponent<Animation>().Rewind();
 				febPickTerrain.GetComponent<Animation>().Play();
-				febPickTerrain.gameObject.SetActive(true);
+				febPickTerrain.gameObject.SetActiveRecursive(true);
 			}
 		}
 		if (targetUnit != null)

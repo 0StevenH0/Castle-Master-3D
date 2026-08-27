@@ -34,7 +34,7 @@ public class AdViewList : MonoBehaviour
 		this.adList = list;
 		procBannerClose = proc;
 		AuiButton.modalActive = true;
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		buttonClose.uiCamera = uiCamera;
 		buttonClose.isModal = true;
 		buttonClose.enabled = true;
@@ -64,7 +64,7 @@ public class AdViewList : MonoBehaviour
 		AlphaAd.AdList[] array = this.adList;
 		foreach (AlphaAd.AdList adList in array)
 		{
-			linkList[num].gameObject.SetActive(true);
+			linkList[num].gameObject.SetActiveRecursive(true);
 			linkList[num].imgBanner.SetActive(false);
 			linkList[num].textMessage.gameObject.SetActive(true);
 			linkList[num].textReward.gameObject.SetActive(true);
@@ -90,7 +90,7 @@ public class AdViewList : MonoBehaviour
 		}
 		for (int k = num; k < linkList.Length; k++)
 		{
-			linkList[k].gameObject.SetActive(false);
+			linkList[k].gameObject.SetActiveRecursive(false);
 		}
 		isLinking = false;
 		StartCoroutine("LoadBannerImage");
@@ -156,7 +156,7 @@ public class AdViewList : MonoBehaviour
 	{
 		AuiButton.modalActive = false;
 		StopAllCoroutines();
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 		if (procBannerClose != null)
 		{
 			procBannerClose();

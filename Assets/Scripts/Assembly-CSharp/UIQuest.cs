@@ -110,12 +110,12 @@ public class UIQuest : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 	}
 
 	public void Show()
 	{
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		PlayInfo.questManager.ProcessDaily(false);
 		Refresh();
 	}
@@ -129,14 +129,14 @@ public class UIQuest : MonoBehaviour
 		QuestManager.Quest curQuest = PlayInfo.questManager.curQuest;
 		if (curQuest == null)
 		{
-			panelReward.SetActive(false);
+			panelReward.SetActiveRecursive(false);
 			textMsg.text = StringContent.msgQuestSysNone;
-			panelButton.SetActive(false);
+			panelButton.SetActiveRecursive(false);
 			return;
 		}
 		int result = PlayInfo.questManager.result;
-		panelReward.SetActive(true);
-		panelButton.SetActive(true);
+		panelReward.SetActiveRecursive(true);
+		panelButton.SetActiveRecursive(true);
 		switch (result)
 		{
 		case 2:

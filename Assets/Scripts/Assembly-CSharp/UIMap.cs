@@ -467,7 +467,7 @@ public class UIMap : MonoBehaviour
 
 	public void Show()
 	{
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		RefershCastleInfo();
 		popupAttack.Hide();
 		popupRedeploy.Hide();
@@ -487,7 +487,7 @@ public class UIMap : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 	}
 
 	public void DisableCastleTargetMode()

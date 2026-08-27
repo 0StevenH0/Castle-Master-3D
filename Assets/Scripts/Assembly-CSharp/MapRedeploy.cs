@@ -172,7 +172,7 @@ public class MapRedeploy : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 		AuiButton.topActive = false;
 		uiMap.DisableCastleTargetMode();
 		StopCoroutine("RefreshRedeployStatus");
@@ -252,7 +252,7 @@ public class MapRedeploy : MonoBehaviour
 		}
 		this.targetIndex = targetIndex;
 		uiMap.DisableCastleTargetMode();
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		AuiButton.topActive = true;
 		Refresh();
 		StartCoroutine("RefreshRedeployStatus");
@@ -279,7 +279,7 @@ public class MapRedeploy : MonoBehaviour
 		for (int j = 0; j < 5; j++)
 		{
 			bool flag = true;
-			units[j].gameObject.SetActive(flag);
+			units[j].gameObject.SetActiveRecursive(flag);
 			units[j].unitBlank.SetFrame(j);
 			units[j].unitBlank.visible = castleInfo.unitCount[j] == 0;
 			if (flag)
@@ -314,15 +314,15 @@ public class MapRedeploy : MonoBehaviour
 			unitCur.text = num2.ToString();
 			instantlyGem.text = PlayInfo.gameRule.redeployInstantlyGem.ToString();
 			ObjectInstant.transform.position = buttonSubmit.transform.position;
-			objBefRedeploy.SetActive(false);
-			objRedeploying.SetActive(true);
+			objBefRedeploy.SetActiveRecursive(false);
+			objRedeploying.SetActiveRecursive(true);
 		}
 		else
 		{
 			buttonSubmit.visible = true;
 			buttonSubmitLabel.visible = true;
-			objBefRedeploy.SetActive(true);
-			objRedeploying.SetActive(false);
+			objBefRedeploy.SetActiveRecursive(true);
+			objRedeploying.SetActiveRecursive(false);
 		}
 	}
 

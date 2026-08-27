@@ -1030,7 +1030,7 @@ public class UnitControl : MonoBehaviour
 		}
 		if (!isMainHero && !thisChar.isGate)
 		{
-			base.gameObject.SetActive(false);
+			base.gameObject.SetActiveRecursive(false);
 		}
 		thisChar.isAwake = false;
 		isAwake = false;

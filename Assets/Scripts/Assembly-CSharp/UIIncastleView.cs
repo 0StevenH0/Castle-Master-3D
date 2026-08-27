@@ -55,12 +55,12 @@ public class UIIncastleView : MonoBehaviour
 					localPosition.z += 0.5f;
 					nameLabel.backName.transform.localPosition = localPosition;
 					nameLabel.textName.gameObject.SetActive(true);
-					nameLabel.backName.gameObject.SetActive(true);
+					nameLabel.backName.gameObject.SetActiveRecursive(true);
 				}
 				else
 				{
 					nameLabel.textName.gameObject.SetActive(false);
-					nameLabel.backName.gameObject.SetActive(false);
+					nameLabel.backName.gameObject.SetActiveRecursive(false);
 				}
 			}
 		}
@@ -95,7 +95,7 @@ public class UIIncastleView : MonoBehaviour
 				position3.z = nameLabel.backName.transform.position.z;
 				nameLabel.backName.transform.position = position3;
 				nameLabel.textName.gameObject.SetActive(true);
-				nameLabel.backName.gameObject.SetActive(true);
+				nameLabel.backName.gameObject.SetActiveRecursive(true);
 			}
 		}
 	}
@@ -116,10 +116,10 @@ public class UIIncastleView : MonoBehaviour
 			nameLabel.backName = Object.Instantiate(backName) as AuiSprite;
 			nameLabel.backName.transform.parent = backName.transform.parent;
 			nameLabel.backName.transform.position = backName.transform.position;
-			nameLabel.backName.gameObject.SetActive(false);
+			nameLabel.backName.gameObject.SetActiveRecursive(false);
 			nameLabels[i] = nameLabel;
 		}
-		backName.gameObject.SetActive(false);
+		backName.gameObject.SetActiveRecursive(false);
 		textName.gameObject.SetActive(false);
 		ProcBase.ChangeTextMeshLanguageAllChild(base.transform);
 	}

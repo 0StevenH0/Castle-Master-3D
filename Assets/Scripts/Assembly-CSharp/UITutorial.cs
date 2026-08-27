@@ -25,7 +25,7 @@ public class UITutorial : MonoBehaviour
 	public void Show()
 	{
 		AuiButton.modalActive = true;
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		for (int i = 0; i < 4; i++)
 		{
 			string text = "img_tutorial_" + string.Format("{0:00}", i + 1) + "_" + UserSetting.language;
@@ -39,7 +39,7 @@ public class UITutorial : MonoBehaviour
 	public void Hide()
 	{
 		AuiButton.modalActive = false;
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 	}
 
 	private void Update()

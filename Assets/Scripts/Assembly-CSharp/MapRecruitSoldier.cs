@@ -165,7 +165,7 @@ public class MapRecruitSoldier : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 		AuiButton.topActive = false;
 		StopCoroutine("RefreshRecruitStatus");
 	}
@@ -233,7 +233,7 @@ public class MapRecruitSoldier : MonoBehaviour
 	public void Show(int castleIndex)
 	{
 		this.castleIndex = castleIndex;
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		AuiButton.topActive = true;
 		Refresh();
 		CastleInfo castleInfo = PlayInfo.castleManager.castle[castleIndex];
@@ -265,7 +265,7 @@ public class MapRecruitSoldier : MonoBehaviour
 			{
 				flag2 = true;
 			}
-			units[i].gameObject.SetActive(flag);
+			units[i].gameObject.SetActiveRecursive(flag);
 			units[i].unitBlank.SetFrame(i);
 			units[i].unitBlank.visible = flag2;
 			if (flag)
@@ -285,8 +285,8 @@ public class MapRecruitSoldier : MonoBehaviour
 				units[i].buttonCount.transform.localPosition = localPosition;
 			}
 		}
-		panelRecruit.gameObject.SetActive(!alreadyRecruit);
-		panelInstant.gameObject.SetActive(alreadyRecruit);
+		panelRecruit.gameObject.SetActiveRecursive(!alreadyRecruit);
+		panelInstant.gameObject.SetActiveRecursive(alreadyRecruit);
 		if (alreadyRecruit)
 		{
 			textRecruiting.gameObject.SetActive(true);
@@ -318,7 +318,7 @@ public class MapRecruitSoldier : MonoBehaviour
 				recruitUnitCount[k] = 0;
 				recruitUnitPrice[k] = 0;
 			}
-			objTerms.SetActive(true);
+			objTerms.SetActiveRecursive(true);
 			textRecruiting.gameObject.SetActive(false);
 		}
 	}

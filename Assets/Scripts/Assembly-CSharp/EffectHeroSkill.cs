@@ -33,7 +33,7 @@ public class EffectHeroSkill : MonoBehaviour
 			effObj[num] = Object.Instantiate(ResourceManager.Load("Character/prefeb/effect", filename, typeof(GameObject))) as GameObject;
 			effObj[num].AddComponent<AdjustAnimationSpeed>();
 			effObj[num].transform.parent = transParent;
-			effObj[num].SetActive(false);
+			effObj[num].SetActiveRecursive(false);
 			num++;
 		}
 		effExtra = new GameObject[fileExtra.Length];
@@ -44,7 +44,7 @@ public class EffectHeroSkill : MonoBehaviour
 			effExtra[num] = Object.Instantiate(ResourceManager.Load("Character/prefeb/effect", filename2, typeof(GameObject))) as GameObject;
 			effExtra[num].AddComponent<AdjustAnimationSpeed>();
 			effExtra[num].transform.parent = transParent;
-			effExtra[num].SetActive(false);
+			effExtra[num].SetActiveRecursive(false);
 			num++;
 		}
 	}
@@ -54,7 +54,7 @@ public class EffectHeroSkill : MonoBehaviour
 		float num = 0.5f;
 		if (effObj[index].GetComponent<Animation>() != null)
 		{
-			effObj[index].SetActive(true);
+			effObj[index].SetActiveRecursive(true);
 			effObj[index].GetComponent<Animation>().Play();
 			num = effObj[index].GetComponent<Animation>().clip.length * 4f;
 			StartCoroutine(Stop(index, num));
@@ -64,7 +64,7 @@ public class EffectHeroSkill : MonoBehaviour
 	private IEnumerator Stop(int index, float waitTime)
 	{
 		yield return new WaitForSeconds(waitTime);
-		effObj[index].SetActive(false);
+		effObj[index].SetActiveRecursive(false);
 	}
 
 	public void PlayExtraEffect(ExtraEffectType effType)
@@ -72,7 +72,7 @@ public class EffectHeroSkill : MonoBehaviour
 		float num = 0.5f;
 		if (effExtra[(int)effType].GetComponent<Animation>() != null)
 		{
-			effExtra[(int)effType].SetActive(true);
+			effExtra[(int)effType].SetActiveRecursive(true);
 			effExtra[(int)effType].GetComponent<Animation>().Play();
 			num = effExtra[(int)effType].GetComponent<Animation>().clip.length * 4f;
 			StartCoroutine(StopExtraEffect((int)effType, num));
@@ -82,7 +82,7 @@ public class EffectHeroSkill : MonoBehaviour
 	private IEnumerator StopExtraEffect(int index, float waitTime)
 	{
 		yield return new WaitForSeconds(waitTime);
-		effExtra[index].SetActive(false);
+		effExtra[index].SetActiveRecursive(false);
 	}
 
 	public void StopAll()
@@ -90,12 +90,12 @@ public class EffectHeroSkill : MonoBehaviour
 		GameObject[] array = effObj;
 		foreach (GameObject gameObject in array)
 		{
-			gameObject.SetActive(false);
+			gameObject.SetActiveRecursive(false);
 		}
 		GameObject[] array2 = effExtra;
 		foreach (GameObject gameObject2 in array2)
 		{
-			gameObject2.SetActive(false);
+			gameObject2.SetActiveRecursive(false);
 		}
 	}
 }

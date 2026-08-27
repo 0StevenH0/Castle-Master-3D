@@ -30,7 +30,7 @@ public class AdViewBanner : MonoBehaviour
 		this.list = list;
 		procBannerClose = proc;
 		AuiButton.modalActive = true;
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		buttonClose.uiCamera = uiCamera;
 		buttonClose.enabled = true;
 		buttonClose.onButtonClick = OnCloseClick;
@@ -92,7 +92,7 @@ public class AdViewBanner : MonoBehaviour
 		}
 		pos.y = 380f;
 		base.transform.position = pos;
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 		if (procBannerClose != null)
 		{
 			procBannerClose();

@@ -31,7 +31,7 @@ public class UIHeroInfo : MonoBehaviour
 
 	public void Show(bool autoRefresh)
 	{
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		gaugeHP.isCrop = true;
 		gaugeMP.isCrop = true;
 		gaugeXP.isCrop = true;
@@ -44,7 +44,7 @@ public class UIHeroInfo : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 		StopAllCoroutines();
 	}
 

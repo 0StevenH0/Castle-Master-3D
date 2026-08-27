@@ -53,7 +53,7 @@ public class UIResult : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 		AuiButton.topActive = false;
 	}
 
@@ -87,7 +87,7 @@ public class UIResult : MonoBehaviour
 		textXp.text = ((rewardXp <= 0) ? string.Empty : "+") + rewardXp;
 		textGold.text = ((rewardGold <= 0) ? string.Empty : "+") + rewardGold;
 		textGem.text = ((rewardGem <= 0) ? string.Empty : "+") + rewardGem;
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		AuiButton.topActive = true;
 		if (isVictory)
 		{

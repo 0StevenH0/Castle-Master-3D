@@ -216,7 +216,7 @@ public class UIFortune : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 		AuiButton.mostTopActive = false;
 		if (procCastle.uiMap.gameObject.activeInHierarchy)
 		{
@@ -236,7 +236,7 @@ public class UIFortune : MonoBehaviour
 
 	public void Show()
 	{
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		AuiButton.mostTopActive = true;
 		buttonSubmit.visible = false;
 		buttonSubmitLabel.visible = false;

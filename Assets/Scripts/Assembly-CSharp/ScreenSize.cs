@@ -143,7 +143,7 @@ public class ScreenSize
 		Camera[] array2 = array;
 		foreach (Camera camera in array2)
 		{
-			if (!camera.name.Equals("Loading Camera"))
+			if (camera.name.Contains("UI"))
 			{
 				AdjustCameraRect(camera);
 			}

@@ -27,7 +27,7 @@ public class MapCancel : MonoBehaviour
 
 	public void Show(SelectingMode selMode)
 	{
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		switch (selMode)
 		{
 		case SelectingMode.redeploy:
@@ -41,6 +41,6 @@ public class MapCancel : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 	}
 }

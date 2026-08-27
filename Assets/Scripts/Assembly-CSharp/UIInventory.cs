@@ -308,7 +308,7 @@ public class UIInventory : MonoBehaviour
 		for (int k = 0; k < buttonItemList.Length; k++)
 		{
 			buttonItemList[k].enabled = false;
-			objectQuantity[k].gameObject.SetActive(false);
+			objectQuantity[k].gameObject.SetActiveRecursive(false);
 		}
 		for (int l = 0; l < itemList.Count; l++)
 		{
@@ -325,11 +325,11 @@ public class UIInventory : MonoBehaviour
 				if (unitItem != null && unitItem.quantity > 1)
 				{
 					textQuantity[num3].text = unitItem.quantity.ToString();
-					objectQuantity[num3].gameObject.SetActive(true);
+					objectQuantity[num3].gameObject.SetActiveRecursive(true);
 				}
 				else
 				{
-					objectQuantity[num3].gameObject.SetActive(false);
+					objectQuantity[num3].gameObject.SetActiveRecursive(false);
 				}
 				if (selectedItem != null && unitItem.code == selectedItem.code)
 				{
@@ -433,7 +433,7 @@ public class UIInventory : MonoBehaviour
 			}
 		}
 		iconItemSlotHP.visible = playerData.slotHp != null;
-		objectEquipQuantity[0].SetActive(playerData.slotHp != null);
+		objectEquipQuantity[0].SetActiveRecursive(playerData.slotHp != null);
 		if (playerData.slotHp != null)
 		{
 			int num3 = FindItemIndex(playerData.slotHp.code);
@@ -444,7 +444,7 @@ public class UIInventory : MonoBehaviour
 			textEquipQuantity[0].text = playerData.slotHp.quantity.ToString();
 		}
 		iconItemSlotMP.visible = playerData.slotMp != null;
-		objectEquipQuantity[1].SetActive(playerData.slotMp != null);
+		objectEquipQuantity[1].SetActiveRecursive(playerData.slotMp != null);
 		if (playerData.slotMp != null)
 		{
 			int num4 = FindItemIndex(playerData.slotMp.code);
@@ -596,7 +596,7 @@ public class UIInventory : MonoBehaviour
 	public void Show()
 	{
 		LoadIcon();
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		AuiButton.topActive = true;
 		if (isReset)
 		{
@@ -607,7 +607,7 @@ public class UIInventory : MonoBehaviour
 			RefreshPreview();
 		}
 		RefreshStatsAlarm();
-		panelStatsUp.gameObject.SetActive(false);
+		panelStatsUp.gameObject.SetActiveRecursive(false);
 	}
 
 	private void RefreshPreview()
@@ -632,7 +632,7 @@ public class UIInventory : MonoBehaviour
 	private void RefreshStatsAlarm()
 	{
 		bool flag = PlayInfo.heroState.statsPoint > 0;
-		panelStatsAlarm.gameObject.SetActive(flag);
+		panelStatsAlarm.gameObject.SetActiveRecursive(flag);
 		if (flag)
 		{
 			remainStats.text = PlayInfo.heroState.statsPoint.ToString();
@@ -642,7 +642,7 @@ public class UIInventory : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 		AuiButton.topActive = false;
 	}
 
@@ -876,13 +876,13 @@ public class UIInventory : MonoBehaviour
 			incStats[j] = 0;
 		}
 		RefreshStatsTemp();
-		panelStatsUp.gameObject.SetActive(true);
+		panelStatsUp.gameObject.SetActiveRecursive(true);
 	}
 
 	private void HideStatsUp()
 	{
 		AuiButton.SetEnableAll(base.transform, true);
-		panelStatsUp.gameObject.SetActive(false);
+		panelStatsUp.gameObject.SetActiveRecursive(false);
 		RefreshPlayerInfo();
 	}
 

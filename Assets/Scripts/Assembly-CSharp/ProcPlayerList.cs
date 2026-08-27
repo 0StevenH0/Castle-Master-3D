@@ -118,11 +118,11 @@ public class ProcPlayerList : ProcBase
 		audioSource.Play();
 		UserSetting.currentBgmSound = audioSource;
 		LoadPlayerList();
-		panelPlayerInfo.SetActive(false);
-		panelEmpty.SetActive(true);
-		panelNewGame.SetActive(false);
-		panelSynopsis.SetActive(false);
-		panelSceneMenu.SetActive(true);
+		panelPlayerInfo.SetActiveRecursive(false);
+		panelEmpty.SetActiveRecursive(true);
+		panelNewGame.SetActiveRecursive(false);
+		panelSynopsis.SetActiveRecursive(false);
+		panelSceneMenu.SetActiveRecursive(true);
 		playerChar = new UnitControl[3];
 		Vector3 vector = new Vector3(0f, 0f, 2f);
 		for (int i = 0; i < 3; i++)
@@ -188,13 +188,13 @@ public class ProcPlayerList : ProcBase
 		PlayInfo.playerData.heroName = playerName;
 		PlayInfo.Save();
 		ShowPlayerInfo();
-		panelNewGame.SetActive(false);
+		panelNewGame.SetActiveRecursive(false);
 	}
 
 	private void OnNewGame(AuiButton sender)
 	{
-		panelEmpty.SetActive(false);
-		panelNewGame.SetActive(true);
+		panelEmpty.SetActiveRecursive(false);
+		panelNewGame.SetActiveRecursive(true);
 		uiKeyBoard.textValue = string.Empty;
 		playerName = string.Empty;
 		uiKeyBoard.buttonEnter.onButtonClick = OnSubmit;
@@ -202,15 +202,15 @@ public class ProcPlayerList : ProcBase
 
 	private void OnCancel(AuiButton sender)
 	{
-		panelEmpty.SetActive(true);
-		panelNewGame.SetActive(false);
+		panelEmpty.SetActiveRecursive(true);
+		panelNewGame.SetActiveRecursive(false);
 	}
 
 	private void OnPlay(AuiButton sender)
 	{
 		int num = currentPlayer;
-		panelPlayerInfo.SetActive(false);
-		panelSceneMenu.SetActive(false);
+		panelPlayerInfo.SetActiveRecursive(false);
+		panelSceneMenu.SetActiveRecursive(false);
 		if (UserSetting.currentSaveSlot != currentPlayer)
 		{
 			UserSetting.currentSaveSlot = currentPlayer;
@@ -218,7 +218,7 @@ public class ProcPlayerList : ProcBase
 		}
 		if (players[num].isNew)
 		{
-			panelSynopsis.SetActive(true);
+			panelSynopsis.SetActiveRecursive(true);
 			textSynopsis.text = StringContent.msgSynopsis.Replace(StringContent.strValue, players[num].heroName);
 			ProcBase.ResetTextWordWarp(textSynopsis, 900f);
 			StartCoroutine("RollingSynopsis");
@@ -231,7 +231,7 @@ public class ProcPlayerList : ProcBase
 
 	private void OnSkip(AuiButton sender)
 	{
-		panelSynopsis.SetActive(false);
+		panelSynopsis.SetActiveRecursive(false);
 		StartGame();
 	}
 
@@ -423,8 +423,8 @@ public class ProcPlayerList : ProcBase
 					}
 					if (dirRotate != 0)
 					{
-						panelPlayerInfo.SetActive(false);
-						panelEmpty.SetActive(false);
+						panelPlayerInfo.SetActiveRecursive(false);
+						panelEmpty.SetActiveRecursive(false);
 					}
 				}
 			}
@@ -436,13 +436,13 @@ public class ProcPlayerList : ProcBase
 		int num = currentPlayer;
 		if (players[num].heroName.Length == 0)
 		{
-			panelPlayerInfo.SetActive(false);
-			panelEmpty.SetActive(true);
+			panelPlayerInfo.SetActiveRecursive(false);
+			panelEmpty.SetActiveRecursive(true);
 		}
 		else
 		{
-			panelPlayerInfo.SetActive(true);
-			panelEmpty.SetActive(false);
+			panelPlayerInfo.SetActiveRecursive(true);
+			panelEmpty.SetActiveRecursive(false);
 			textPlayerLevel.text = "Lv." + players[num].level;
 			textPlayerName.text = players[num].heroName;
 			ProcBase.ResetTextWidth(textPlayerName, 400f);

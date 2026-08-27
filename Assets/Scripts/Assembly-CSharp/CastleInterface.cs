@@ -95,7 +95,7 @@ public class CastleInterface : MonoBehaviour
 		Vector3 vector = new Vector3(castleInfo.posx, castleInfo.posy, 0f);
 		Quaternion localRotation = Quaternion.Euler(Quaternion.FromToRotation(toDirection: new Vector3(castleInfo2.posx, castleInfo2.posy, 0f) - vector, fromDirection: new Vector3(0f, 1f, 0f)).eulerAngles + new Vector3(0f, 0f, 90f));
 		attackArrow.localRotation = localRotation;
-		attackArrow.gameObject.SetActive(true);
+		attackArrow.gameObject.SetActiveRecursive(true);
 		aniAttackSource.visible = true;
 		aniAttackSource.StartAnimation(true, false);
 		isSelectingAttack = true;
@@ -105,7 +105,7 @@ public class CastleInterface : MonoBehaviour
 
 	public void HideAttackTarget()
 	{
-		attackArrow.gameObject.SetActive(false);
+		attackArrow.gameObject.SetActiveRecursive(false);
 		aniAttackSource.visible = false;
 		isSelectingAttack = false;
 	}
@@ -126,7 +126,7 @@ public class CastleInterface : MonoBehaviour
 				Quaternion localRotation = Quaternion.Euler(Quaternion.FromToRotation(toDirection: new Vector3(castleInfo.posx, castleInfo.posy, 0f) - vector, fromDirection: new Vector3(0f, 1f, 0f)).eulerAngles + new Vector3(0f, 0f, 90f));
 				redeployArrow[i].localPosition = new Vector3(0f, 0f, 0f);
 				redeployArrow[i].localRotation = localRotation;
-				redeployArrow[i].gameObject.SetActive(true);
+				redeployArrow[i].gameObject.SetActiveRecursive(true);
 				popupCastleDetail.castles[targetCastles[i]].aniRedeployTarget.visible = true;
 				popupCastleDetail.castles[targetCastles[i]].aniRedeployTarget.StartAnimation(true, false);
 				isRedeploySource = true;
@@ -140,7 +140,7 @@ public class CastleInterface : MonoBehaviour
 		{
 			for (int i = 0; i < maxRedeployArrow; i++)
 			{
-				redeployArrow[i].gameObject.SetActive(false);
+				redeployArrow[i].gameObject.SetActiveRecursive(false);
 			}
 		}
 		aniRedeployTarget.visible = false;
@@ -150,7 +150,7 @@ public class CastleInterface : MonoBehaviour
 
 	public void HideRedeploying()
 	{
-		aniRedeploy.gameObject.SetActive(false);
+		aniRedeploy.gameObject.SetActiveRecursive(false);
 		isRedeploySource = false;
 	}
 
@@ -194,7 +194,7 @@ public class CastleInterface : MonoBehaviour
 			CastleInfo castleInfo = PlayInfo.castleManager.castle[info.redeployTargetIndex];
 			if (!aniRedeploy.gameObject.activeInHierarchy)
 			{
-				aniRedeploy.gameObject.SetActive(true);
+				aniRedeploy.gameObject.SetActiveRecursive(true);
 				Vector3 vector = new Vector3(info.posx, info.posy, 0f);
 				Quaternion localRotation = Quaternion.Euler(Quaternion.FromToRotation(toDirection: new Vector3(castleInfo.posx, castleInfo.posy, 0f) - vector, fromDirection: new Vector3(0f, 1f, 0f)).eulerAngles + new Vector3(0f, 0f, 90f));
 				aniRedeploy.localPosition = new Vector3(0f, 0f, 0f);
@@ -221,7 +221,7 @@ public class CastleInterface : MonoBehaviour
 		}
 		else if (aniRedeploy.gameObject.activeInHierarchy)
 		{
-			aniRedeploy.gameObject.SetActive(false);
+			aniRedeploy.gameObject.SetActiveRecursive(false);
 		}
 		int frame = info.side * 3 + info.level - 1;
 		castleIcon.SetFrame(frame);

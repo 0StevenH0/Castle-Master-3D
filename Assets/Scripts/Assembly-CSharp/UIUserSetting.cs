@@ -80,7 +80,7 @@ public class UIUserSetting : MonoBehaviour
 	public void Show()
 	{
 		AuiButton.modalActive = true;
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		tabletMode = UserSetting.tabletMode;
 		volumeEffect = UserSetting.volumeEffect;
 		volumeBgm = UserSetting.volumeBgm;
@@ -92,7 +92,7 @@ public class UIUserSetting : MonoBehaviour
 	public void Hide()
 	{
 		AuiButton.modalActive = false;
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 	}
 
 	private void Refresh()

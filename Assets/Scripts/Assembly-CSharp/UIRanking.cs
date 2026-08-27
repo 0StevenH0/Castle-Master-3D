@@ -152,7 +152,7 @@ public class UIRanking : MonoBehaviour
 			num = ranking.Length;
 			for (int j = 0; j < num; j++)
 			{
-				rankList[j].panel.SetActive(true);
+				rankList[j].panel.SetActiveRecursive(true);
 				rankList[j].textRank.text = ranking[j].rank.ToString();
 				rankList[j].textUserName.text = ranking[j].userName;
 				rankList[j].textTotalExp.text = ranking[j].totalExp.ToString();
@@ -165,14 +165,14 @@ public class UIRanking : MonoBehaviour
 		}
 		for (int k = num; k < 10; k++)
 		{
-			rankList[k].panel.SetActive(false);
+			rankList[k].panel.SetActiveRecursive(false);
 		}
 		ProcBase.ChangeTextMeshLanguageAllChild(base.transform);
 	}
 
 	public void Show(string userName)
 	{
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		AuiButton.topActive = true;
 		curUserName = userName;
 		buttonMyRank.visible = curUserName.Length > 0;
@@ -185,7 +185,7 @@ public class UIRanking : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 		AuiButton.topActive = false;
 	}
 

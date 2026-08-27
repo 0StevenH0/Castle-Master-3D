@@ -230,12 +230,12 @@ public class MapCastleDetail : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 	}
 
 	public void Show(int castleIndex)
 	{
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		this.castleIndex = castleIndex;
 		Refresh();
 		for (int i = 0; i < PlayInfo.castleManager.castle.Length; i++)

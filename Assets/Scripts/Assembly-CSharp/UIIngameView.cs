@@ -116,16 +116,16 @@ public class UIIngameView : MonoBehaviour
 				aniDefenseUpList[j].transform.position = aniDefenseUp.transform.position;
 			}
 			aniHealingList[j].visible = false;
-			aniHealingList[j].gameObject.SetActive(false);
+			aniHealingList[j].gameObject.SetActiveRecursive(false);
 			aniDefenseUpList[j].visible = false;
-			aniDefenseUpList[j].gameObject.SetActive(false);
+			aniDefenseUpList[j].gameObject.SetActiveRecursive(false);
 		}
 		iconFinderCastle.visible = false;
 		iconFinderTrap.visible = false;
 		iconTrap.visible = false;
 		iconCritical.visible = false;
 		aniLevelUp.visible = false;
-		panelFinish.SetActive(false);
+		panelFinish.SetActiveRecursive(false);
 		ProcBase.ChangeTextMeshLanguageAllChild(base.transform);
 	}
 
@@ -254,7 +254,7 @@ public class UIIngameView : MonoBehaviour
 				transHealingList[i] = trans;
 				offsetHealingList[i] = offsetY;
 				aniHealingList[i].StartAnimation(0, false, true);
-				aniHealingList[i].gameObject.SetActive(true);
+				aniHealingList[i].gameObject.SetActiveRecursive(true);
 				UpdateHealingAnimation(i);
 				break;
 			}
@@ -313,7 +313,7 @@ public class UIIngameView : MonoBehaviour
 				transDefenseUpList[i] = trans;
 				offsetDefenseUpList[i] = offsetY;
 				aniDefenseUpList[i].StartAnimation(true, false);
-				aniDefenseUpList[i].gameObject.SetActive(true);
+				aniDefenseUpList[i].gameObject.SetActiveRecursive(true);
 				UpdateDefenseUpAnimation(i);
 				break;
 			}
@@ -337,7 +337,7 @@ public class UIIngameView : MonoBehaviour
 		if (aniHealingList[i].curFrame >= aniHealingList[i].materials.Length - 1)
 		{
 			aniHealingList[i].visible = false;
-			aniHealingList[i].gameObject.SetActive(false);
+			aniHealingList[i].gameObject.SetActiveRecursive(false);
 		}
 	}
 
@@ -364,7 +364,7 @@ public class UIIngameView : MonoBehaviour
 			if (aniDefenseUpList[i].gameObject.activeInHierarchy)
 			{
 				aniDefenseUpList[i].visible = false;
-				aniDefenseUpList[i].gameObject.SetActive(false);
+				aniDefenseUpList[i].gameObject.SetActiveRecursive(false);
 			}
 		}
 	}
@@ -557,7 +557,7 @@ public class UIIngameView : MonoBehaviour
 
 	private IEnumerator AnimateFinishText()
 	{
-		panelFinish.SetActive(true);
+		panelFinish.SetActiveRecursive(true);
 		float topY = -371f;
 		float bottomY = -498f;
 		Transform trans = panelFinish.transform;
@@ -586,6 +586,6 @@ public class UIIngameView : MonoBehaviour
 			yield return 1;
 		}
 		while (pos.y != bottomY);
-		panelFinish.SetActive(false);
+		panelFinish.SetActiveRecursive(false);
 	}
 }

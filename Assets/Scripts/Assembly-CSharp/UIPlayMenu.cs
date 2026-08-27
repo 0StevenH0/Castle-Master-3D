@@ -36,7 +36,7 @@ public class UIPlayMenu : MonoBehaviour
 	public void Show(bool isBattle)
 	{
 		AuiButton.mostTopActive = true;
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		this.isBattle = isBattle;
 		if (isBattle)
 		{
@@ -57,7 +57,7 @@ public class UIPlayMenu : MonoBehaviour
 	public void Hide()
 	{
 		AuiButton.mostTopActive = false;
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 		if (isBattle)
 		{
 			Time.timeScale = 1f;

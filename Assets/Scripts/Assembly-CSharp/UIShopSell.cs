@@ -194,7 +194,7 @@ public class UIShopSell : MonoBehaviour
 		for (int k = 0; k < itemPerPage; k++)
 		{
 			buttonItem[k].visible = false;
-			objectQuantity[k].SetActive(false);
+			objectQuantity[k].SetActiveRecursive(false);
 		}
 		for (int l = 0; l < itemPerPage; l++)
 		{
@@ -209,7 +209,7 @@ public class UIShopSell : MonoBehaviour
 			buttonItem[l].buttonTag = num;
 			buttonItem[l].visible = true;
 			buttonItem[l].onButtonClick = OnItemClick;
-			objectQuantity[l].SetActive(false);
+			objectQuantity[l].SetActiveRecursive(false);
 			num++;
 		}
 		for (int m = listTop + itemPerPage; m < itemIcon.Length; m++)
@@ -403,7 +403,7 @@ public class UIShopSell : MonoBehaviour
 	public void Show()
 	{
 		LoadIcon();
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		AuiSprite[] array = iconList;
 		foreach (AuiSprite auiSprite in array)
 		{
@@ -415,6 +415,6 @@ public class UIShopSell : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 	}
 }

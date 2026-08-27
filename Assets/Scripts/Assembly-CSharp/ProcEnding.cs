@@ -48,13 +48,13 @@ public class ProcEnding : ProcBase
 		audioSource.Play();
 		UserSetting.currentBgmSound = audioSource;
 		ProcMain.InitGame();
-		panelStep1.SetActive(false);
-		panelStep2.SetActive(false);
-		panelStep3.SetActive(false);
-		panelStep4.SetActive(false);
+		panelStep1.SetActiveRecursive(false);
+		panelStep2.SetActiveRecursive(false);
+		panelStep3.SetActiveRecursive(false);
+		panelStep4.SetActiveRecursive(false);
 		if (isWin)
 		{
-			panelStep1.SetActive(true);
+			panelStep1.SetActiveRecursive(true);
 			StartCoroutine("MoveUpTalkPanel", panelTalk1);
 			textStep1.text = StringContent.msgEndingSuccess1;
 			textStep2.text = StringContent.msgEndingSuccess2;
@@ -63,7 +63,7 @@ public class ProcEnding : ProcBase
 		}
 		else
 		{
-			panelStep3.SetActive(true);
+			panelStep3.SetActiveRecursive(true);
 			StartCoroutine("MoveUpTalkPanel", panelTalk3);
 			textStep3.text = StringContent.msgEndingFail1;
 			textStep4.text = StringContent.msgEndingFail2;
@@ -75,8 +75,8 @@ public class ProcEnding : ProcBase
 	{
 		if (isWin)
 		{
-			panelStep1.SetActive(false);
-			panelStep2.SetActive(true);
+			panelStep1.SetActiveRecursive(false);
+			panelStep2.SetActiveRecursive(true);
 		}
 		ProcBase.ChangeTextMeshLanguage();
 	}
@@ -85,8 +85,8 @@ public class ProcEnding : ProcBase
 	{
 		if (isWin)
 		{
-			panelStep2.SetActive(false);
-			panelStep3.SetActive(true);
+			panelStep2.SetActiveRecursive(false);
+			panelStep3.SetActiveRecursive(true);
 			aniBeforeSelect.visible = true;
 			aniAfterSelect.visible = false;
 			aniBeforeSelect.StartAnimation(true, false);
@@ -154,8 +154,8 @@ public class ProcEnding : ProcBase
 		StopCoroutine("MoveUpTalkPanel");
 		StartCoroutine("MoveDownTalkPanel", panelTalk3);
 		yield return new WaitForSeconds(1f);
-		panelStep3.SetActive(false);
-		panelStep4.SetActive(true);
+		panelStep3.SetActiveRecursive(false);
+		panelStep4.SetActiveRecursive(true);
 		ProcBase.ChangeTextMeshLanguage();
 		PlayInfo.soundManager.Play(ExtSoundManager.Effect2D.efs_rebirth, Vector3.zero);
 		yield return new WaitForSeconds(2f);

@@ -53,10 +53,10 @@ public class UIPlayTutorial : MonoBehaviour
 
 	public void Show()
 	{
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		for (int i = 0; i < maxStep; i++)
 		{
-			objectStep[i].SetActive(false);
+			objectStep[i].SetActiveRecursive(false);
 		}
 		curStep = 0;
 		ShowStep(0);
@@ -71,14 +71,14 @@ public class UIPlayTutorial : MonoBehaviour
 		{
 			buttonController.isActive = true;
 		}
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 	}
 
 	private void ShowStep(int step)
 	{
-		objectStep[curStep].SetActive(false);
+		objectStep[curStep].SetActiveRecursive(false);
 		curStep = step;
-		objectStep[curStep].SetActive(true);
+		objectStep[curStep].SetActiveRecursive(true);
 	}
 
 	private void Update()

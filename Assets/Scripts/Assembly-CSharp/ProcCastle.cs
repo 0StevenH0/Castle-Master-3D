@@ -131,7 +131,7 @@ public class ProcCastle : ProcBase
 			gameObject2 = Object.Instantiate(gameObject) as GameObject;
 		}
 		AuiButton.SetCameraAllChild(gameObject2.transform, interControl.uiCamera);
-		gameObject2.SetActive(false);
+		gameObject2.SetActiveRecursive(false);
 		uiTraining = gameObject2.GetComponent<UITraining>();
 		uiTraining.buttonClose.onButtonClick = OnTrainingCloseClick;
 		uiTraining.procCastle = this;
@@ -142,7 +142,7 @@ public class ProcCastle : ProcBase
 			gameObject2 = Object.Instantiate(gameObject) as GameObject;
 		}
 		AuiButton.SetCameraAllChild(gameObject2.transform, interControl.uiCamera);
-		gameObject2.SetActive(false);
+		gameObject2.SetActiveRecursive(false);
 		uiLord = gameObject2.GetComponent<UILord>();
 		uiLord.buttonClose.onButtonClick = OnRetainerCloseClick;
 		uiLord.procCastle = this;
@@ -153,7 +153,7 @@ public class ProcCastle : ProcBase
 			gameObject2 = Object.Instantiate(gameObject) as GameObject;
 		}
 		AuiButton.SetCameraAllChild(gameObject2.transform, interControl.uiCamera);
-		gameObject2.SetActive(false);
+		gameObject2.SetActiveRecursive(false);
 		uiMessageNote = gameObject2.GetComponent<UIMessageNote>();
 		gameObject2 = GameObject.Find("feb_fortune");
 		if (gameObject2 == null)
@@ -162,7 +162,7 @@ public class ProcCastle : ProcBase
 			gameObject2 = Object.Instantiate(gameObject) as GameObject;
 		}
 		AuiButton.SetCameraAllChild(gameObject2.transform, interControl.uiCamera);
-		gameObject2.SetActive(false);
+		gameObject2.SetActiveRecursive(false);
 		uiFortune = gameObject2.GetComponent<UIFortune>();
 		uiFortune.procCastle = this;
 		gameObject2 = GameObject.Find("feb_fortuneresult");
@@ -172,7 +172,7 @@ public class ProcCastle : ProcBase
 			gameObject2 = Object.Instantiate(gameObject) as GameObject;
 		}
 		AuiButton.SetCameraAllChild(gameObject2.transform, interControl.uiCamera);
-		gameObject2.SetActive(false);
+		gameObject2.SetActiveRecursive(false);
 		uiFortuneResult = gameObject2.GetComponent<UIFortuneResult>();
 		gameObject2 = GameObject.Find("feb_playmessage");
 		if (gameObject2 == null)
@@ -188,7 +188,7 @@ public class ProcCastle : ProcBase
 			gameObject2 = Object.Instantiate(gameObject) as GameObject;
 		}
 		AuiButton.SetCameraAllChild(gameObject2.transform, interControl.uiCamera);
-		gameObject2.SetActive(false);
+		gameObject2.SetActiveRecursive(false);
 		uiPlayMenu = gameObject2.GetComponent<UIPlayMenu>();
 		uiPlayMenu.procCastle = this;
 		gameObject2 = GameObject.Find("feb_usersetting");
@@ -198,7 +198,7 @@ public class ProcCastle : ProcBase
 			gameObject2 = Object.Instantiate(gameObject) as GameObject;
 		}
 		AuiButton.SetCameraAllChild(gameObject2.transform, interControl.uiCamera);
-		gameObject2.SetActive(false);
+		gameObject2.SetActiveRecursive(false);
 		uiUserSetting = gameObject2.GetComponent<UIUserSetting>();
 		gameObject2 = GameObject.Find("feb_tutorial");
 		if (gameObject2 == null)
@@ -207,7 +207,7 @@ public class ProcCastle : ProcBase
 			gameObject2 = Object.Instantiate(gameObject) as GameObject;
 		}
 		AuiButton.SetCameraAllChild(gameObject2.transform, interControl.uiCamera);
-		gameObject2.SetActive(false);
+		gameObject2.SetActiveRecursive(false);
 		uiTutorial = gameObject2.GetComponent<UITutorial>();
 		if (PlayInfo.playerData.tutorialMode)
 		{
@@ -217,7 +217,7 @@ public class ProcCastle : ProcBase
 				gameObject = ResourceManager.Load("interface/prefabs", "feb_playtutorial", typeof(GameObject)) as GameObject;
 				gameObject2 = Object.Instantiate(gameObject) as GameObject;
 			}
-			gameObject2.SetActive(false);
+			gameObject2.SetActiveRecursive(false);
 			uiPlayTutorial = gameObject2.GetComponent<UIPlayTutorial>();
 			uiPlayTutorial.uiCamera = interControl.uiCamera;
 			uiPlayTutorial.interCtrl = interControl;
@@ -413,14 +413,14 @@ public class ProcCastle : ProcBase
 
 	public void OnShopCloseClick(AuiButton sender)
 	{
-		uiShopBuy.gameObject.SetActive(false);
-		uiShopSell.gameObject.SetActive(false);
+		uiShopBuy.gameObject.SetActiveRecursive(false);
+		uiShopSell.gameObject.SetActiveRecursive(false);
 		ResetCamera();
 	}
 
 	public void OnSkillMasterCloseClick(AuiButton sender)
 	{
-		uiSkillMaster.gameObject.SetActive(false);
+		uiSkillMaster.gameObject.SetActiveRecursive(false);
 		ResetCamera();
 	}
 
@@ -625,6 +625,7 @@ public class ProcCastle : ProcBase
 	{
 		HideAll();
 		uiMap.Show();
+		cameraControl.camUnit.enabled = false;
 		interControl.UserInputEnable(false);
 		uiGameMenu.buttonCastle.visible = true;
 		uiGameMenu.buttonMap.visible = false;
@@ -644,6 +645,7 @@ public class ProcCastle : ProcBase
 	public void ShowCastle()
 	{
 		HideAll();
+		cameraControl.camUnit.enabled = true;
 		interControl.UserInputEnable(true);
 		uiGameMenu.buttonCastle.visible = false;
 		uiGameMenu.buttonMap.visible = true;

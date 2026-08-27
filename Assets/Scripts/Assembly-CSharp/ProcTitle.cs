@@ -85,7 +85,7 @@ public class ProcTitle : ProcBase
 
 	private IEnumerator OverlapLogo()
 	{
-		panelMenu.gameObject.SetActive(false);
+		panelMenu.gameObject.SetActiveRecursive(false);
 		Color colorLogo = new Color(1f, 1f, 1f, 1f);
 		Material mtrLogo = bgiLogo.GetComponent<Renderer>().material;
 		bgiLogo.SetActive(true);
@@ -102,7 +102,7 @@ public class ProcTitle : ProcBase
 			mtrLogo.SetColor("_Color", colorLogo);
 		}
 		bgiLogo.SetActive(false);
-		panelMenu.gameObject.SetActive(true);
+		panelMenu.gameObject.SetActiveRecursive(true);
 		if (Application.platform == RuntimePlatform.IPhonePlayer)
 		{
 			buttonExit.visible = false;

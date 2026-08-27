@@ -30,7 +30,7 @@ public class AdViewFull : MonoBehaviour
 		this.list = list;
 		procBannerClose = proc;
 		AuiButton.modalActive = true;
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		buttonYes.uiCamera = uiCamera;
 		buttonNo.uiCamera = uiCamera;
 		buttonYes.isModal = true;
@@ -79,7 +79,7 @@ public class AdViewFull : MonoBehaviour
 	{
 		AuiButton.modalActive = false;
 		StopAllCoroutines();
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 		if (isError)
 		{
 			ProcBase.ShowMsg(StringContent.msgAlphaAdError, MessageView.MsgIcon.alert, true);

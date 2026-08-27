@@ -44,7 +44,18 @@ public class DataRegistry
 
 	private static KeyData dataList = new KeyData();
 
-	private static byte[] Skey = Encoding.ASCII.GetBytes(SystemInfo.deviceUniqueIdentifier.Substring(SystemInfo.deviceUniqueIdentifier.Length - 8, 8));
+	private static byte[] Skey = Encoding.ASCII.GetBytes(BuildSkeySource());
+
+	private static string BuildSkeySource()
+	{
+		string deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier;
+		if (string.IsNullOrEmpty(deviceUniqueIdentifier) || deviceUniqueIdentifier == SystemInfo.unsupportedIdentifier)
+		{
+			deviceUniqueIdentifier = "castlemaster";
+		}
+		deviceUniqueIdentifier = deviceUniqueIdentifier.PadLeft(8, 'x');
+		return deviceUniqueIdentifier.Substring(deviceUniqueIdentifier.Length - 8, 8);
+	}
 
 	public static void ClearAll()
 	{

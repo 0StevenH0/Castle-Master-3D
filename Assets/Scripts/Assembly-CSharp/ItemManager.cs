@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class ItemManager
@@ -35,107 +34,142 @@ public class ItemManager
 
 	public UnitItem[] listMisc;
 
+	[System.Serializable]
+	private class ItemRow
+	{
+		public string type;
+
+		public string name;
+
+		public string subtype;
+
+		public int code;
+
+		public int requireLevel;
+
+		public int costGold;
+
+		public int costGem;
+
+		public int sellGold;
+
+		public float attack;
+
+		public float defense;
+
+		public float strength;
+
+		public float intellectual;
+
+		public float constitution;
+
+		public float critical;
+
+		public float speed;
+
+		public float colltime;
+
+		public float hp;
+
+		public float mp;
+	}
+
+	[System.Serializable]
+	private class ItemRowList
+	{
+		public ItemRow[] items;
+	}
+
 	public void LoadDefault()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "item_list", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
+		if (textAsset == null || string.IsNullOrEmpty(textAsset.text))
 		{
 			Debug.LogError("Decrypt Error!!");
 			return;
 		}
-		StringReader stringReader = new StringReader(s);
+		ItemRowList itemRowList = JsonUtility.FromJson<ItemRowList>("{\"items\":" + textAsset.text + "}");
 		List<UnitItem> list = new List<UnitItem>();
 		List<UnitItem> list2 = new List<UnitItem>();
 		List<UnitItem> list3 = new List<UnitItem>();
 		List<UnitItem> list4 = new List<UnitItem>();
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		ItemRow[] items = itemRowList.items;
+		foreach (ItemRow row in items)
 		{
-			if (text.Trim().Length == 0)
+			UnitItem unitItem = new UnitItem();
+			if (row.type.Equals("weapon"))
 			{
-				continue;
+				unitItem.type = ItemType.weapon;
 			}
-			char[] separator = new char[1] { '\t' };
-			string[] array = text.Split(separator);
-			if (array.Length > 1)
+			else if (row.type.Equals("cloth"))
 			{
-				UnitItem unitItem = new UnitItem();
-				if (array[0].Equals("weapon"))
-				{
-					unitItem.type = ItemType.weapon;
-				}
-				else if (array[0].Equals("cloth"))
-				{
-					unitItem.type = ItemType.cloth;
-				}
-				else if (array[0].Equals("misc"))
-				{
-					unitItem.type = ItemType.misc;
-				}
-				unitItem.name = array[1];
-				unitItem.code = int.Parse(array[3]);
-				if (array[2].Equals("onehand"))
-				{
-					unitItem.weaponType = UnitCharactor.WeaponType.onehand;
-				}
-				else if (array[2].Equals("doublehand"))
-				{
-					unitItem.weaponType = UnitCharactor.WeaponType.doublehand;
-				}
-				else if (array[2].Equals("bigsword"))
-				{
-					unitItem.weaponType = UnitCharactor.WeaponType.bigsword;
-				}
-				if (array[2].Equals("head"))
-				{
-					unitItem.clothPart = HeroModel.ClothPart.head;
-				}
-				else if (array[2].Equals("top"))
-				{
-					unitItem.clothPart = HeroModel.ClothPart.top;
-				}
-				else if (array[2].Equals("bottom"))
-				{
-					unitItem.clothPart = HeroModel.ClothPart.bottom;
-				}
-				if (array[2].Equals("ring"))
-				{
-					unitItem.miscType = MiscType.ring;
-				}
-				else if (array[2].Equals("consumable"))
-				{
-					unitItem.miscType = MiscType.consumable;
-				}
-				unitItem.requireLevel = int.Parse(array[4]);
-				unitItem.costGold = int.Parse(array[5]);
-				unitItem.costGem = int.Parse(array[6]);
-				unitItem.sellGold = int.Parse(array[7]);
-				unitItem.ability = new Ability();
-				unitItem.ability.attack = float.Parse(array[8]);
-				unitItem.ability.defense = float.Parse(array[9]);
-				unitItem.ability.strength = float.Parse(array[10]);
-				unitItem.ability.intellectual = float.Parse(array[11]);
-				unitItem.ability.constitution = float.Parse(array[12]);
-				unitItem.ability.critical = float.Parse(array[13]);
-				unitItem.ability.speed = float.Parse(array[14]);
-				unitItem.ability.colltime = float.Parse(array[15]);
-				unitItem.ability.hp = float.Parse(array[16]);
-				unitItem.ability.mp = float.Parse(array[17]);
-				list.Add(unitItem);
-				switch (unitItem.type)
-				{
-				case ItemType.weapon:
-					list2.Add(unitItem);
-					break;
-				case ItemType.cloth:
-					list3.Add(unitItem);
-					break;
-				case ItemType.misc:
-					list4.Add(unitItem);
-					break;
-				}
+				unitItem.type = ItemType.cloth;
+			}
+			else if (row.type.Equals("misc"))
+			{
+				unitItem.type = ItemType.misc;
+			}
+			unitItem.name = row.name;
+			unitItem.code = row.code;
+			if (row.subtype.Equals("onehand"))
+			{
+				unitItem.weaponType = UnitCharactor.WeaponType.onehand;
+			}
+			else if (row.subtype.Equals("doublehand"))
+			{
+				unitItem.weaponType = UnitCharactor.WeaponType.doublehand;
+			}
+			else if (row.subtype.Equals("bigsword"))
+			{
+				unitItem.weaponType = UnitCharactor.WeaponType.bigsword;
+			}
+			if (row.subtype.Equals("head"))
+			{
+				unitItem.clothPart = HeroModel.ClothPart.head;
+			}
+			else if (row.subtype.Equals("top"))
+			{
+				unitItem.clothPart = HeroModel.ClothPart.top;
+			}
+			else if (row.subtype.Equals("bottom"))
+			{
+				unitItem.clothPart = HeroModel.ClothPart.bottom;
+			}
+			if (row.subtype.Equals("ring"))
+			{
+				unitItem.miscType = MiscType.ring;
+			}
+			else if (row.subtype.Equals("consumable"))
+			{
+				unitItem.miscType = MiscType.consumable;
+			}
+			unitItem.requireLevel = row.requireLevel;
+			unitItem.costGold = row.costGold;
+			unitItem.costGem = row.costGem;
+			unitItem.sellGold = row.sellGold;
+			unitItem.ability = new Ability();
+			unitItem.ability.attack = row.attack;
+			unitItem.ability.defense = row.defense;
+			unitItem.ability.strength = row.strength;
+			unitItem.ability.intellectual = row.intellectual;
+			unitItem.ability.constitution = row.constitution;
+			unitItem.ability.critical = row.critical;
+			unitItem.ability.speed = row.speed;
+			unitItem.ability.colltime = row.colltime;
+			unitItem.ability.hp = row.hp;
+			unitItem.ability.mp = row.mp;
+			list.Add(unitItem);
+			switch (unitItem.type)
+			{
+			case ItemType.weapon:
+				list2.Add(unitItem);
+				break;
+			case ItemType.cloth:
+				list3.Add(unitItem);
+				break;
+			case ItemType.misc:
+				list4.Add(unitItem);
+				break;
 			}
 		}
 		listAll = list.ToArray();

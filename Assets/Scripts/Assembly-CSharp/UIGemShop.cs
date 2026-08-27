@@ -1,4 +1,3 @@
-using System.IO;
 using UnityEngine;
 
 public class UIGemShop : MonoBehaviour
@@ -54,44 +53,53 @@ public class UIGemShop : MonoBehaviour
 		}
 	}
 
+	[System.Serializable]
+	private class GemShopRow
+	{
+		public string currency;
+
+		public int qty;
+
+		public int max;
+
+		public float cost_usd;
+
+		public int cost_krw;
+	}
+
+	[System.Serializable]
+	private class GemShopRowList
+	{
+		public GemShopRow[] items;
+	}
+
 	private void LoadSaleList()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "gem_shop", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
+		if (textAsset == null || string.IsNullOrEmpty(textAsset.text))
 		{
 			Debug.LogError("Decrypt Error!!");
 			return;
 		}
-		StringReader stringReader = new StringReader(s);
+		GemShopRowList gemShopRowList = JsonUtility.FromJson<GemShopRowList>("{\"items\":" + textAsset.text + "}");
 		int num = 0;
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		GemShopRow[] items = gemShopRowList.items;
+		foreach (GemShopRow item in items)
 		{
-			if (text.Trim().Length == 0)
+			saleQty[num] = item.qty;
+			saleMax[num] = item.max;
+			if (StoreType.store == StoreType.Store.appstore || StoreType.store == StoreType.Store.android)
 			{
-				continue;
+				saleCost[num] = item.cost_usd;
 			}
-			char[] separator = new char[1] { '\t' };
-			string[] array = text.Split(separator);
-			if (array.Length > 1)
+			else
 			{
-				saleQty[num] = int.Parse(array[1]);
-				saleMax[num] = int.Parse(array[2]);
-				if (StoreType.store == StoreType.Store.appstore || StoreType.store == StoreType.Store.android)
-				{
-					saleCost[num] = float.Parse(array[3]);
-				}
-				else
-				{
-					saleCost[num] = float.Parse(array[4]);
-				}
-				num++;
-				if (num >= 4)
-				{
-					break;
-				}
+				saleCost[num] = item.cost_krw;
+			}
+			num++;
+			if (num >= 4)
+			{
+				break;
 			}
 		}
 		string text2 = StringContent.signDollar;
@@ -256,14 +264,14 @@ public class UIGemShop : MonoBehaviour
 
 	public void Show()
 	{
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		AuiButton.mostTopActive = true;
 		PlayInfo.gameTime.pause = true;
 	}
 
 	public void Hide()
 	{
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 		AuiButton.mostTopActive = false;
 		PlayInfo.gameTime.pause = false;
 	}

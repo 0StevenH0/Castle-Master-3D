@@ -57,6 +57,10 @@ public class UIQuest : MonoBehaviour
 
 	public UnitControl heroUnit;
 
+	public AuiSprite rewardTypeGem;
+
+	public TextMesh textRewardsGem;
+
 	private GameObject npcQuestIcon;
 
 	private Material[] npcQuestMtr;
@@ -277,15 +281,21 @@ public class UIQuest : MonoBehaviour
 		}
 		}
 		textRewardXp.text = curQuest.rewardXp.ToString();
-		if (curQuest.rewardGold > 0)
+		bool flag2 = curQuest.rewardGold > 0;
+		rewardType.gameObject.SetActive(flag2);
+		textRewards.gameObject.SetActive(flag2);
+		if (flag2)
 		{
 			textRewards.text = curQuest.rewardGold.ToString();
 			rewardType.SetFrame(0);
 		}
-		else if (curQuest.rewardGem > 0)
+		bool flag3 = curQuest.rewardGem > 0;
+		rewardTypeGem.gameObject.SetActive(flag3);
+		textRewardsGem.gameObject.SetActive(flag3);
+		if (flag3)
 		{
-			textRewards.text = curQuest.rewardGem.ToString();
-			rewardType.SetFrame(1);
+			textRewardsGem.text = curQuest.rewardGem.ToString();
+			rewardTypeGem.SetFrame(1);
 		}
 		int num2 = curQuest.period;
 		if (result == 2)

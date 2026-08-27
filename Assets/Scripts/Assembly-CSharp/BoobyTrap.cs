@@ -115,13 +115,13 @@ public class BoobyTrap : MonoBehaviour
 		{
 			if (preTrapIcon[i] != null)
 			{
-				preTrapIcon[i].SetActive(false);
+				preTrapIcon[i].SetActiveRecursive(false);
 			}
 			if (preTrapObject[i] != null)
 			{
 				for (int j = 0; j < preTrapObject[i].Length; j++)
 				{
-					preTrapObject[i][j].SetActive(false);
+					preTrapObject[i][j].SetActiveRecursive(false);
 				}
 			}
 		}
@@ -134,7 +134,7 @@ public class BoobyTrap : MonoBehaviour
 		Vector3 position = heroTrans.position;
 		if (trapPoint != null)
 		{
-			trapPoint.SetActive(false);
+			trapPoint.SetActiveRecursive(false);
 		}
 		trapPoint = preTrapIcon[(int)type];
 		TrapAttr trapAttr = BoobyTrap.trapAttr[(int)curTrapType];
@@ -171,7 +171,7 @@ public class BoobyTrap : MonoBehaviour
 		}
 		trapPos = vector;
 		trapPoint.transform.position = vector;
-		trapPoint.SetActive(true);
+		trapPoint.SetActiveRecursive(true);
 		uiIngameView.SetTrapTransform(trapPoint.transform, type);
 		StartCoroutine("CheckForHeroPos");
 	}
@@ -185,7 +185,7 @@ public class BoobyTrap : MonoBehaviour
 			float len = Vector3.Distance(trapPoint.transform.position, heroTrans.position);
 			if (len < 1f)
 			{
-				trapPoint.SetActive(false);
+				trapPoint.SetActiveRecursive(false);
 				ActiveBoobyTrap();
 				break;
 			}
@@ -193,7 +193,7 @@ public class BoobyTrap : MonoBehaviour
 			pass += step;
 			if (pass > trapAttr[(int)curTrapType].iconWaitTime)
 			{
-				trapPoint.SetActive(false);
+				trapPoint.SetActiveRecursive(false);
 				break;
 			}
 		}
@@ -266,7 +266,7 @@ public class BoobyTrap : MonoBehaviour
 			pos.x += Random.Range(0f - attr.appearLength, attr.appearLength);
 			pos.z += Random.Range(0f - attr.appearLength, attr.appearLength);
 			obj.transform.position = pos;
-			obj.SetActive(true);
+			obj.SetActiveRecursive(true);
 			PlayAllChild(obj);
 			StartCoroutine(HideDelay(obj, trapAnimationTime[(int)curTrapType]));
 			PlayInfo.soundManager.Play(efSound, pos);
@@ -284,7 +284,7 @@ public class BoobyTrap : MonoBehaviour
 	private IEnumerator HideDelay(GameObject obj, float delay)
 	{
 		yield return new WaitForSeconds(delay);
-		obj.SetActive(false);
+		obj.SetActiveRecursive(false);
 	}
 
 	private IEnumerator RunGhost()
@@ -303,7 +303,7 @@ public class BoobyTrap : MonoBehaviour
 			posBorn.z = startZ + (float)Random.Range(0, 20);
 			obj.transform.position = posBorn;
 			obj.transform.localRotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
-			obj.SetActive(true);
+			obj.SetActiveRecursive(true);
 		}
 		while (true)
 		{
@@ -336,7 +336,7 @@ public class BoobyTrap : MonoBehaviour
 		GameObject[] array3 = trapEffect;
 		foreach (GameObject obj3 in array3)
 		{
-			obj3.SetActive(false);
+			obj3.SetActiveRecursive(false);
 		}
 	}
 
@@ -381,46 +381,58 @@ public class BoobyTrap : MonoBehaviour
 		}
 	}
 
+	[System.Serializable]
+	private class TrapAttrRow
+	{
+		public string name;
+		public float iconAppearLength;
+		public float iconWaitTime;
+		public int iconHeroLevel;
+		public float iconInterval;
+		public float appearLength;
+		public float duration;
+		public float interval;
+		public float fromCastle;
+		public float attackLength;
+		public int knockback;
+		public float attack_mul;
+		public float attack_add;
+		public float unitSlowRate;
+		public float unitSlotTime;
+	}
+
+	[System.Serializable]
+	private class TrapAttrRowList
+	{
+		public TrapAttrRow[] items;
+	}
+
 	public static void LoadDefault()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "booby_trap", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
-		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		StringReader stringReader = new StringReader(s);
+		string json = "{\"items\":" + textAsset.text + "}";
+		TrapAttrRowList trapAttrRowList = JsonUtility.FromJson<TrapAttrRowList>(json);
 		int num = 0;
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		TrapAttrRow[] items = trapAttrRowList.items;
+		foreach (TrapAttrRow row in items)
 		{
-			if (text.Trim().Length != 0)
-			{
-				char[] separator = new char[1] { '\t' };
-				string[] array = text.Split(separator);
-				if (array.Length > 1)
-				{
-					TrapAttr trapAttr = new TrapAttr();
-					trapAttr.iconAppearLength = float.Parse(array[1]);
-					trapAttr.iconWaitTime = float.Parse(array[2]);
-					trapAttr.iconHeroLevel = int.Parse(array[3]);
-					trapAttr.iconInterval = float.Parse(array[4]);
-					trapAttr.appearLength = float.Parse(array[5]);
-					trapAttr.duration = float.Parse(array[6]);
-					trapAttr.interval = float.Parse(array[7]);
-					trapAttr.fromCastle = float.Parse(array[8]);
-					trapAttr.attackLength = float.Parse(array[9]);
-					trapAttr.knockback = int.Parse(array[10]) == 1;
-					trapAttr.attack_mul = float.Parse(array[11]);
-					trapAttr.attack_add = float.Parse(array[12]);
-					trapAttr.unitSlowRate = float.Parse(array[13]);
-					trapAttr.unitSlotTime = float.Parse(array[14]);
-					BoobyTrap.trapAttr[num] = trapAttr;
-					num++;
-				}
-			}
+			TrapAttr trapAttr = new TrapAttr();
+			trapAttr.iconAppearLength = row.iconAppearLength;
+			trapAttr.iconWaitTime = row.iconWaitTime;
+			trapAttr.iconHeroLevel = row.iconHeroLevel;
+			trapAttr.iconInterval = row.iconInterval;
+			trapAttr.appearLength = row.appearLength;
+			trapAttr.duration = row.duration;
+			trapAttr.interval = row.interval;
+			trapAttr.fromCastle = row.fromCastle;
+			trapAttr.attackLength = row.attackLength;
+			trapAttr.knockback = row.knockback == 1;
+			trapAttr.attack_mul = row.attack_mul;
+			trapAttr.attack_add = row.attack_add;
+			trapAttr.unitSlowRate = row.unitSlowRate;
+			trapAttr.unitSlotTime = row.unitSlotTime;
+			BoobyTrap.trapAttr[num] = trapAttr;
+			num++;
 		}
 	}
 }

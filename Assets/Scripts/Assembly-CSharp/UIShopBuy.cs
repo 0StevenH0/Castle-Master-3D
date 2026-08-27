@@ -1,9 +1,26 @@
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class UIShopBuy : MonoBehaviour
 {
+	[System.Serializable]
+	private class ShopDisplayRow
+	{
+		public string itemType;
+
+		public string itemName;
+
+		public int itemCode;
+
+		public int saleCount;
+	}
+
+	[System.Serializable]
+	private class ShopDisplayRowWrapper
+	{
+		public ShopDisplayRow[] items;
+	}
+
 	public AuiSprite shopTitle;
 
 	public AuiButton buttonClose;
@@ -146,56 +163,41 @@ public class UIShopBuy : MonoBehaviour
 			itemIcon = null;
 		}
 		TextAsset textAsset = ResourceManager.Load("GameData", "shop_display", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
-		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		StringReader stringReader = new StringReader(s);
+		string json = "{\"items\":" + textAsset.text + "}";
+		ShopDisplayRowWrapper shopDisplayRowWrapper = JsonUtility.FromJson<ShopDisplayRowWrapper>(json);
 		List<AuiSprite> list = new List<AuiSprite>();
 		List<int> list2 = new List<int>();
 		List<int> list3 = new List<int>();
 		int num = 0;
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		ShopDisplayRow[] items = shopDisplayRowWrapper.items;
+		foreach (ShopDisplayRow shopDisplayRow in items)
 		{
-			if (text.Trim().Length == 0)
+			string text2 = shopDisplayRow.itemType.Trim();
+			ItemManager.ItemType itemType = ItemManager.ItemType.weapon;
+			if (text2.Equals("weapon"))
 			{
-				continue;
+				itemType = ItemManager.ItemType.weapon;
 			}
-			char[] separator = new char[1] { '\t' };
-			string[] array2 = text.Split(separator);
-			if (array2.Length > 1)
+			else if (text2.Equals("cloth"))
 			{
-				string text2 = array2[0].Trim();
-				ItemManager.ItemType itemType = ItemManager.ItemType.weapon;
-				if (text2.Equals("weapon"))
-				{
-					itemType = ItemManager.ItemType.weapon;
-				}
-				else if (text2.Equals("cloth"))
-				{
-					itemType = ItemManager.ItemType.cloth;
-				}
-				else if (text2.Equals("misc"))
-				{
-					itemType = ItemManager.ItemType.misc;
-				}
-				if (itemType == this.itemType)
-				{
-					GameObject gameObject = Object.Instantiate(iconList[(int)this.itemType].gameObject) as GameObject;
-					gameObject.transform.parent = iconList[(int)this.itemType].transform.parent;
-					int num2 = int.Parse(array2[2]);
-					int item = int.Parse(array2[3]);
-					AuiSprite component = gameObject.GetComponent<AuiSprite>();
-					component.SetFrame(PlayInfo.itemManager.FindItemIndex(this.itemType, num2));
-					list.Add(component);
-					list2.Add(num2);
-					list3.Add(item);
-					num++;
-				}
+				itemType = ItemManager.ItemType.cloth;
+			}
+			else if (text2.Equals("misc"))
+			{
+				itemType = ItemManager.ItemType.misc;
+			}
+			if (itemType == this.itemType)
+			{
+				GameObject gameObject = Object.Instantiate(iconList[(int)this.itemType].gameObject) as GameObject;
+				gameObject.transform.parent = iconList[(int)this.itemType].transform.parent;
+				int num2 = shopDisplayRow.itemCode;
+				int item = shopDisplayRow.saleCount;
+				AuiSprite component = gameObject.GetComponent<AuiSprite>();
+				component.SetFrame(PlayInfo.itemManager.FindItemIndex(this.itemType, num2));
+				list.Add(component);
+				list2.Add(num2);
+				list3.Add(item);
+				num++;
 			}
 		}
 		itemIcon = list.ToArray();
@@ -233,7 +235,7 @@ public class UIShopBuy : MonoBehaviour
 		for (int k = 0; k < itemPerPage; k++)
 		{
 			buttonItem[k].visible = false;
-			objectQuantity[k].SetActive(false);
+			objectQuantity[k].SetActiveRecursive(false);
 		}
 		for (int l = 0; l < itemPerPage; l++)
 		{
@@ -247,11 +249,11 @@ public class UIShopBuy : MonoBehaviour
 			if (saleCount[num] > 1)
 			{
 				textQuantity[l].text = saleCount[num].ToString();
-				objectQuantity[l].SetActive(true);
+				objectQuantity[l].SetActiveRecursive(true);
 			}
 			else
 			{
-				objectQuantity[l].SetActive(false);
+				objectQuantity[l].SetActiveRecursive(false);
 			}
 			num++;
 			if (num >= itemIcon.Length)
@@ -282,7 +284,7 @@ public class UIShopBuy : MonoBehaviour
 		itemSelected.visible = false;
 		textCost.gameObject.SetActive(false);
 		iconCurrency.visible = false;
-		previewPanel.SetActive(false);
+		previewPanel.SetActiveRecursive(false);
 		buttonBuy.visible = false;
 		buttonBuyLabel.visible = false;
 		buttonPreview.visible = false;
@@ -433,7 +435,7 @@ public class UIShopBuy : MonoBehaviour
 	{
 		if (itemType != ItemManager.ItemType.misc)
 		{
-			previewPanel.SetActive(true);
+			previewPanel.SetActiveRecursive(true);
 			if (previewUnit == null)
 			{
 				GameObject gameObject = Object.Instantiate(ResourceManager.Load("Character/prefeb/character", "feb_hero01", typeof(GameObject))) as GameObject;
@@ -465,7 +467,7 @@ public class UIShopBuy : MonoBehaviour
 
 	private void OnPreviewCloseClick(AuiButton sender)
 	{
-		previewPanel.SetActive(false);
+		previewPanel.SetActiveRecursive(false);
 	}
 
 	private void Update()
@@ -567,7 +569,7 @@ public class UIShopBuy : MonoBehaviour
 	public void Show()
 	{
 		LoadIcon();
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		AuiSprite[] array = iconList;
 		foreach (AuiSprite auiSprite in array)
 		{
@@ -579,7 +581,7 @@ public class UIShopBuy : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 	}
 
 	private void ShowGotoGoldShop()

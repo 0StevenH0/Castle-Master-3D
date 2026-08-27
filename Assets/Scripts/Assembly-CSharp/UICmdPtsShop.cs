@@ -59,53 +59,52 @@ public class UICmdPtsShop : MonoBehaviour
 		ProcBase.ChangeTextMeshLanguageAllChild(base.transform);
 	}
 
+	[System.Serializable]
+	private class SaleRow
+	{
+		public string name;
+		public int upgradeMax;
+		public float costAppStore;
+		public float costOther;
+	}
+
+	[System.Serializable]
+	private class SaleRowList
+	{
+		public SaleRow[] items;
+	}
+
 	private void LoadSaleList()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "cmdpts_shop", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
-		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		StringReader stringReader = new StringReader(s);
+		string json = "{\"items\":" + textAsset.text + "}";
+		SaleRowList saleRowList = JsonUtility.FromJson<SaleRowList>(json);
 		int num = 0;
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		SaleRow[] items = saleRowList.items;
+		foreach (SaleRow row in items)
 		{
-			if (text.Trim().Length == 0)
-			{
-				continue;
-			}
-			char[] separator = new char[1] { '\t' };
-			string[] array = text.Split(separator);
-			if (array.Length <= 1)
-			{
-				continue;
-			}
 			if (num == 0)
 			{
 				if (StoreType.store == StoreType.Store.appstore || StoreType.store == StoreType.Store.android)
 				{
-					rechargeCost = float.Parse(array[2]);
+					rechargeCost = row.costAppStore;
 				}
 				else
 				{
-					rechargeCost = float.Parse(array[3]);
+					rechargeCost = row.costOther;
 				}
 			}
 			else
 			{
 				if (StoreType.store == StoreType.Store.appstore || StoreType.store == StoreType.Store.android)
 				{
-					upgradeCost = float.Parse(array[2]);
+					upgradeCost = row.costAppStore;
 				}
 				else
 				{
-					upgradeCost = float.Parse(array[3]);
+					upgradeCost = row.costOther;
 				}
-				upgradeMax = int.Parse(array[1]);
+				upgradeMax = row.upgradeMax;
 			}
 			num++;
 		}
@@ -319,7 +318,7 @@ public class UICmdPtsShop : MonoBehaviour
 
 	public void Show()
 	{
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		labelCurrent.text = StringContent.wordCurrent;
 		labelRecharge.text = StringContent.msgCmdPtsRecharge100;
 		labelRechargeDesc.text = StringContent.msgCmdPtsRechargeDesc;
@@ -332,7 +331,7 @@ public class UICmdPtsShop : MonoBehaviour
 
 	public void Hide()
 	{
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 		AuiButton.mostTopActive = false;
 		PlayInfo.gameTime.pause = false;
 	}

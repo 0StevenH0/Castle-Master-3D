@@ -10,6 +10,7 @@ public class UINpcAction : MonoBehaviour
 		secretary = 1
 	}
 
+	[System.Serializable]
 	private class PriestRow
 	{
 		public int castleCount;
@@ -21,6 +22,7 @@ public class UINpcAction : MonoBehaviour
 		public int maxLoyalty;
 	}
 
+	[System.Serializable]
 	private class SecretaryRow
 	{
 		public int heroLevel;
@@ -30,6 +32,18 @@ public class UINpcAction : MonoBehaviour
 		public int minLoyalty;
 
 		public int maxLoyalty;
+	}
+
+	[System.Serializable]
+	private class PriestRowListWrapper
+	{
+		public PriestRow[] items;
+	}
+
+	[System.Serializable]
+	private class SecretaryRowListWrapper
+	{
+		public SecretaryRow[] items;
 	}
 
 	public AuiButton buttonSubmit;
@@ -69,74 +83,24 @@ public class UINpcAction : MonoBehaviour
 
 	public static void Init()
 	{
-		List<PriestRow> list = new List<PriestRow>();
 		TextAsset textAsset = ResourceManager.Load("GameData", "priest_list", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
-		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		StringReader stringReader = new StringReader(s);
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
-		{
-			if (text.Trim().Length != 0)
-			{
-				char[] separator = new char[1] { '\t' };
-				string[] array = text.Split(separator);
-				if (array.Length > 1)
-				{
-					PriestRow priestRow = new PriestRow();
-					priestRow.castleCount = int.Parse(array[0]);
-					priestRow.gemCount = int.Parse(array[1]);
-					priestRow.minLoyalty = int.Parse(array[2]);
-					priestRow.maxLoyalty = int.Parse(array[3]);
-					list.Add(priestRow);
-				}
-			}
-		}
-		priestList = list.ToArray();
-		List<SecretaryRow> list2 = new List<SecretaryRow>();
+		string json = "{\"items\":" + textAsset.text + "}";
+		PriestRowListWrapper priestRowListWrapper = JsonUtility.FromJson<PriestRowListWrapper>(json);
+		priestList = priestRowListWrapper.items;
 		TextAsset textAsset2 = ResourceManager.Load("GameData", "secretary_list", typeof(TextAsset)) as TextAsset;
-		bool succeed2 = false;
-		string s2 = DataSecurity.Decrypt(textAsset2.text, "surkwjch", out succeed2);
-		if (!succeed2)
-		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		StringReader stringReader2 = new StringReader(s2);
-		string text2;
-		while ((text2 = stringReader2.ReadLine()) != null)
-		{
-			if (text2.Trim().Length != 0)
-			{
-				char[] separator2 = new char[1] { '\t' };
-				string[] array2 = text2.Split(separator2);
-				if (array2.Length > 1)
-				{
-					SecretaryRow secretaryRow = new SecretaryRow();
-					secretaryRow.heroLevel = int.Parse(array2[0]);
-					secretaryRow.gemCount = int.Parse(array2[1]);
-					secretaryRow.minLoyalty = int.Parse(array2[2]);
-					secretaryRow.maxLoyalty = int.Parse(array2[3]);
-					list2.Add(secretaryRow);
-				}
-			}
-		}
-		secretaryList = list2.ToArray();
+		string json2 = "{\"items\":" + textAsset2.text + "}";
+		SecretaryRowListWrapper secretaryRowListWrapper = JsonUtility.FromJson<SecretaryRowListWrapper>(json2);
+		secretaryList = secretaryRowListWrapper.items;
 	}
 
 	public void Hide()
 	{
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 	}
 
 	public void Show(NpcActionType type)
 	{
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		actionType = type;
 		labelLoyalty.text = StringContent.wordLoyalty;
 		if (actionType == NpcActionType.priest)
@@ -152,8 +116,8 @@ public class UINpcAction : MonoBehaviour
 			}
 			textGem.text = "-" + priestList[currentIdx].gemCount;
 			textDesc.text = StringContent.msgNpcQuestCitizenLoyalty;
-			panelAfter.SetActive(false);
-			panelBefore.SetActive(true);
+			panelAfter.SetActiveRecursive(false);
+			panelBefore.SetActiveRecursive(true);
 		}
 		else
 		{
@@ -172,8 +136,8 @@ public class UINpcAction : MonoBehaviour
 			}
 			textGem.text = "-" + secretaryList[currentIdx].gemCount;
 			textDesc.text = StringContent.msgNpcQuestLordLoyalty;
-			panelAfter.SetActive(false);
-			panelBefore.SetActive(true);
+			panelAfter.SetActiveRecursive(false);
+			panelBefore.SetActiveRecursive(true);
 		}
 	}
 
@@ -202,8 +166,8 @@ public class UINpcAction : MonoBehaviour
 			}
 			textLoyalty.text = "+" + num;
 			textDesc.text = StringContent.msgNpcRiseCitizenLoyalty;
-			panelAfter.SetActive(true);
-			panelBefore.SetActive(false);
+			panelAfter.SetActiveRecursive(true);
+			panelBefore.SetActiveRecursive(false);
 			PlayInfo.Save();
 		}
 		else
@@ -232,8 +196,8 @@ public class UINpcAction : MonoBehaviour
 			}
 			textLoyalty.text = "+" + num2;
 			textDesc.text = StringContent.msgNpcRiseLordLoyalty;
-			panelAfter.SetActive(true);
-			panelBefore.SetActive(false);
+			panelAfter.SetActiveRecursive(true);
+			panelBefore.SetActiveRecursive(false);
 			PlayInfo.Save();
 		}
 	}

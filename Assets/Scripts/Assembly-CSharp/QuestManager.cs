@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class QuestManager
@@ -67,47 +66,61 @@ public class QuestManager
 
 	public int result;
 
+	[System.Serializable]
+	private class QuestRow
+	{
+		public string type;
+
+		public int heroLevel;
+
+		public int conA;
+
+		public int conB;
+
+		public int period;
+
+		public int rewardXp;
+
+		public int rewardGem;
+
+		public int rewardGold;
+	}
+
+	[System.Serializable]
+	private class QuestRowList
+	{
+		public QuestRow[] items;
+	}
+
 	public static void LoadDefault()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "quest_list", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
+		if (textAsset == null || string.IsNullOrEmpty(textAsset.text))
 		{
 			Debug.LogError("Decrypt Error!!");
 			return;
 		}
-		StringReader stringReader = new StringReader(s);
+		QuestRowList questRowList = JsonUtility.FromJson<QuestRowList>("{\"items\":" + textAsset.text + "}");
 		List<Quest> list = new List<Quest>();
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		QuestRow[] items = questRowList.items;
+		foreach (QuestRow row in items)
 		{
-			if (text.Trim().Length == 0)
-			{
-				continue;
-			}
-			char[] separator = new char[1] { '\t' };
-			string[] array = text.Split(separator);
-			if (array.Length <= 1)
-			{
-				continue;
-			}
 			Quest quest = new Quest();
 			for (int i = 0; i < 11; i++)
 			{
-				if (array[0].Equals(((QuestType)i).ToString()))
+				if (row.type.Equals(((QuestType)i).ToString()))
 				{
 					quest.type = (QuestType)i;
 					break;
 				}
 			}
-			quest.heroLevel = int.Parse(array[1]);
-			quest.conA = int.Parse(array[2]);
-			quest.conB = int.Parse(array[3]);
-			quest.period = int.Parse(array[4]);
-			quest.rewardXp = int.Parse(array[5]);
-			quest.rewardGem = int.Parse(array[6]);
-			quest.rewardGold = int.Parse(array[7]);
+			quest.heroLevel = row.heroLevel;
+			quest.conA = row.conA;
+			quest.conB = row.conB;
+			quest.period = row.period;
+			quest.rewardXp = row.rewardXp;
+			quest.rewardGem = row.rewardGem;
+			quest.rewardGold = row.rewardGold;
 			list.Add(quest);
 		}
 		QuestManager.list = list.ToArray();

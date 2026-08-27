@@ -60,7 +60,7 @@ public class CastleTrap : MonoBehaviour
 		trapEffect = Object.Instantiate(ResourceManager.Load("Misc/prefeb", "feb_enermytrap", typeof(GameObject))) as GameObject;
 		trapEffect.transform.position = centerPos;
 		trapEffect.transform.localRotation = Quaternion.Euler(new Vector3(0f, 90f, 0f));
-		trapEffect.SetActive(false);
+		trapEffect.SetActiveRecursive(false);
 		StartCoroutine("CheckForUnitPos");
 	}
 
@@ -90,7 +90,7 @@ public class CastleTrap : MonoBehaviour
 
 	private IEnumerator LaunchCastleTrap()
 	{
-		trapEffect.SetActive(true);
+		trapEffect.SetActiveRecursive(true);
 		Animation[] componentsInChildren = trapEffect.GetComponentsInChildren<Animation>();
 		foreach (Animation ani in componentsInChildren)
 		{
@@ -112,40 +112,39 @@ public class CastleTrap : MonoBehaviour
 			}
 		}
 		yield return new WaitForSeconds(0.5f);
-		trapEffect.SetActive(false);
+		trapEffect.SetActiveRecursive(false);
+	}
+
+	[System.Serializable]
+	private class TrapAttrRow
+	{
+		public int heroLevel;
+		public float interval;
+		public float attack_mul;
+		public float attack_add;
+	}
+
+	[System.Serializable]
+	private class TrapAttrRowList
+	{
+		public TrapAttrRow[] items;
 	}
 
 	public static void LoadDefault()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "monster_trap", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
-		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		StringReader stringReader = new StringReader(s);
+		string json = "{\"items\":" + textAsset.text + "}";
+		TrapAttrRowList trapAttrRowList = JsonUtility.FromJson<TrapAttrRowList>(json);
 		CastleTrap.trapAttr.Clear();
-		int num = 0;
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		TrapAttrRow[] items = trapAttrRowList.items;
+		foreach (TrapAttrRow row in items)
 		{
-			if (text.Trim().Length != 0)
-			{
-				char[] separator = new char[1] { '\t' };
-				string[] array = text.Split(separator);
-				if (array.Length > 1)
-				{
-					TrapAttr trapAttr = new TrapAttr();
-					trapAttr.heroLevel = int.Parse(array[0]);
-					trapAttr.interval = float.Parse(array[1]);
-					trapAttr.attack_mul = float.Parse(array[2]);
-					trapAttr.attack_add = float.Parse(array[3]);
-					CastleTrap.trapAttr.Add(trapAttr);
-					num++;
-				}
-			}
+			TrapAttr trapAttr = new TrapAttr();
+			trapAttr.heroLevel = row.heroLevel;
+			trapAttr.interval = row.interval;
+			trapAttr.attack_mul = row.attack_mul;
+			trapAttr.attack_add = row.attack_add;
+			CastleTrap.trapAttr.Add(trapAttr);
 		}
 	}
 }

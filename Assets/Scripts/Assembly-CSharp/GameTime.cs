@@ -1,8 +1,13 @@
-using System.IO;
 using UnityEngine;
 
 public class GameTime
 {
+	[System.Serializable]
+	private class GameRuleJson
+	{
+		public float SecondPerDay = 30f;
+	}
+
 	public const float hourPerDay = 24f;
 
 	public int day;
@@ -28,33 +33,8 @@ public class GameTime
 	{
 		Init();
 		TextAsset textAsset = ResourceManager.Load("GameData", "game_rule", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
-		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		StringReader stringReader = new StringReader(s);
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
-		{
-			if (text.Trim().Length == 0)
-			{
-				continue;
-			}
-			char[] separator = new char[1] { '\t' };
-			string[] array = text.Split(separator);
-			if (array.Length > 1)
-			{
-				string text2 = array[0].ToLower().Trim();
-				string s2 = array[1];
-				if (text2.Equals("secondperday"))
-				{
-					secPerDay = float.Parse(s2);
-				}
-			}
-		}
+		GameRuleJson gameRuleJson = JsonUtility.FromJson<GameRuleJson>(textAsset.text);
+		secPerDay = gameRuleJson.SecondPerDay;
 		secPerHour = secPerDay / 24f;
 	}
 

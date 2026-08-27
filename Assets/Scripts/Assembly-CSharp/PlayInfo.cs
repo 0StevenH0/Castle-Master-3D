@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class PlayInfo
@@ -234,206 +233,256 @@ public class PlayInfo
 		fortuneSystem.Load();
 	}
 
+	[System.Serializable]
+	private class HeroDefaultRow
+	{
+		public int level;
+
+		public int fame;
+
+		public int strength;
+
+		public int intellectual;
+
+		public int constitution;
+
+		public int baseHp;
+
+		public int baseMp;
+
+		public int critical;
+
+		public int speed;
+	}
+
+	[System.Serializable]
+	private class HeroDefaultRowList
+	{
+		public HeroDefaultRow[] items;
+	}
+
 	private static void LoadHeroDefault()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "hero_default", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
+		if (textAsset == null || string.IsNullOrEmpty(textAsset.text))
 		{
 			Debug.LogError("Decrypt Error!!");
 			return;
 		}
-		StringReader stringReader = new StringReader(s);
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		HeroDefaultRowList heroDefaultRowList = JsonUtility.FromJson<HeroDefaultRowList>("{\"items\":" + textAsset.text + "}");
+		foreach (HeroDefaultRow item in heroDefaultRowList.items)
 		{
-			if (text.Trim().Length != 0)
-			{
-				char[] separator = new char[1] { '\t' };
-				string[] array = text.Split(separator);
-				if (array.Length > 1)
-				{
-					heroState.level = int.Parse(array[0]);
-					heroState.fame = int.Parse(array[1]);
-					heroState.strength = int.Parse(array[2]);
-					heroState.intellectual = int.Parse(array[3]);
-					heroState.constitution = int.Parse(array[4]);
-					heroState.baseHp = int.Parse(array[5]);
-					heroState.baseMp = int.Parse(array[6]);
-					heroState.critical = int.Parse(array[7]);
-					heroState.speed = int.Parse(array[8]);
-				}
-			}
+			heroState.level = item.level;
+			heroState.fame = item.fame;
+			heroState.strength = item.strength;
+			heroState.intellectual = item.intellectual;
+			heroState.constitution = item.constitution;
+			heroState.baseHp = item.baseHp;
+			heroState.baseMp = item.baseMp;
+			heroState.critical = item.critical;
+			heroState.speed = item.speed;
 		}
+	}
+
+	[System.Serializable]
+	private class BattleRewardRow
+	{
+		public string type;
+
+		public int fame;
+
+		public int gem;
+
+		public float xp_a;
+
+		public float xp_b;
+
+		public float xp_inc;
+
+		public float gold_a;
+
+		public float gold_b;
+
+		public float gold_inc;
+	}
+
+	[System.Serializable]
+	private class BattleRewardRowList
+	{
+		public BattleRewardRow[] items;
 	}
 
 	private static void LoadBattleReward()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "battle_reward", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
+		if (textAsset == null || string.IsNullOrEmpty(textAsset.text))
 		{
 			Debug.LogError("Decrypt Error!!");
 			return;
 		}
-		StringReader stringReader = new StringReader(s);
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		BattleRewardRowList battleRewardRowList = JsonUtility.FromJson<BattleRewardRowList>("{\"items\":" + textAsset.text + "}");
+		foreach (BattleRewardRow item in battleRewardRowList.items)
 		{
-			if (text.Trim().Length == 0)
+			if (item.type.Equals("victory"))
 			{
-				continue;
+				battleRewardVictory.fame = item.fame;
+				battleRewardVictory.gem = item.gem;
+				battleRewardVictory.xp_a = item.xp_a;
+				battleRewardVictory.xp_b = item.xp_b;
+				battleRewardVictory.xp_inc = item.xp_inc;
+				battleRewardVictory.gold_a = item.gold_a;
+				battleRewardVictory.gold_b = item.gold_b;
+				battleRewardVictory.gold_inc = item.gold_inc;
 			}
-			char[] separator = new char[1] { '\t' };
-			string[] array = text.Split(separator);
-			if (array.Length > 1)
+			else if (item.type.Equals("defeat"))
 			{
-				string text2 = array[0];
-				if (text2.Equals("victory"))
-				{
-					battleRewardVictory.fame = int.Parse(array[1]);
-					battleRewardVictory.gem = int.Parse(array[2]);
-					battleRewardVictory.xp_a = float.Parse(array[3]);
-					battleRewardVictory.xp_b = float.Parse(array[4]);
-					battleRewardVictory.xp_inc = float.Parse(array[5]);
-					battleRewardVictory.gold_a = float.Parse(array[6]);
-					battleRewardVictory.gold_b = float.Parse(array[7]);
-					battleRewardVictory.gold_inc = float.Parse(array[8]);
-				}
-				else if (text2.Equals("defeat"))
-				{
-					battleRewardDepeat.fame = int.Parse(array[1]);
-					battleRewardDepeat.gem = int.Parse(array[2]);
-					battleRewardDepeat.xp_a = float.Parse(array[3]);
-					battleRewardDepeat.xp_b = float.Parse(array[4]);
-					battleRewardDepeat.xp_inc = float.Parse(array[5]);
-					battleRewardDepeat.gold_a = float.Parse(array[6]);
-					battleRewardDepeat.gold_b = float.Parse(array[7]);
-					battleRewardDepeat.gold_inc = float.Parse(array[8]);
-				}
+				battleRewardDepeat.fame = item.fame;
+				battleRewardDepeat.gem = item.gem;
+				battleRewardDepeat.xp_a = item.xp_a;
+				battleRewardDepeat.xp_b = item.xp_b;
+				battleRewardDepeat.xp_inc = item.xp_inc;
+				battleRewardDepeat.gold_a = item.gold_a;
+				battleRewardDepeat.gold_b = item.gold_b;
+				battleRewardDepeat.gold_inc = item.gold_inc;
 			}
 		}
+	}
+
+	[System.Serializable]
+	private class HeroLevelTableRow
+	{
+		public int level;
+
+		public int exp;
+
+		public int incStats;
+	}
+
+	[System.Serializable]
+	private class HeroLevelTableRowList
+	{
+		public HeroLevelTableRow[] items;
 	}
 
 	private static void LoadHeroLevelTable()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "hero_leveltable", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
+		if (textAsset == null || string.IsNullOrEmpty(textAsset.text))
 		{
 			Debug.LogError("Decrypt Error!!");
 			return;
 		}
-		StringReader stringReader = new StringReader(s);
+		HeroLevelTableRowList heroLevelTableRowList = JsonUtility.FromJson<HeroLevelTableRowList>("{\"items\":" + textAsset.text + "}");
 		int num = 0;
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		HeroLevelTableRow[] items = heroLevelTableRowList.items;
+		foreach (HeroLevelTableRow item in items)
 		{
-			if (text.Trim().Length != 0)
-			{
-				char[] separator = new char[1] { '\t' };
-				string[] array = text.Split(separator);
-				if (array.Length > 1)
-				{
-					heroLevelTable[num] = new HeroLevelTable();
-					heroLevelTable[num].level = int.Parse(array[0]);
-					heroLevelTable[num].exp = int.Parse(array[1]);
-					heroLevelTable[num].incStats = int.Parse(array[2]);
-					num++;
-				}
-			}
+			heroLevelTable[num] = new HeroLevelTable();
+			heroLevelTable[num].level = item.level;
+			heroLevelTable[num].exp = item.exp;
+			heroLevelTable[num].incStats = item.incStats;
+			num++;
 		}
+	}
+
+	[System.Serializable]
+	private class MercyTableRow
+	{
+		public int raiseRate;
+
+		public int costGold;
+	}
+
+	[System.Serializable]
+	private class MercyTableRowList
+	{
+		public MercyTableRow[] items;
 	}
 
 	private static void LoadMercyTable()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "mercy_list", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
+		if (textAsset == null || string.IsNullOrEmpty(textAsset.text))
 		{
 			Debug.LogError("Decrypt Error!!");
 			return;
 		}
-		StringReader stringReader = new StringReader(s);
+		MercyTableRowList mercyTableRowList = JsonUtility.FromJson<MercyTableRowList>("{\"items\":" + textAsset.text + "}");
 		int num = 0;
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		MercyTableRow[] items = mercyTableRowList.items;
+		foreach (MercyTableRow item in items)
 		{
-			if (text.Trim().Length != 0)
-			{
-				char[] separator = new char[1] { '\t' };
-				string[] array = text.Split(separator);
-				if (array.Length > 1)
-				{
-					mercyTable[num] = new MercyTable();
-					mercyTable[num].raiseRate = int.Parse(array[0]);
-					mercyTable[num].costGold = int.Parse(array[1]);
-					num++;
-				}
-			}
+			mercyTable[num] = new MercyTable();
+			mercyTable[num].raiseRate = item.raiseRate;
+			mercyTable[num].costGold = item.costGold;
+			num++;
 		}
+	}
+
+	[System.Serializable]
+	private class MonsterBornRow
+	{
+		public int level;
+
+		public int bornRate;
+	}
+
+	[System.Serializable]
+	private class MonsterBornRowList
+	{
+		public MonsterBornRow[] items;
 	}
 
 	private static void LoadMonsterBorn()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "monster_born", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
+		if (textAsset == null || string.IsNullOrEmpty(textAsset.text))
 		{
 			Debug.LogError("Decrypt Error!!");
 			return;
 		}
-		StringReader stringReader = new StringReader(s);
+		MonsterBornRowList monsterBornRowList = JsonUtility.FromJson<MonsterBornRowList>("{\"items\":" + textAsset.text + "}");
 		PlayInfo.monsterBorn.Clear();
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		MonsterBornRow[] items = monsterBornRowList.items;
+		foreach (MonsterBornRow item in items)
 		{
-			if (text.Trim().Length != 0)
-			{
-				char[] separator = new char[1] { '\t' };
-				string[] array = text.Split(separator);
-				if (array.Length > 1)
-				{
-					MonsterBorn monsterBorn = new MonsterBorn();
-					monsterBorn.bornRate = int.Parse(array[1]);
-					PlayInfo.monsterBorn.Add(monsterBorn);
-				}
-			}
+			MonsterBorn monsterBorn = new MonsterBorn();
+			monsterBorn.bornRate = item.bornRate;
+			PlayInfo.monsterBorn.Add(monsterBorn);
 		}
+	}
+
+	[System.Serializable]
+	private class MonsterAttackIntervalRow
+	{
+		public int heroLevel;
+
+		public int days;
+	}
+
+	[System.Serializable]
+	private class MonsterAttackIntervalRowList
+	{
+		public MonsterAttackIntervalRow[] items;
 	}
 
 	private static void LoadMonsterAttackInterval()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "monster_interval", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
+		if (textAsset == null || string.IsNullOrEmpty(textAsset.text))
 		{
 			Debug.LogError("Decrypt Error!!");
 			return;
 		}
-		StringReader stringReader = new StringReader(s);
+		MonsterAttackIntervalRowList monsterAttackIntervalRowList = JsonUtility.FromJson<MonsterAttackIntervalRowList>("{\"items\":" + textAsset.text + "}");
 		PlayInfo.monsterAttackInterval.Clear();
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		MonsterAttackIntervalRow[] items = monsterAttackIntervalRowList.items;
+		foreach (MonsterAttackIntervalRow item in items)
 		{
-			if (text.Trim().Length != 0)
-			{
-				char[] separator = new char[1] { '\t' };
-				string[] array = text.Split(separator);
-				if (array.Length > 1)
-				{
-					MonsterAttackInterval monsterAttackInterval = new MonsterAttackInterval();
-					monsterAttackInterval.heroLevel = int.Parse(array[0]);
-					monsterAttackInterval.days = int.Parse(array[1]);
-					PlayInfo.monsterAttackInterval.Add(monsterAttackInterval);
-				}
-			}
+			MonsterAttackInterval monsterAttackInterval = new MonsterAttackInterval();
+			monsterAttackInterval.heroLevel = item.heroLevel;
+			monsterAttackInterval.days = item.days;
+			PlayInfo.monsterAttackInterval.Add(monsterAttackInterval);
 		}
 	}
 

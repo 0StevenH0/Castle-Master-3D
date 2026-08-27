@@ -21,45 +21,24 @@ public class InventoryManager
 		itemClothList.Clear();
 		itemMiscList.Clear();
 		TextAsset textAsset = ResourceManager.Load("GameData", "player_data", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
+		string json = "{\"items\":" + textAsset.text + "}";
+		PlayerDataEntryList playerDataEntryList = JsonUtility.FromJson<PlayerDataEntryList>(json);
+		PlayerDataEntry[] items = playerDataEntryList.items;
+		foreach (PlayerDataEntry playerDataEntry in items)
 		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		StringReader stringReader = new StringReader(s);
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
-		{
-			if (text.Trim().Length == 0)
+			string text2 = playerDataEntry.type.ToLower().Trim();
+			if (text2.Equals("weapon"))
 			{
-				continue;
+				AddItem(ItemManager.ItemType.weapon, playerDataEntry.value);
 			}
-			char[] separator = new char[1] { '\t' };
-			string[] array = text.Split(separator);
-			if (array.Length > 1)
+			else if (text2.Equals("cloth"))
 			{
-				string text2 = array[0].ToLower().Trim();
-				string s2 = array[1];
-				string s3 = string.Empty;
-				if (array.Length > 2)
-				{
-					s3 = array[2];
-				}
-				if (text2.Equals("weapon"))
-				{
-					AddItem(ItemManager.ItemType.weapon, int.Parse(s2));
-				}
-				else if (text2.Equals("cloth"))
-				{
-					AddItem(ItemManager.ItemType.cloth, int.Parse(s2));
-				}
-				else if (text2.Equals("itemhp") || text2.Equals("itemmp"))
-				{
-					UnitItem unitItem = AddItem(ItemManager.ItemType.misc, int.Parse(s2));
-					unitItem.quantity = int.Parse(s3);
-				}
+				AddItem(ItemManager.ItemType.cloth, playerDataEntry.value);
+			}
+			else if (text2.Equals("itemhp") || text2.Equals("itemmp"))
+			{
+				UnitItem unitItem = AddItem(ItemManager.ItemType.misc, playerDataEntry.value);
+				unitItem.quantity = playerDataEntry.quantity;
 			}
 		}
 	}

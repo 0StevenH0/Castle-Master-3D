@@ -58,45 +58,28 @@ public class PlayerData
 		tutorialMode = true;
 		reviewIndex = 0;
 		TextAsset textAsset = ResourceManager.Load("GameData", "player_data", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
+		string json = "{\"items\":" + textAsset.text + "}";
+		PlayerDataEntryList playerDataEntryList = JsonUtility.FromJson<PlayerDataEntryList>(json);
+		PlayerDataEntry[] items = playerDataEntryList.items;
+		foreach (PlayerDataEntry playerDataEntry in items)
 		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		StringReader stringReader = new StringReader(s);
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
-		{
-			if (text.Trim().Length == 0)
-			{
-				continue;
-			}
-			char[] separator = new char[1] { '\t' };
-			string[] array = text.Split(separator);
-			if (array.Length <= 1)
-			{
-				continue;
-			}
-			string text2 = array[0].ToLower().Trim();
-			string s2 = array[1];
+			string text2 = playerDataEntry.type.ToLower().Trim();
 			if (text2.Equals("gem"))
 			{
-				gem = int.Parse(s2);
+				gem = playerDataEntry.value;
 			}
 			else if (text2.Equals("gold"))
 			{
-				gold = int.Parse(s2);
+				gold = playerDataEntry.value;
 			}
 			else if (text2.Equals("commandpts"))
 			{
-				cmdPts = int.Parse(s2);
+				cmdPts = playerDataEntry.value;
 				maxCmdPts = cmdPts;
 			}
 			else if (text2.Equals("weapon"))
 			{
-				UnitItem unitItem = PlayInfo.inventory.FindItem(int.Parse(s2));
+				UnitItem unitItem = PlayInfo.inventory.FindItem(playerDataEntry.value);
 				if (unitItem != null)
 				{
 					equipWeapon[(int)(unitItem.weaponType - 1)] = unitItem;
@@ -104,7 +87,7 @@ public class PlayerData
 			}
 			else if (text2.Equals("cloth"))
 			{
-				UnitItem unitItem2 = PlayInfo.inventory.FindItem(int.Parse(s2));
+				UnitItem unitItem2 = PlayInfo.inventory.FindItem(playerDataEntry.value);
 				if (unitItem2 != null)
 				{
 					wearCloth[(int)unitItem2.clothPart] = unitItem2;
@@ -112,7 +95,7 @@ public class PlayerData
 			}
 			else if (text2.Equals("itemhp"))
 			{
-				UnitItem unitItem3 = PlayInfo.inventory.FindItem(int.Parse(s2));
+				UnitItem unitItem3 = PlayInfo.inventory.FindItem(playerDataEntry.value);
 				if (unitItem3 != null)
 				{
 					slotHp = unitItem3;
@@ -120,7 +103,7 @@ public class PlayerData
 			}
 			else if (text2.Equals("itemmp"))
 			{
-				UnitItem unitItem4 = PlayInfo.inventory.FindItem(int.Parse(s2));
+				UnitItem unitItem4 = PlayInfo.inventory.FindItem(playerDataEntry.value);
 				if (unitItem4 != null)
 				{
 					slotMp = unitItem4;
@@ -132,7 +115,7 @@ public class PlayerData
 				{
 					continue;
 				}
-				int num = int.Parse(s2);
+				int num = playerDataEntry.value;
 				int num2 = num / 5;
 				skill.skillLevel[num] = 1;
 				for (int k = 0; k < 3; k++)
@@ -389,4 +372,20 @@ public class PlayerData
 			DataRegistry.Get(current, "skillEquip" + k, ref equipSkill[k], ref current2);
 		}
 	}
+}
+
+[Serializable]
+public class PlayerDataEntry
+{
+	public string type;
+
+	public int value;
+
+	public int quantity;
+}
+
+[Serializable]
+public class PlayerDataEntryList
+{
+	public PlayerDataEntry[] items;
 }

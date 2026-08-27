@@ -9,49 +9,54 @@ public class CastleManager
 
 	public CastleInfo[] castle = new CastleInfo[45];
 
+	[System.Serializable]
+	private class CastleInitialRow
+	{
+		public int id;
+		public string castleName;
+		public string side;
+		public int level;
+		public float posx;
+		public float posy;
+		public int[] monsterCode;
+		public int[] unitCount;
+		public int groundId;
+	}
+
+	[System.Serializable]
+	private class CastleInitialRowList
+	{
+		public CastleInitialRow[] items;
+	}
+
 	public void LoadDefault()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "castle_initial", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
-		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		StringReader stringReader = new StringReader(s);
+		string json = "{\"items\":" + textAsset.text + "}";
+		CastleInitialRowList castleInitialRowList = JsonUtility.FromJson<CastleInitialRowList>(json);
 		int num = 0;
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		CastleInitialRow[] items = castleInitialRowList.items;
+		foreach (CastleInitialRow row in items)
 		{
-			if (text.Trim().Length == 0)
+			CastleInfo castleInfo = new CastleInfo();
+			castleInfo.Reset();
+			castleInfo.castleName = row.castleName.Trim();
+			castleInfo.side = ((row.side.Trim() == "monster") ? 1 : 0);
+			castleInfo.level = row.level;
+			castleInfo.posx = row.posx;
+			castleInfo.posy = row.posy;
+			for (int i = 0; i < 5; i++)
 			{
-				continue;
+				castleInfo.monsterCode[i] = row.monsterCode[i];
 			}
-			char[] separator = new char[1] { '\t' };
-			string[] array = text.Split(separator);
-			if (array.Length > 1)
+			for (int j = 0; j < 5; j++)
 			{
-				CastleInfo castleInfo = new CastleInfo();
-				castleInfo.Reset();
-				castleInfo.castleName = array[1].Trim();
-				castleInfo.side = ((array[2].Trim() == "monster") ? 1 : 0);
-				castleInfo.level = int.Parse(array[3]);
-				castleInfo.posx = float.Parse(array[4]);
-				castleInfo.posy = float.Parse(array[5]);
-				for (int i = 0; i < 5; i++)
-				{
-					castleInfo.monsterCode[i] = int.Parse(array[6 + i]);
-				}
-				for (int j = 0; j < 5; j++)
-				{
-					castleInfo.unitCount[j] = int.Parse(array[11 + j]);
-				}
-				castleInfo.groundId = int.Parse(array[16]);
-				castleInfo.index = num;
-				castle[num] = castleInfo;
-				num++;
+				castleInfo.unitCount[j] = row.unitCount[j];
 			}
+			castleInfo.groundId = row.groundId;
+			castleInfo.index = num;
+			castle[num] = castleInfo;
+			num++;
 		}
 		CastleInfo[] array2 = castle;
 		foreach (CastleInfo castleInfo2 in array2)

@@ -1,8 +1,63 @@
-using System.IO;
 using UnityEngine;
 
 public class GameRule
 {
+	[System.Serializable]
+	private class GameRuleJson
+	{
+		public float SpyActiveDays = 3f;
+
+		public int SpyCostGold = 300;
+
+		public float RedeploySoldierDays = 10f;
+
+		public float RecruitSoldierDays = 10f;
+
+		public float TaxDays = 30f;
+
+		public float FortuneDays = 30f;
+
+		public int AutoIncCmdPts = 10;
+
+		public int RedeployGold = 1000;
+
+		public int RedeployInstantlyGem = 3;
+
+		public int BattleTimeLimit = 300;
+
+		public int RecruitInstantlyGem = 2;
+
+		public int LordDefaultLoyalty = 60;
+
+		public int LordFireLoyalty = 40;
+
+		public int LordLoyaltyDownDays = 30;
+
+		public int LordLoyaltyDown = 5;
+
+		public int LoyaltyDown = 2;
+
+		public int LoyaltyDownDays = 5;
+
+		public int LoyaltyDownAlert = 20;
+	}
+
+	[System.Serializable]
+	private class CommandPointEntry
+	{
+		public int Index;
+
+		public string Name;
+
+		public int Points;
+	}
+
+	[System.Serializable]
+	private class CommandPointJson
+	{
+		public CommandPointEntry[] items;
+	}
+
 	public const int maxUnitPerBattle = 300;
 
 	public const int maxLoyalty = 100;
@@ -66,155 +121,63 @@ public class GameRule
 	public void LoadDefault()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "game_rule", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
-		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		StringReader stringReader = new StringReader(s);
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
-		{
-			if (text.Trim().Length == 0)
-			{
-				continue;
-			}
-			char[] separator = new char[1] { '\t' };
-			string[] array = text.Split(separator);
-			if (array.Length > 1)
-			{
-				string text2 = array[0].ToLower().Trim();
-				string s2 = array[1];
-				if (text2.Equals("spyactivedays"))
-				{
-					spyActiveDays = float.Parse(s2);
-				}
-				else if (text2.Equals("spycostgold"))
-				{
-					spyCostGold = int.Parse(s2);
-				}
-				else if (text2.Equals("redeploysoldierdays"))
-				{
-					redeploySoldierDays = int.Parse(s2);
-				}
-				else if (text2.Equals("recruitsoldierdays"))
-				{
-					recruitSoldierDays = int.Parse(s2);
-				}
-				else if (text2.Equals("taxdays"))
-				{
-					taxDays = int.Parse(s2);
-				}
-				else if (text2.Equals("fortunedays"))
-				{
-					fortuneDays = int.Parse(s2);
-				}
-				else if (text2.Equals("autoinccmdpts"))
-				{
-					autoIncCmdPts = int.Parse(s2);
-				}
-				else if (text2.Equals("redeploygold"))
-				{
-					redeployGold = int.Parse(s2);
-				}
-				else if (text2.Equals("redeployinstantlygem"))
-				{
-					redeployInstantlyGem = int.Parse(s2);
-				}
-				else if (text2.Equals("battletimelimit"))
-				{
-					battleTimeLimit = int.Parse(s2);
-				}
-				else if (text2.Equals("recruitinstantlygem"))
-				{
-					recruitInstantlyGem = int.Parse(s2);
-				}
-				else if (text2.Equals("lorddefaultloyalty"))
-				{
-					lordDefaultLoyalty = int.Parse(s2);
-				}
-				else if (text2.Equals("lordfireloyalty"))
-				{
-					lordFireLoyalty = int.Parse(s2);
-				}
-				else if (text2.Equals("lordloyaltydowndays"))
-				{
-					lordLoyaltyDownDays = int.Parse(s2);
-				}
-				else if (text2.Equals("lordloyaltydown"))
-				{
-					lordLoyaltyDown = int.Parse(s2);
-				}
-				else if (text2.Equals("loyaltydown"))
-				{
-					loyaltyDown = int.Parse(s2);
-				}
-				else if (text2.Equals("loyaltydowndays"))
-				{
-					loyaltyDownDays = int.Parse(s2);
-				}
-				else if (text2.Equals("loyaltydownalert"))
-				{
-					loyaltyDownAlert = int.Parse(s2);
-				}
-			}
-		}
+		GameRuleJson gameRuleJson = JsonUtility.FromJson<GameRuleJson>(textAsset.text);
+		spyActiveDays = gameRuleJson.SpyActiveDays;
+		spyCostGold = gameRuleJson.SpyCostGold;
+		redeploySoldierDays = gameRuleJson.RedeploySoldierDays;
+		recruitSoldierDays = gameRuleJson.RecruitSoldierDays;
+		taxDays = gameRuleJson.TaxDays;
+		fortuneDays = gameRuleJson.FortuneDays;
+		autoIncCmdPts = gameRuleJson.AutoIncCmdPts;
+		redeployGold = gameRuleJson.RedeployGold;
+		redeployInstantlyGem = gameRuleJson.RedeployInstantlyGem;
+		battleTimeLimit = gameRuleJson.BattleTimeLimit;
+		recruitInstantlyGem = gameRuleJson.RecruitInstantlyGem;
+		lordDefaultLoyalty = gameRuleJson.LordDefaultLoyalty;
+		lordFireLoyalty = gameRuleJson.LordFireLoyalty;
+		lordLoyaltyDownDays = gameRuleJson.LordLoyaltyDownDays;
+		lordLoyaltyDown = gameRuleJson.LordLoyaltyDown;
+		loyaltyDown = gameRuleJson.LoyaltyDown;
+		loyaltyDownDays = gameRuleJson.LoyaltyDownDays;
+		loyaltyDownAlert = gameRuleJson.LoyaltyDownAlert;
 		textAsset = ResourceManager.Load("GameData", "command_point", typeof(TextAsset)) as TextAsset;
-		succeed = false;
-		s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
+		CommandPointJson commandPointJson = JsonUtility.FromJson<CommandPointJson>("{\"items\":" + textAsset.text + "}");
+		CommandPointEntry[] items = commandPointJson.items;
+		foreach (CommandPointEntry commandPointEntry in items)
 		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		stringReader = new StringReader(s);
-		while ((text = stringReader.ReadLine()) != null)
-		{
-			if (text.Trim().Length == 0)
+			int points = commandPointEntry.Points;
+			switch (commandPointEntry.Index)
 			{
-				continue;
-			}
-			char[] separator2 = new char[1] { '\t' };
-			string[] array2 = text.Split(separator2);
-			if (array2.Length > 1)
-			{
-				int num = int.Parse(array2[0]);
-				int num2 = int.Parse(array2[2]);
-				switch (num)
-				{
-				case 0:
-					cmdPtsAttack = num2;
-					break;
-				case 1:
-					cmdPtsTraining = num2;
-					break;
-				case 2:
-					cmdPtsRedeploy = num2;
-					break;
-				case 3:
-					cmdPtsSearchLord = num2;
-					break;
-				case 4:
-					cmdPtsManageLord = num2;
-					break;
-				case 5:
-					cmdPtsRecruitSoldier = num2;
-					break;
-				case 6:
-					cmdPtsConstruct = num2;
-					break;
-				case 7:
-					cmdPtsAppointLord = num2;
-					break;
-				case 8:
-					cmdPtsSpy = num2;
-					break;
-				case 9:
-					cmdPtsUpgradeCastle = num2;
-					break;
-				}
+			case 0:
+				cmdPtsAttack = points;
+				break;
+			case 1:
+				cmdPtsTraining = points;
+				break;
+			case 2:
+				cmdPtsRedeploy = points;
+				break;
+			case 3:
+				cmdPtsSearchLord = points;
+				break;
+			case 4:
+				cmdPtsManageLord = points;
+				break;
+			case 5:
+				cmdPtsRecruitSoldier = points;
+				break;
+			case 6:
+				cmdPtsConstruct = points;
+				break;
+			case 7:
+				cmdPtsAppointLord = points;
+				break;
+			case 8:
+				cmdPtsSpy = points;
+				break;
+			case 9:
+				cmdPtsUpgradeCastle = points;
+				break;
 			}
 		}
 	}

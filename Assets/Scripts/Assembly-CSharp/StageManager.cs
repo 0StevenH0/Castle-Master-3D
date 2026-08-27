@@ -133,6 +133,20 @@ public class StageManager : MonoBehaviour
 
 	private BoobyTrap boobyTrap;
 
+	[System.Serializable]
+	private class StageInfoRow
+	{
+		public string key;
+
+		public string[] values;
+	}
+
+	[System.Serializable]
+	private class StageInfoRowList
+	{
+		public StageInfoRow[] items;
+	}
+
 	public StageInfo LoadStageInfo(StageType id)
 	{
 		StageInfo stageInfo = new StageInfo();
@@ -142,75 +156,60 @@ public class StageManager : MonoBehaviour
 		int num2 = 0;
 		int num3 = 0;
 		TextAsset textAsset = ResourceManager.Load("GameData", "stageinfo_" + id, typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
+		string json = "{\"items\":" + textAsset.text + "}";
+		StageInfoRowList stageInfoRowList = JsonUtility.FromJson<StageInfoRowList>(json);
+		StageInfoRow[] items = stageInfoRowList.items;
+		foreach (StageInfoRow row in items)
 		{
-			Debug.LogError("Decrypt Error!!");
-			return null;
-		}
-		StringReader stringReader = new StringReader(s);
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
-		{
-			if (text.Trim().Length == 0)
-			{
-				continue;
-			}
-			char[] separator = new char[1] { '\t' };
-			string[] array = text.Split(separator);
-			if (array.Length == 0)
-			{
-				continue;
-			}
-			string text2 = array[0].Trim();
+			string[] array = row.values;
+			string text2 = row.key.Trim();
 			if (text2.Equals("stage_id"))
 			{
-				stageInfo.stageId = array[1].Trim();
+				stageInfo.stageId = array[0].Trim();
 			}
 			else if (text2.Equals("continent_id"))
 			{
-				stageInfo.continentIdx = int.Parse(array[1].Trim());
+				stageInfo.continentIdx = int.Parse(array[0].Trim());
 			}
 			else if (text2.Equals("stage_type"))
 			{
-				stageInfo.stageType = (StageType)int.Parse(array[1].Trim());
+				stageInfo.stageType = (StageType)int.Parse(array[0].Trim());
 			}
 			else if (text2.Equals("ground"))
 			{
-				stageInfo.groundType = (GroundManager.GroundType)int.Parse(array[1].Trim());
+				stageInfo.groundType = (GroundManager.GroundType)int.Parse(array[0].Trim());
 			}
 			else if (text2.Equals("ground_id"))
 			{
-				stageInfo.groundIdx = int.Parse(array[1].Trim());
+				stageInfo.groundIdx = int.Parse(array[0].Trim());
 			}
 			else if (text2.Equals("player_position"))
 			{
-				stageInfo.playerPos.x = float.Parse(array[1].Trim());
+				stageInfo.playerPos.x = float.Parse(array[0].Trim());
 				stageInfo.playerPos.y = 0f;
-				stageInfo.playerPos.z = float.Parse(array[2].Trim());
+				stageInfo.playerPos.z = float.Parse(array[1].Trim());
 			}
 			else if (text2.Equals("player_attackpos"))
 			{
-				stageInfo.playerAttackPos.x = float.Parse(array[1].Trim());
+				stageInfo.playerAttackPos.x = float.Parse(array[0].Trim());
 				stageInfo.playerAttackPos.y = 0f;
-				stageInfo.playerAttackPos.z = float.Parse(array[2].Trim());
+				stageInfo.playerAttackPos.z = float.Parse(array[1].Trim());
 			}
 			else if (text2.Equals("map_position"))
 			{
-				stageInfo.mapPos.x = float.Parse(array[1].Trim());
-				stageInfo.mapPos.y = float.Parse(array[2].Trim());
+				stageInfo.mapPos.x = float.Parse(array[0].Trim());
+				stageInfo.mapPos.y = float.Parse(array[1].Trim());
 			}
 			else if (text2.Equals("static_unit"))
 			{
 				stageInfo.staticUnit[num] = new UnitInfo();
-				stageInfo.staticUnit[num].charactorType = (UnitCharactor.CharactorType)int.Parse(array[1].Trim());
-				stageInfo.staticUnit[num].charactorIdx = int.Parse(array[2].Trim());
-				stageInfo.staticUnit[num].pos.x = float.Parse(array[3].Trim());
+				stageInfo.staticUnit[num].charactorType = (UnitCharactor.CharactorType)int.Parse(array[0].Trim());
+				stageInfo.staticUnit[num].charactorIdx = int.Parse(array[1].Trim());
+				stageInfo.staticUnit[num].pos.x = float.Parse(array[2].Trim());
 				stageInfo.staticUnit[num].pos.y = 0f;
-				stageInfo.staticUnit[num].pos.z = float.Parse(array[4].Trim());
-				stageInfo.staticUnit[num].rotationY = float.Parse(array[5].Trim());
-				stageInfo.staticUnit[num].movable = int.Parse(array[6].Trim()) == 1;
+				stageInfo.staticUnit[num].pos.z = float.Parse(array[3].Trim());
+				stageInfo.staticUnit[num].rotationY = float.Parse(array[4].Trim());
+				stageInfo.staticUnit[num].movable = int.Parse(array[5].Trim()) == 1;
 				num++;
 			}
 			else if (text2.Equals("defense_regen_pos"))
@@ -218,9 +217,9 @@ public class StageManager : MonoBehaviour
 				if (num2 < 5)
 				{
 					stageInfo.regenPos[1, num2] = default(Vector3);
-					stageInfo.regenPos[1, num2].x = float.Parse(array[1].Trim());
+					stageInfo.regenPos[1, num2].x = float.Parse(array[0].Trim());
 					stageInfo.regenPos[1, num2].y = 0f;
-					stageInfo.regenPos[1, num2].z = float.Parse(array[2].Trim());
+					stageInfo.regenPos[1, num2].z = float.Parse(array[1].Trim());
 					num2++;
 				}
 			}
@@ -229,46 +228,46 @@ public class StageManager : MonoBehaviour
 				if (num3 < 5)
 				{
 					stageInfo.regenPos[0, num3] = default(Vector3);
-					stageInfo.regenPos[0, num3].x = float.Parse(array[1].Trim());
+					stageInfo.regenPos[0, num3].x = float.Parse(array[0].Trim());
 					stageInfo.regenPos[0, num3].y = 0f;
-					stageInfo.regenPos[0, num3].z = float.Parse(array[2].Trim());
+					stageInfo.regenPos[0, num3].z = float.Parse(array[1].Trim());
 					num3++;
 				}
 			}
 			else if (text2.Equals("defense_base_minpos"))
 			{
 				stageInfo.minPos[1] = default(Vector3);
-				stageInfo.minPos[1].x = float.Parse(array[1].Trim());
+				stageInfo.minPos[1].x = float.Parse(array[0].Trim());
 				stageInfo.minPos[1].y = 0f;
-				stageInfo.minPos[1].z = float.Parse(array[2].Trim());
+				stageInfo.minPos[1].z = float.Parse(array[1].Trim());
 			}
 			else if (text2.Equals("defense_base_maxpos"))
 			{
 				stageInfo.maxPos[1] = default(Vector3);
-				stageInfo.maxPos[1].x = float.Parse(array[1].Trim());
+				stageInfo.maxPos[1].x = float.Parse(array[0].Trim());
 				stageInfo.maxPos[1].y = 0f;
-				stageInfo.maxPos[1].z = float.Parse(array[2].Trim());
+				stageInfo.maxPos[1].z = float.Parse(array[1].Trim());
 			}
 			else if (text2.Equals("attack_base_minpos"))
 			{
 				stageInfo.minPos[0] = default(Vector3);
-				stageInfo.minPos[0].x = float.Parse(array[1].Trim());
+				stageInfo.minPos[0].x = float.Parse(array[0].Trim());
 				stageInfo.minPos[0].y = 0f;
-				stageInfo.minPos[0].z = float.Parse(array[2].Trim());
+				stageInfo.minPos[0].z = float.Parse(array[1].Trim());
 			}
 			else if (text2.Equals("attack_base_maxpos"))
 			{
 				stageInfo.maxPos[0] = default(Vector3);
-				stageInfo.maxPos[0].x = float.Parse(array[1].Trim());
+				stageInfo.maxPos[0].x = float.Parse(array[0].Trim());
 				stageInfo.maxPos[0].y = 0f;
-				stageInfo.maxPos[0].z = float.Parse(array[2].Trim());
+				stageInfo.maxPos[0].z = float.Parse(array[1].Trim());
 			}
 			else if (text2.Equals("castle_gate"))
 			{
 				stageInfo.castleGatePos = default(Vector3);
-				stageInfo.castleGatePos.x = float.Parse(array[1].Trim());
+				stageInfo.castleGatePos.x = float.Parse(array[0].Trim());
 				stageInfo.castleGatePos.y = 0f;
-				stageInfo.castleGatePos.z = float.Parse(array[2].Trim());
+				stageInfo.castleGatePos.z = float.Parse(array[1].Trim());
 			}
 		}
 		stageInfo.staticUnitCount = num;
@@ -700,7 +699,7 @@ public class StageManager : MonoBehaviour
 			int num4 = Random.Range(0, 5);
 			Vector3 position = stageInfo.regenPos[side, num4];
 			position.z += ((float)Random.Range(0, 20) - 10f) / 10f;
-			ctl.gameObject.SetActive(true);
+			ctl.gameObject.SetActiveRecursive(true);
 			ctl.Init(null);
 			ctl.SetPosition(position);
 			ctl.SetRotation((side != 0) ? 90 : (-90));
@@ -751,7 +750,7 @@ public class StageManager : MonoBehaviour
 			}
 			if (lordUnit != null && !lordUnit.isAwake)
 			{
-				lordUnit.gameObject.SetActive(true);
+				lordUnit.gameObject.SetActiveRecursive(true);
 				lordUnit.thisCtrl.unitState.curHp = lordUnit.thisCtrl.unitState.sumHp;
 				lordUnit.thisCtrl.isDie = false;
 				lordUnit.thisCtrl.isAwake = true;
@@ -799,34 +798,36 @@ public class StageManager : MonoBehaviour
 		return num;
 	}
 
+	[System.Serializable]
+	private class BonusTableRow
+	{
+		public int maxPoint;
+
+		public int bonusRate;
+
+		public int starCount;
+	}
+
+	[System.Serializable]
+	private class BonusTableRowList
+	{
+		public BonusTableRow[] items;
+	}
+
 	private BonusTable[] LoadBonusTable()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "battle_point", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
-		{
-			Debug.LogError("Decrypt Error!!");
-			return null;
-		}
-		StringReader stringReader = new StringReader(s);
+		string json = "{\"items\":" + textAsset.text + "}";
+		BonusTableRowList bonusTableRowList = JsonUtility.FromJson<BonusTableRowList>(json);
 		List<BonusTable> list = new List<BonusTable>();
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		BonusTableRow[] items = bonusTableRowList.items;
+		foreach (BonusTableRow row in items)
 		{
-			if (text.Trim().Length != 0)
-			{
-				char[] separator = new char[1] { '\t' };
-				string[] array = text.Split(separator);
-				if (array.Length > 1)
-				{
-					BonusTable bonusTable = new BonusTable();
-					bonusTable.maxPoint = int.Parse(array[0]);
-					bonusTable.bonusRate = int.Parse(array[1]);
-					bonusTable.starCount = int.Parse(array[2]);
-					list.Add(bonusTable);
-				}
-			}
+			BonusTable bonusTable = new BonusTable();
+			bonusTable.maxPoint = row.maxPoint;
+			bonusTable.bonusRate = row.bonusRate;
+			bonusTable.starCount = row.starCount;
+			list.Add(bonusTable);
 		}
 		return list.ToArray();
 	}

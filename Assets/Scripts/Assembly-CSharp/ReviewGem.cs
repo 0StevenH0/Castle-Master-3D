@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class ReviewGem
@@ -11,35 +10,37 @@ public class ReviewGem
 		public int gem;
 	}
 
+	[System.Serializable]
+	private class RewardGemRow
+	{
+		public int id;
+
+		public int heroLevel;
+
+		public int gem;
+	}
+
+	[System.Serializable]
+	private class RewardGemRowWrapper
+	{
+		public RewardGemRow[] items;
+	}
+
 	public static RewardGem[] rewardList;
 
 	public static void LoadDefault()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "review_gem", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
-		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		StringReader stringReader = new StringReader(s);
+		string json = "{\"items\":" + textAsset.text + "}";
+		RewardGemRowWrapper rewardGemRowWrapper = JsonUtility.FromJson<RewardGemRowWrapper>(json);
 		List<RewardGem> list = new List<RewardGem>();
-		string empty = string.Empty;
-		while ((empty = stringReader.ReadLine()) != null)
+		RewardGemRow[] items = rewardGemRowWrapper.items;
+		foreach (RewardGemRow rewardGemRow in items)
 		{
-			if (empty.Trim().Length != 0)
-			{
-				char[] separator = new char[1] { '\t' };
-				string[] array = empty.Split(separator);
-				if (array.Length > 1)
-				{
-					RewardGem rewardGem = new RewardGem();
-					rewardGem.heroLevel = int.Parse(array[1]);
-					rewardGem.gem = int.Parse(array[2]);
-					list.Add(rewardGem);
-				}
-			}
+			RewardGem rewardGem = new RewardGem();
+			rewardGem.heroLevel = rewardGemRow.heroLevel;
+			rewardGem.gem = rewardGemRow.gem;
+			list.Add(rewardGem);
 		}
 		rewardList = list.ToArray();
 	}

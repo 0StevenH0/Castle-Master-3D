@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class FortuneSystem
@@ -107,91 +106,109 @@ public class FortuneSystem
 		LoadFortuneEvent();
 	}
 
+	[System.Serializable]
+	private class FortuneCardMixRow
+	{
+		public string label;
+
+		public float goodRate;
+
+		public int dayFrom;
+
+		public int dayTo;
+
+		public int[] stepLevel;
+
+		public float[] stepRate;
+	}
+
+	[System.Serializable]
+	private class FortuneCardMixRowList
+	{
+		public FortuneCardMixRow[] items;
+	}
+
 	private static void LoadFortuneCardMix()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "fortune_cardmix", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
-		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		StringReader stringReader = new StringReader(s);
+		string json = "{\"items\":" + textAsset.text + "}";
+		FortuneCardMixRow[] items = JsonUtility.FromJson<FortuneCardMixRowList>(json).items;
 		List<FortuneCardMix> list = new List<FortuneCardMix>();
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		foreach (FortuneCardMixRow row in items)
 		{
-			if (text.Trim().Length == 0)
+			FortuneCardMix fortuneCardMix = new FortuneCardMix();
+			fortuneCardMix.goodRate = row.goodRate;
+			fortuneCardMix.dayFrom = row.dayFrom;
+			fortuneCardMix.dayTo = row.dayTo;
+			for (int i = 0; i < 3; i++)
 			{
-				continue;
+				fortuneCardMix.stepLevel[i] = row.stepLevel[i];
+				fortuneCardMix.stepRate[i] = row.stepRate[i];
 			}
-			char[] separator = new char[1] { '\t' };
-			string[] array = text.Split(separator);
-			if (array.Length > 1)
-			{
-				FortuneCardMix fortuneCardMix = new FortuneCardMix();
-				fortuneCardMix.goodRate = float.Parse(array[1]);
-				fortuneCardMix.dayFrom = int.Parse(array[2]);
-				fortuneCardMix.dayTo = int.Parse(array[3]);
-				for (int i = 0; i < 3; i++)
-				{
-					fortuneCardMix.stepLevel[i] = int.Parse(array[4 + i * 2]);
-					fortuneCardMix.stepRate[i] = float.Parse(array[5 + i * 2]);
-				}
-				list.Add(fortuneCardMix);
-			}
+			list.Add(fortuneCardMix);
 		}
 		FortuneSystem.fortuneCardMix = list.ToArray();
+	}
+
+	[System.Serializable]
+	private class FortuneEventRow
+	{
+		public string fortuneType;
+
+		public string fortuneName;
+
+		public float rate;
+
+		public string fortuneCastle;
+
+		public int rewardLoyalty;
+
+		public int rewardGold;
+
+		public int rewardGem;
+
+		public int rewardFame;
+
+		public int rewardResidents;
+	}
+
+	[System.Serializable]
+	private class FortuneEventRowList
+	{
+		public FortuneEventRow[] items;
 	}
 
 	private static void LoadFortuneEvent()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "fortune_event", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
-		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		StringReader stringReader = new StringReader(s);
+		string json = "{\"items\":" + textAsset.text + "}";
+		FortuneEventRow[] items = JsonUtility.FromJson<FortuneEventRowList>(json).items;
 		List<FortuneEvent> list = new List<FortuneEvent>();
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		foreach (FortuneEventRow row in items)
 		{
-			if (text.Trim().Length == 0)
+			FortuneEvent fortuneEvent = new FortuneEvent();
+			fortuneEvent.fortuneType = ((!row.fortuneType.Trim().Equals("good")) ? FortuneType.bad : FortuneType.good);
+			fortuneEvent.fortuneName = row.fortuneName;
+			fortuneEvent.rate = row.rate;
+			string text2 = row.fortuneCastle.Trim();
+			if (text2.Equals("all"))
 			{
-				continue;
+				fortuneEvent.fortuneCastle = FortuneCastle.all;
 			}
-			char[] separator = new char[1] { '\t' };
-			string[] array = text.Split(separator);
-			if (array.Length > 1)
+			else if (text2.Equals("random"))
 			{
-				FortuneEvent fortuneEvent = new FortuneEvent();
-				fortuneEvent.fortuneType = ((!array[0].Trim().Equals("good")) ? FortuneType.bad : FortuneType.good);
-				fortuneEvent.fortuneName = array[1];
-				fortuneEvent.rate = float.Parse(array[2]);
-				string text2 = array[3].Trim();
-				if (text2.Equals("all"))
-				{
-					fortuneEvent.fortuneCastle = FortuneCastle.all;
-				}
-				else if (text2.Equals("random"))
-				{
-					fortuneEvent.fortuneCastle = FortuneCastle.random;
-				}
-				else if (text2.Equals("none"))
-				{
-					fortuneEvent.fortuneCastle = FortuneCastle.none;
-				}
-				fortuneEvent.rewardLoyalty = int.Parse(array[4]);
-				fortuneEvent.rewardGold = int.Parse(array[5]);
-				fortuneEvent.rewardGem = int.Parse(array[6]);
-				fortuneEvent.rewardFame = int.Parse(array[7]);
-				fortuneEvent.rewardResidents = int.Parse(array[8]);
-				list.Add(fortuneEvent);
+				fortuneEvent.fortuneCastle = FortuneCastle.random;
 			}
+			else if (text2.Equals("none"))
+			{
+				fortuneEvent.fortuneCastle = FortuneCastle.none;
+			}
+			fortuneEvent.rewardLoyalty = row.rewardLoyalty;
+			fortuneEvent.rewardGold = row.rewardGold;
+			fortuneEvent.rewardGem = row.rewardGem;
+			fortuneEvent.rewardFame = row.rewardFame;
+			fortuneEvent.rewardResidents = row.rewardResidents;
+			list.Add(fortuneEvent);
 		}
 		FortuneSystem.fortuneEvent = list.ToArray();
 	}

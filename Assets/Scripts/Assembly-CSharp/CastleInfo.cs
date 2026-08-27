@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class CastleInfo
@@ -149,139 +148,132 @@ public class CastleInfo
 
 	public List<CastleInfo> nearCastle = new List<CastleInfo>();
 
+	[System.Serializable]
+	private class CastleLevelDefaultRow
+	{
+		public int upgradeGold;
+
+		public int upgradeInstantlyGem;
+
+		public int upgradePeriod;
+
+		public int maxUnit;
+
+		public int maxPopulation;
+
+		public int defense;
+
+		public int battleUnit;
+
+		public int buildingActivate;
+
+		public int autoUpgradeDays;
+
+		public int battleUnitMon;
+	}
+
+	[System.Serializable]
+	private class CastleLevelDefaultRowList
+	{
+		public CastleLevelDefaultRow[] items;
+	}
+
+	[System.Serializable]
+	private class BuildingAttributeRow
+	{
+		public string name;
+
+		public int requireLevel;
+
+		public int requireBuilding;
+
+		public int incTax;
+
+		public int incPopulation;
+
+		public int constructPeriod;
+
+		public int constructGold;
+
+		public int constructInstantlyGem;
+
+		public int genUnitCode;
+	}
+
+	[System.Serializable]
+	private class BuildingAttributeRowList
+	{
+		public BuildingAttributeRow[] items;
+	}
+
+	[System.Serializable]
+	private class CastleDefaultRow
+	{
+		public int level;
+
+		public int[] unitCount;
+
+		public int population;
+
+		public int loyalty;
+
+		public int lordBaseFame;
+	}
+
 	public static void LoadDefault()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "castle_level", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
-		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		StringReader stringReader = new StringReader(s);
+		string json = "{\"items\":" + textAsset.text + "}";
+		CastleLevelDefaultRowList castleLevelDefaultRowList = JsonUtility.FromJson<CastleLevelDefaultRowList>(json);
 		int num = 0;
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		CastleLevelDefaultRow[] items = castleLevelDefaultRowList.items;
+		foreach (CastleLevelDefaultRow row in items)
 		{
-			if (text.Trim().Length != 0)
-			{
-				char[] separator = new char[1] { '\t' };
-				string[] array = text.Split(separator);
-				if (array.Length > 1)
-				{
-					CastleLevelDefault castleLevelDefault = new CastleLevelDefault();
-					castleLevelDefault.upgradeGold = int.Parse(array[1]);
-					castleLevelDefault.upgradeInstantlyGem = int.Parse(array[2]);
-					castleLevelDefault.upgradePeriod = int.Parse(array[3]);
-					castleLevelDefault.maxUnit = int.Parse(array[4]);
-					castleLevelDefault.maxPopulation = int.Parse(array[5]);
-					castleLevelDefault.defense = int.Parse(array[6]);
-					castleLevelDefault.battleUnit = int.Parse(array[7]);
-					castleLevelDefault.buildingActivate = int.Parse(array[8]);
-					castleLevelDefault.autoUpgradeDays = int.Parse(array[9]);
-					castleLevelDefault.battleUnitMon = int.Parse(array[10]);
-					levelDefault[num] = castleLevelDefault;
-					num++;
-				}
-			}
+			CastleLevelDefault castleLevelDefault = new CastleLevelDefault();
+			castleLevelDefault.upgradeGold = row.upgradeGold;
+			castleLevelDefault.upgradeInstantlyGem = row.upgradeInstantlyGem;
+			castleLevelDefault.upgradePeriod = row.upgradePeriod;
+			castleLevelDefault.maxUnit = row.maxUnit;
+			castleLevelDefault.maxPopulation = row.maxPopulation;
+			castleLevelDefault.defense = row.defense;
+			castleLevelDefault.battleUnit = row.battleUnit;
+			castleLevelDefault.buildingActivate = row.buildingActivate;
+			castleLevelDefault.autoUpgradeDays = row.autoUpgradeDays;
+			castleLevelDefault.battleUnitMon = row.battleUnitMon;
+			levelDefault[num] = castleLevelDefault;
+			num++;
 		}
 		textAsset = ResourceManager.Load("GameData", "building_attribute", typeof(TextAsset)) as TextAsset;
-		succeed = false;
-		s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
-		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		stringReader = new StringReader(s);
+		json = "{\"items\":" + textAsset.text + "}";
+		BuildingAttributeRowList buildingAttributeRowList = JsonUtility.FromJson<BuildingAttributeRowList>(json);
 		num = 0;
-		while ((text = stringReader.ReadLine()) != null)
+		BuildingAttributeRow[] items2 = buildingAttributeRowList.items;
+		foreach (BuildingAttributeRow row2 in items2)
 		{
-			if (text.Trim().Length == 0)
-			{
-				continue;
-			}
-			char[] separator2 = new char[1] { '\t' };
-			string[] array2 = text.Split(separator2);
-			if (array2.Length > 1)
-			{
-				BuildingAttribute buildingAttribute = new BuildingAttribute();
-				buildingAttribute.name = array2[1];
-				buildingAttribute.requireLevel = int.Parse(array2[2]);
-				if (array2[3].Equals(string.Empty))
-				{
-					buildingAttribute.requireBuilding = -1;
-				}
-				else
-				{
-					buildingAttribute.requireBuilding = int.Parse(array2[3]);
-				}
-				buildingAttribute.incTax = int.Parse(array2[4]);
-				buildingAttribute.incPopulation = int.Parse(array2[5]);
-				buildingAttribute.constructPeriod = int.Parse(array2[6]);
-				buildingAttribute.constructGold = int.Parse(array2[7]);
-				buildingAttribute.constructInstantlyGem = int.Parse(array2[8]);
-				buildingAttribute.genUnitCode = int.Parse(array2[9]);
-				CastleInfo.buildingAttribute[num] = buildingAttribute;
-				num++;
-			}
+			BuildingAttribute buildingAttribute = new BuildingAttribute();
+			buildingAttribute.name = row2.name;
+			buildingAttribute.requireLevel = row2.requireLevel;
+			buildingAttribute.requireBuilding = row2.requireBuilding;
+			buildingAttribute.incTax = row2.incTax;
+			buildingAttribute.incPopulation = row2.incPopulation;
+			buildingAttribute.constructPeriod = row2.constructPeriod;
+			buildingAttribute.constructGold = row2.constructGold;
+			buildingAttribute.constructInstantlyGem = row2.constructInstantlyGem;
+			buildingAttribute.genUnitCode = row2.genUnitCode;
+			CastleInfo.buildingAttribute[num] = buildingAttribute;
+			num++;
 		}
 		textAsset = ResourceManager.Load("GameData", "castle_default", typeof(TextAsset)) as TextAsset;
-		succeed = false;
-		s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
-		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		stringReader = new StringReader(s);
+		CastleDefaultRow castleDefaultRow = JsonUtility.FromJson<CastleDefaultRow>(textAsset.text);
 		castleDefault = new CastleInfo();
-		while ((text = stringReader.ReadLine()) != null)
+		castleDefault.level = castleDefaultRow.level;
+		for (int i = 0; i < 5; i++)
 		{
-			if (text.Trim().Length == 0)
-			{
-				continue;
-			}
-			char[] separator3 = new char[1] { '\t' };
-			string[] array3 = text.Split(separator3);
-			if (array3.Length <= 1)
-			{
-				continue;
-			}
-			string text2 = array3[0].ToLower().Trim();
-			string s2 = array3[1];
-			if (text2.Equals("level"))
-			{
-				castleDefault.level = int.Parse(s2);
-			}
-			else if (text2.Equals("units"))
-			{
-				for (int i = 0; i < 5; i++)
-				{
-					if (array3.Length > i + 1)
-					{
-						castleDefault.unitCount[i] = int.Parse(array3[i + 1]);
-					}
-					else
-					{
-						castleDefault.unitCount[i] = 0;
-					}
-				}
-			}
-			else if (text2.Equals("population"))
-			{
-				castleDefault.population = int.Parse(s2);
-			}
-			else if (text2.Equals("loyalty"))
-			{
-				castleDefault.loyalty = int.Parse(s2);
-			}
-			else if (text2.Equals("lordfame"))
-			{
-				castleDefault.lordBaseFame = int.Parse(s2);
-			}
+			castleDefault.unitCount[i] = (castleDefaultRow.unitCount != null && castleDefaultRow.unitCount.Length > i) ? castleDefaultRow.unitCount[i] : 0;
 		}
+		castleDefault.population = castleDefaultRow.population;
+		castleDefault.loyalty = castleDefaultRow.loyalty;
+		castleDefault.lordBaseFame = castleDefaultRow.lordBaseFame;
 	}
 
 	public void Reset()

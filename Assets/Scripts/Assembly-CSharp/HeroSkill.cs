@@ -1,4 +1,3 @@
-using System.IO;
 using UnityEngine;
 
 public class HeroSkill
@@ -59,6 +58,52 @@ public class HeroSkill
 		public int price;
 	}
 
+	[System.Serializable]
+	private class SkillListRow
+	{
+		public string skillType;
+
+		public string name;
+
+		public int skillLevel;
+
+		public int requireLevel;
+
+		public int attack;
+
+		public int hp;
+
+		public int defense;
+
+		public float length;
+
+		public bool splash;
+
+		public float range;
+
+		public bool knockdown;
+
+		public bool knockback;
+
+		public bool stun;
+
+		public int mp;
+
+		public float colldown;
+
+		public float duration;
+
+		public string currency;
+
+		public int price;
+	}
+
+	[System.Serializable]
+	private class SkillListRowWrapper
+	{
+		public SkillListRow[] items;
+	}
+
 	public const int maxSkillSlot = 3;
 
 	public const int maxSkillKind = 3;
@@ -96,46 +141,32 @@ public class HeroSkill
 	public static void LoadDefault()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "skill_list", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
-		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		StringReader stringReader = new StringReader(s);
+		string json = "{\"items\":" + textAsset.text + "}";
+		SkillListRowWrapper skillListRowWrapper = JsonUtility.FromJson<SkillListRowWrapper>(json);
 		int num = 0;
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		SkillListRow[] items = skillListRowWrapper.items;
+		foreach (SkillListRow skillListRow in items)
 		{
-			if (text.Trim().Length != 0)
-			{
-				char[] separator = new char[1] { '\t' };
-				string[] array = text.Split(separator);
-				if (array.Length > 1)
-				{
-					SkillLevelSpec skillLevelSpec = new SkillLevelSpec();
-					skillLevelSpec.name = array[1];
-					skillLevelSpec.skillLevel = int.Parse(array[2]);
-					skillLevelSpec.requireLevel = int.Parse(array[3]);
-					skillLevelSpec.attack = int.Parse(array[4]);
-					skillLevelSpec.hp = int.Parse(array[5]);
-					skillLevelSpec.defense = int.Parse(array[6]);
-					skillLevelSpec.length = float.Parse(array[7]);
-					skillLevelSpec.splash = array[8].Equals("1");
-					skillLevelSpec.range = float.Parse(array[9]);
-					skillLevelSpec.knockdown = array[10].Equals("1");
-					skillLevelSpec.knockback = array[11].Equals("1");
-					skillLevelSpec.stun = array[12].Equals("1");
-					skillLevelSpec.mp = int.Parse(array[13]);
-					skillLevelSpec.colldown = float.Parse(array[14]);
-					skillLevelSpec.duration = float.Parse(array[15]);
-					skillLevelSpec.currency = ((!array[16].Equals("gold")) ? 1 : 0);
-					skillLevelSpec.price = int.Parse(array[17]);
-					levelSpec[num] = skillLevelSpec;
-					num++;
-				}
-			}
+			SkillLevelSpec skillLevelSpec = new SkillLevelSpec();
+			skillLevelSpec.name = skillListRow.name;
+			skillLevelSpec.skillLevel = skillListRow.skillLevel;
+			skillLevelSpec.requireLevel = skillListRow.requireLevel;
+			skillLevelSpec.attack = skillListRow.attack;
+			skillLevelSpec.hp = skillListRow.hp;
+			skillLevelSpec.defense = skillListRow.defense;
+			skillLevelSpec.length = skillListRow.length;
+			skillLevelSpec.splash = skillListRow.splash;
+			skillLevelSpec.range = skillListRow.range;
+			skillLevelSpec.knockdown = skillListRow.knockdown;
+			skillLevelSpec.knockback = skillListRow.knockback;
+			skillLevelSpec.stun = skillListRow.stun;
+			skillLevelSpec.mp = skillListRow.mp;
+			skillLevelSpec.colldown = skillListRow.colldown;
+			skillLevelSpec.duration = skillListRow.duration;
+			skillLevelSpec.currency = ((!skillListRow.currency.Equals("gold")) ? 1 : 0);
+			skillLevelSpec.price = skillListRow.price;
+			levelSpec[num] = skillLevelSpec;
+			num++;
 		}
 	}
 }

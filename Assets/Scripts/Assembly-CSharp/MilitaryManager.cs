@@ -17,92 +17,104 @@ public class MilitaryManager
 
 	private UnitLevelCost[,] unitLevelCost;
 
+	[System.Serializable]
+	private class UnitDefaultEntry
+	{
+		public string side;
+		public int code;
+		public string name;
+		public int basePrice;
+		public int autoBorn;
+		public int autoUptime;
+		public int rankAttack;
+		public int rankHp;
+		public float baseHp;
+		public float attack;
+		public float defense;
+		public float speed;
+		public int requiredBldg;
+		public bool splashAttack;
+		public int splashRange;
+		public float splashLength;
+		public int upgradeDays;
+		public int upgradeInstantlyGem;
+	}
+
+	[System.Serializable]
+	private class UnitDefaultList
+	{
+		public UnitDefaultEntry[] items;
+	}
+
 	public void LoadDefault(int side)
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "unit_default", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
+		string json = "{\"items\":" + textAsset.text + "}";
+		UnitDefaultList unitDefaultList = JsonUtility.FromJson<UnitDefaultList>(json);
+		UnitDefaultEntry[] items = unitDefaultList.items;
+		foreach (UnitDefaultEntry unitDefaultEntry in items)
 		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		StringReader stringReader = new StringReader(s);
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
-		{
-			if (text.Trim().Length == 0)
+			int num = ((!unitDefaultEntry.side.Equals("human")) ? 1 : 0);
+			if (num == side)
 			{
-				continue;
-			}
-			char[] separator = new char[1] { '\t' };
-			string[] array = text.Split(separator);
-			if (array.Length > 1)
-			{
-				int num = ((!array[0].Equals("human")) ? 1 : 0);
-				if (num == side)
-				{
-					UnitState unitState = new UnitState();
-					unitState.side = num;
-					unitState.code = int.Parse(array[1]);
-					unitState.name = array[2];
-					unitState.basePrice = int.Parse(array[3]);
-					unitState.autoBorn = int.Parse(array[4]);
-					unitState.autoUptime = int.Parse(array[5]);
-					unitState.rankAttack = int.Parse(array[6]);
-					unitState.rankHp = int.Parse(array[7]);
-					unitState.baseHp = float.Parse(array[8]);
-					unitState.attack = float.Parse(array[9]);
-					unitState.defense = float.Parse(array[10]);
-					unitState.speed = float.Parse(array[11]);
-					unitState.requiredBldg = int.Parse(array[12]);
-					unitState.splashAttack = int.Parse(array[13]) == 1;
-					unitState.splashRange = int.Parse(array[14]);
-					unitState.splashLength = float.Parse(array[15]);
-					unitState.upgradeDays = int.Parse(array[16]);
-					unitState.upgradeInstantlyGem = int.Parse(array[17]);
-					unitState.curHp = unitState.sumHp;
-					unitStates.Add(unitState);
-				}
+				UnitState unitState = new UnitState();
+				unitState.side = num;
+				unitState.code = unitDefaultEntry.code;
+				unitState.name = unitDefaultEntry.name;
+				unitState.basePrice = unitDefaultEntry.basePrice;
+				unitState.autoBorn = unitDefaultEntry.autoBorn;
+				unitState.autoUptime = unitDefaultEntry.autoUptime;
+				unitState.rankAttack = unitDefaultEntry.rankAttack;
+				unitState.rankHp = unitDefaultEntry.rankHp;
+				unitState.baseHp = unitDefaultEntry.baseHp;
+				unitState.attack = unitDefaultEntry.attack;
+				unitState.defense = unitDefaultEntry.defense;
+				unitState.speed = unitDefaultEntry.speed;
+				unitState.requiredBldg = unitDefaultEntry.requiredBldg;
+				unitState.splashAttack = unitDefaultEntry.splashAttack;
+				unitState.splashRange = unitDefaultEntry.splashRange;
+				unitState.splashLength = unitDefaultEntry.splashLength;
+				unitState.upgradeDays = unitDefaultEntry.upgradeDays;
+				unitState.upgradeInstantlyGem = unitDefaultEntry.upgradeInstantlyGem;
+				unitState.curHp = unitState.sumHp;
+				unitStates.Add(unitState);
 			}
 		}
 		LoadUnitLevelCost();
+	}
+
+	[System.Serializable]
+	private class UnitLevelTableEntry
+	{
+		public int level;
+		public int[] costGold;
+	}
+
+	[System.Serializable]
+	private class UnitLevelTableList
+	{
+		public UnitLevelTableEntry[] items;
 	}
 
 	private void LoadUnitLevelCost()
 	{
 		unitLevelCost = new UnitLevelCost[5, 50];
 		TextAsset textAsset = ResourceManager.Load("GameData", "unit_leveltable", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
-		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		StringReader stringReader = new StringReader(s);
+		string json = "{\"items\":" + textAsset.text + "}";
+		UnitLevelTableList unitLevelTableList = JsonUtility.FromJson<UnitLevelTableList>(json);
+		UnitLevelTableEntry[] items = unitLevelTableList.items;
 		int num = 0;
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		foreach (UnitLevelTableEntry unitLevelTableEntry in items)
 		{
-			if (text.Trim().Length == 0)
+			for (int i = 0; i < 5; i++)
 			{
-				continue;
+				unitLevelCost[i, num] = new UnitLevelCost();
+				unitLevelCost[i, num].costGold = unitLevelTableEntry.costGold[i];
 			}
-			char[] separator = new char[1] { '\t' };
-			string[] array = text.Split(separator);
-			if (array.Length > 1)
+			num++;
+			if (num >= 50)
 			{
-				for (int i = 0; i < 5; i++)
-				{
-					unitLevelCost[i, num] = new UnitLevelCost();
-					unitLevelCost[i, num].costGold = int.Parse(array[1 + i]);
-				}
-				num++;
-				if (num >= 50)
-				{
-					break;
-				}
+				break;
 			}
 		}
 	}

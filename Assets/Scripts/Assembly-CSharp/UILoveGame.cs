@@ -35,6 +35,7 @@ public class UILoveGame : MonoBehaviour
 		public string[] answer = new string[2];
 	}
 
+	[System.Serializable]
 	public class HeartPoint
 	{
 		public int requireGem;
@@ -46,6 +47,12 @@ public class UILoveGame : MonoBehaviour
 		public int pointInc;
 
 		public int pointDec;
+	}
+
+	[System.Serializable]
+	private class HeartPointListWrapper
+	{
+		public HeartPoint[] items;
 	}
 
 	private const string pathFab = "Misc/prefeb";
@@ -173,53 +180,27 @@ public class UILoveGame : MonoBehaviour
 			}
 		}
 		questList = list.ToArray();
-		List<HeartPoint> list2 = new List<HeartPoint>();
 		TextAsset textAsset2 = ResourceManager.Load("GameData", "lovegame_point", typeof(TextAsset)) as TextAsset;
-		bool succeed2 = false;
-		string s2 = DataSecurity.Decrypt(textAsset2.text, "surkwjch", out succeed2);
-		if (!succeed2)
-		{
-			Debug.LogError("Decrypt Error!!");
-			return;
-		}
-		StringReader stringReader2 = new StringReader(s2);
-		string text2;
-		while ((text2 = stringReader2.ReadLine()) != null)
-		{
-			if (text2.Trim().Length != 0)
-			{
-				char[] separator2 = new char[1] { '\t' };
-				string[] array2 = text2.Split(separator2);
-				if (array2.Length > 1)
-				{
-					HeartPoint heartPoint = new HeartPoint();
-					heartPoint.requireGem = int.Parse(array2[1]);
-					heartPoint.rewardGold = int.Parse(array2[2]);
-					heartPoint.pointMax = int.Parse(array2[3]);
-					heartPoint.pointInc = int.Parse(array2[4]);
-					heartPoint.pointDec = int.Parse(array2[5]);
-					list2.Add(heartPoint);
-				}
-			}
-		}
-		UILoveGame.heartPoint = list2.ToArray();
+		string json = "{\"items\":" + textAsset2.text + "}";
+		HeartPointListWrapper heartPointListWrapper = JsonUtility.FromJson<HeartPointListWrapper>(json);
+		UILoveGame.heartPoint = heartPointListWrapper.items;
 	}
 
 	public void Hide()
 	{
-		base.gameObject.SetActive(false);
+		base.gameObject.SetActiveRecursive(false);
 	}
 
 	public void Show()
 	{
-		base.gameObject.SetActive(true);
+		base.gameObject.SetActiveRecursive(true);
 		viewMode = QuestViewMode.quest;
 		textLoveInc.text = string.Empty;
 		textLoveDec.text = string.Empty;
 		aniHeart.visible = false;
-		panelClose.SetActive(false);
-		panelReward.SetActive(false);
-		panelRequired.SetActive(false);
+		panelClose.SetActiveRecursive(false);
+		panelReward.SetActiveRecursive(false);
+		panelRequired.SetActiveRecursive(false);
 		for (int i = 0; i < aniRewardWeapon.Length; i++)
 		{
 			aniRewardWeapon[i].visible = false;
@@ -238,8 +219,8 @@ public class UILoveGame : MonoBehaviour
 			viewMode = QuestViewMode.finish;
 		}
 		RefreshGauge();
-		panelClose.SetActive(false);
-		panelReward.SetActive(false);
+		panelClose.SetActiveRecursive(false);
+		panelReward.SetActiveRecursive(false);
 		switch (viewMode)
 		{
 		case QuestViewMode.quest:
@@ -253,7 +234,7 @@ public class UILoveGame : MonoBehaviour
 					buttonAnswer[0].visible = true;
 					buttonAnswer[1].visible = true;
 					textRequiredGem.text = "-" + heartPoint[PlayInfo.playerData.countHeart].requireGem;
-					panelRequired.SetActive(true);
+					panelRequired.SetActiveRecursive(true);
 				}
 				else
 				{
@@ -272,7 +253,7 @@ public class UILoveGame : MonoBehaviour
 				textAnswerB.text = string.Empty;
 				buttonAnswer[0].visible = false;
 				buttonAnswer[1].visible = false;
-				panelClose.SetActive(true);
+				panelClose.SetActiveRecursive(true);
 			}
 			break;
 		case QuestViewMode.first:
@@ -288,7 +269,7 @@ public class UILoveGame : MonoBehaviour
 			textAnswerB.text = string.Empty;
 			buttonAnswer[0].visible = false;
 			buttonAnswer[1].visible = false;
-			panelClose.SetActive(true);
+			panelClose.SetActiveRecursive(true);
 			break;
 		case QuestViewMode.result:
 			break;
@@ -371,7 +352,7 @@ public class UILoveGame : MonoBehaviour
 						PlayInfo.playerData.gem = 0;
 					}
 				}
-				panelRequired.SetActive(false);
+				panelRequired.SetActiveRecursive(false);
 			}
 			if (flag)
 			{
@@ -385,7 +366,7 @@ public class UILoveGame : MonoBehaviour
 					if (PlayInfo.playerData.countHeart < 9)
 					{
 						textRewardGold.text = "+" + heartPoint[num].rewardGold;
-						panelReward.SetActive(true);
+						panelReward.SetActiveRecursive(true);
 						textDesc.text = StringContent.msgLoveGameGetHeart;
 						PlayInfo.playerData.gold += heartPoint[num].rewardGold;
 						PlayInfo.Save();
@@ -439,7 +420,7 @@ public class UILoveGame : MonoBehaviour
 			textAnswerB.text = string.Empty;
 			buttonAnswer[0].visible = false;
 			buttonAnswer[1].visible = false;
-			panelClose.SetActive(true);
+			panelClose.SetActiveRecursive(true);
 			isAllowQuest = false;
 			npcQuestIcon.GetComponent<Renderer>().material = npcQuestMtr[isAllowQuest ? 1 : 0];
 		}

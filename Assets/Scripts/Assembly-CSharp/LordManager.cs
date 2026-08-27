@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class LordManager
@@ -92,39 +91,59 @@ public class LordManager
 
 	public static LordDefault[] lordDefault;
 
+	[System.Serializable]
+	private class LordDefaultRow
+	{
+		public string lordType;
+
+		public float rateFame;
+
+		public float rateAttak;
+
+		public float rateInte;
+
+		public float rateHp;
+
+		public string weaponType;
+
+		public float speed;
+
+		public float splash;
+
+		public float splashLength;
+
+		public int regenTime;
+	}
+
+	[System.Serializable]
+	private class LordDefaultRowList
+	{
+		public LordDefaultRow[] items;
+	}
+
 	public void Init()
 	{
 		TextAsset textAsset = ResourceManager.Load("GameData", "lord_default", typeof(TextAsset)) as TextAsset;
-		bool succeed = false;
-		string s = DataSecurity.Decrypt(textAsset.text, "surkwjch", out succeed);
-		if (!succeed)
+		if (textAsset == null || string.IsNullOrEmpty(textAsset.text))
 		{
 			Debug.LogError("Decrypt Error!!");
 			return;
 		}
-		StringReader stringReader = new StringReader(s);
+		LordDefaultRowList lordDefaultRowList = JsonUtility.FromJson<LordDefaultRowList>("{\"items\":" + textAsset.text + "}");
 		List<LordDefault> list = new List<LordDefault>();
-		string text;
-		while ((text = stringReader.ReadLine()) != null)
+		LordDefaultRow[] items = lordDefaultRowList.items;
+		foreach (LordDefaultRow item in items)
 		{
-			if (text.Trim().Length != 0)
-			{
-				char[] separator = new char[1] { '\t' };
-				string[] array = text.Split(separator);
-				if (array.Length > 1)
-				{
-					LordDefault lordDefault = new LordDefault();
-					lordDefault.rateFame = float.Parse(array[1]);
-					lordDefault.rateAttak = float.Parse(array[2]);
-					lordDefault.rateInte = float.Parse(array[3]);
-					lordDefault.rateHp = float.Parse(array[4]);
-					lordDefault.speed = float.Parse(array[6]);
-					lordDefault.splash = float.Parse(array[7]);
-					lordDefault.splashLength = float.Parse(array[8]);
-					lordDefault.regenTime = int.Parse(array[9]);
-					list.Add(lordDefault);
-				}
-			}
+			LordDefault lordDefault = new LordDefault();
+			lordDefault.rateFame = item.rateFame;
+			lordDefault.rateAttak = item.rateAttak;
+			lordDefault.rateInte = item.rateInte;
+			lordDefault.rateHp = item.rateHp;
+			lordDefault.speed = item.speed;
+			lordDefault.splash = item.splash;
+			lordDefault.splashLength = item.splashLength;
+			lordDefault.regenTime = item.regenTime;
+			list.Add(lordDefault);
 		}
 		LordManager.lordDefault = list.ToArray();
 	}

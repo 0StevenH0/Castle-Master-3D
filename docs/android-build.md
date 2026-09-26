@@ -16,19 +16,45 @@ Unity -batchmode -nographics -quit -projectPath . -buildTarget Android -executeM
 
 ## GitHub Actions
 
-The `Android APK release` workflow runs on `v*` tags, pull requests to `main`, or manually. Pull requests and manual runs produce an artifact-only build. A successful tag build publishes the APK and checksum to GitHub Releases. It does not publish a release if validation, compilation, signing or APK verification fails.
+The `Android APK release` workflow runs on `v*` tags, pull requests to `main`, or manually.
 
-Configure these **repository Actions secrets** in GitHub Settings; never commit them:
+- Pull requests and manual runs build a **test APK** using Unity's default Android signing path. They need Unity credentials, but they do **not** receive the release keystore.
+- A `v*` tag runs the **release build** inside the GitHub Environment named `release`. Only that job receives the Android release-signing secrets.
+- A successful release build publishes the APK and checksum to GitHub Releases.
+- The GameCI action is pinned to commit `4423ee75828dff56037d1d1cfdac6b68e3a6ba00`, and its CLI is pinned to `v0.1.69`, so those credential-bearing components do not silently follow moving `v4` / `latest` references.
 
-- A supported `UNITY_LICENSE` **or** `UNITY_SERIAL`, plus `UNITY_EMAIL` and `UNITY_PASSWORD`, following [GameCI activation](https://game.ci/docs/github/activation/). A Unity Personal account alone is not a serial; current Personal licensing can require an already activated local Unity installation instead of hosted CI.
-- `ANDROID_KEYSTORE_BASE64`: base64 contents of the existing signing keystore.
-- `ANDROID_KEYSTORE_PASS`, `ANDROID_KEYALIAS_NAME`, `ANDROID_KEYALIAS_PASS`.
+### Repository Actions secrets
+
+Configure the Unity activation credentials under **Settings → Secrets and variables → Actions**. Never commit them:
+
+- A supported `UNITY_LICENSE` **or** `UNITY_SERIAL`.
+- `UNITY_EMAIL`.
+- `UNITY_PASSWORD`.
+
+Follow [GameCI activation](https://game.ci/docs/github/activation/). A Unity Personal account alone is not a serial; current Personal licensing can require an already activated local Unity installation instead of hosted CI.
+
+These secrets are needed for PR/manual builds as well as release builds, so they remain repository-level Actions secrets.
+
+### Release environment and signing secrets
+
+Create a GitHub Environment named **`release`** under **Settings → Environments → New environment**.
+
+Store the Android release-signing values as **environment secrets**, not repository-wide secrets:
+
+- `ANDROID_KEYSTORE_BASE64`: base64 contents of the release keystore.
+- `ANDROID_KEYSTORE_PASS`.
+- `ANDROID_KEYALIAS_NAME`.
+- `ANDROID_KEYALIAS_PASS`.
+
+If you previously stored those four values as repository Actions secrets, remove the repository-level copies after adding them to the `release` environment.
+
+For extra protection, configure the `release` environment to require your approval before deployment where your GitHub plan/repository settings support it. That makes possession of write access to a branch insufficient by itself to use the release signing key.
 
 The builder uses the matching Unity Android image. If that editor image is not yet available in GameCI, use the local build above rather than changing the project's editor version blindly.
 
-After configuration, re-run the tagged workflow. For subsequent releases, increase `bundleVersion` and `AndroidBundleVersionCode` in Player Settings, update release notes, commit, and push a matching `v<bundleVersion>` tag.
+After configuration, re-run the workflow. For subsequent releases, increase `bundleVersion` and `AndroidBundleVersionCode` in Player Settings, update release notes, commit, and push a matching `v<bundleVersion>` tag.
 
-To publish a locally built APK for the existing tag:
+To publish a locally built APK for an existing tag:
 
 ```sh
 cd build/Android

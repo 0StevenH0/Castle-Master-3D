@@ -20,11 +20,7 @@ public class UIGemShop : MonoBehaviour
 
 	private int[] saleMax = new int[4];
 
-	private float[] saleCost = new float[4];
-
 	private StoreLib storeLib;
-
-	private int buyCode;
 
 	private void Start()
 	{
@@ -88,53 +84,28 @@ public class UIGemShop : MonoBehaviour
 		{
 			saleQty[num] = item.qty;
 			saleMax[num] = item.max;
-			if (StoreType.store == StoreType.Store.appstore || StoreType.store == StoreType.Store.android)
-			{
-				saleCost[num] = item.cost_usd;
-			}
-			else
-			{
-				saleCost[num] = item.cost_krw;
-			}
 			num++;
 			if (num >= 4)
 			{
 				break;
 			}
 		}
-		string text2 = StringContent.signDollar;
-		if (StoreType.store != 0 && StoreType.store != StoreType.Store.android)
-		{
-			text2 = StringContent.signWon;
-		}
 		for (int i = 0; i < 4; i++)
 		{
 			textQty[i].text = "x " + saleQty[i];
-			textCost[i].text = text2 + " " + saleCost[i];
+			textCost[i].text = "FREE";
 		}
 		ProcBase.ChangeTextMeshLanguageAllChild(base.transform);
 	}
 
 	private void OnBuyClick(AuiButton sender)
 	{
-		int num = (buyCode = sender.buttonTag);
+		int num = sender.buttonTag;
 		if (num < 2)
 		{
 			if (PlayInfo.playerData.gem > saleMax[num])
 			{
 				ProcBase.ShowMsg(StringContent.msgGemShopResultCannotBuy, MessageView.MsgIcon.alert);
-			}
-			else if (StoreType.store == StoreType.Store.tstore || StoreType.store == StoreType.Store.olleh || StoreType.store == StoreType.Store.samsung)
-			{
-				string msgPaymentReGemGold = StringContent.msgPaymentReGemGold;
-				msgPaymentReGemGold = msgPaymentReGemGold.Replace(StringContent.strValue, StringContent.wordGem);
-				msgPaymentReGemGold = msgPaymentReGemGold.Replace(StringContent.strValue2, saleQty[num].ToString());
-				msgPaymentReGemGold = msgPaymentReGemGold.Replace(StringContent.strValue3, saleCost[num].ToString());
-				ProcBase.ShowMsg(msgPaymentReGemGold, MessageView.MsgIcon.question, false, new MessageView.MsgButton[2]
-				{
-					MessageView.MsgButton.yes,
-					MessageView.MsgButton.no
-				}, OnBuyMessage);
 			}
 			else
 			{
@@ -150,18 +121,6 @@ public class UIGemShop : MonoBehaviour
 		{
 			ProcBase.ShowMsg(StringContent.msgGemShopResultCannotBuy, MessageView.MsgIcon.alert);
 		}
-		else if (StoreType.store == StoreType.Store.tstore || StoreType.store == StoreType.Store.olleh || StoreType.store == StoreType.Store.samsung)
-		{
-			string msgPaymentReGemGold2 = StringContent.msgPaymentReGemGold;
-			msgPaymentReGemGold2 = msgPaymentReGemGold2.Replace(StringContent.strValue, StringContent.wordGold);
-			msgPaymentReGemGold2 = msgPaymentReGemGold2.Replace(StringContent.strValue2, saleQty[num].ToString());
-			msgPaymentReGemGold2 = msgPaymentReGemGold2.Replace(StringContent.strValue3, saleCost[num].ToString());
-			ProcBase.ShowMsg(msgPaymentReGemGold2, MessageView.MsgIcon.question, false, new MessageView.MsgButton[2]
-			{
-				MessageView.MsgButton.yes,
-				MessageView.MsgButton.no
-			}, OnBuyMessage);
-		}
 		else
 		{
 			StartPayment();
@@ -170,26 +129,6 @@ public class UIGemShop : MonoBehaviour
 				storeLib = StoreLib.LoadStoreLib();
 			}
 			storeLib.BuyItem(StoreLib.ProductType.gold, num - 2, OnResultPayment);
-		}
-	}
-
-	private void OnBuyMessage(MessageView.MsgButton button)
-	{
-		if (button == MessageView.MsgButton.yes)
-		{
-			StartPayment();
-			if (storeLib == null)
-			{
-				storeLib = StoreLib.LoadStoreLib();
-			}
-			if (buyCode < 2)
-			{
-				storeLib.BuyItem(StoreLib.ProductType.gem, buyCode, OnResultPayment);
-			}
-			else
-			{
-				storeLib.BuyItem(StoreLib.ProductType.gold, buyCode - 2, OnResultPayment);
-			}
 		}
 	}
 

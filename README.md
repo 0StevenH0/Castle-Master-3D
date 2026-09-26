@@ -9,3 +9,7 @@
 
 Left click drag - pan map
 Scroll wheel - toggle zoom in/out (two-levels, not continuous)
+
+### Android restoration
+
+Version 1.0.9 adds free offline shop grants and fullscreen UI. See [build and release instructions](docs/android-build.md) and [release notes](docs/release-notes.md).

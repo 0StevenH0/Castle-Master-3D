@@ -37,8 +37,6 @@ public class UICmdPtsShop : MonoBehaviour
 
 	private float rechargeCost;
 
-	private float upgradeCost;
-
 	private int upgradeMax;
 
 	private StoreLib storeLib;
@@ -96,25 +94,12 @@ public class UICmdPtsShop : MonoBehaviour
 			}
 			else
 			{
-				if (StoreType.store == StoreType.Store.appstore || StoreType.store == StoreType.Store.android)
-				{
-					upgradeCost = row.costAppStore;
-				}
-				else
-				{
-					upgradeCost = row.costOther;
-				}
 				upgradeMax = row.upgradeMax;
 			}
 			num++;
 		}
-		string text2 = StringContent.signDollar;
-		if (StoreType.store != 0 && StoreType.store != StoreType.Store.android)
-		{
-			text2 = StringContent.signWon;
-		}
 		textGemRecharge.text = rechargeCost.ToString();
-		textGemUpgrade.text = text2 + " " + upgradeCost;
+		textGemUpgrade.text = "FREE";
 	}
 
 	private void OnRechargeClick(AuiButton sender)
@@ -174,17 +159,6 @@ public class UICmdPtsShop : MonoBehaviour
 		{
 			ProcBase.ShowMsg(StringContent.msgCmdPtsResultCannotExtand, MessageView.MsgIcon.alert);
 		}
-		else if (StoreType.store == StoreType.Store.tstore || StoreType.store == StoreType.Store.olleh || StoreType.store == StoreType.Store.samsung)
-		{
-			string msgPaymentReMaxCmdPts = StringContent.msgPaymentReMaxCmdPts;
-			msgPaymentReMaxCmdPts = msgPaymentReMaxCmdPts.Replace(StringContent.strValue, 100.ToString());
-			msgPaymentReMaxCmdPts = msgPaymentReMaxCmdPts.Replace(StringContent.strValue2, upgradeCost.ToString());
-			ProcBase.ShowMsg(msgPaymentReMaxCmdPts, MessageView.MsgIcon.question, false, new MessageView.MsgButton[2]
-			{
-				MessageView.MsgButton.yes,
-				MessageView.MsgButton.no
-			}, OnMaxUpgradeMessage);
-		}
 		else
 		{
 			StartPayment();
@@ -220,19 +194,6 @@ public class UICmdPtsShop : MonoBehaviour
 			PlayInfo.playerData.gem -= (int)rechargeCost;
 			PlayInfo.Save();
 			RefreshGauge();
-		}
-	}
-
-	private void OnMaxUpgradeMessage(MessageView.MsgButton button)
-	{
-		if (button == MessageView.MsgButton.yes)
-		{
-			StartPayment();
-			if (storeLib == null)
-			{
-				storeLib = StoreLib.LoadStoreLib();
-			}
-			storeLib.BuyItem(StoreLib.ProductType.cmdpts, 1, OnResultMaxUpgrade);
 		}
 	}
 

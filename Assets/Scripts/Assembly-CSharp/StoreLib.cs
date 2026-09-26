@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class StoreLib : PlugInNetServer
@@ -166,96 +165,28 @@ public class StoreLib : PlugInNetServer
 		new string[2] { "000000037737", "000000037738" }
 	};
 
-	private OnResultDelegate onResult;
-
-	private ProductType prodType;
-
-	private int prodIndex;
-
 	public static StoreLib LoadStoreLib()
 	{
 		GameObject gameObject = GameObject.Find("StoreLib");
 		if (gameObject == null)
 		{
-			gameObject = new GameObject();
+			gameObject = new GameObject("StoreLib");
 		}
 		StoreLib storeLib = gameObject.GetComponent<StoreLib>();
 		if (storeLib == null)
 		{
 			storeLib = gameObject.AddComponent<StoreLib>();
 		}
-		if (!Application.isEditor)
-		{
-			InApp.curType = InApp.Type.INAPP_ADMOB;
-			storeLib.AppCreate();
-		}
 		return storeLib;
 	}
 
+	// Offline restoration: these products are free local grants, not store transactions.
+	// Keep each callback request-local so repeated purchases cannot overwrite a result.
 	public void BuyItem(ProductType type, int idx, OnResultDelegate proc)
 	{
-		onResult = proc;
-		onResult(false, type, idx);
-		StartCoroutine("ShowDisabledMsg");
-	}
-
-	private IEnumerator ShowDisabledMsg()
-	{
-		yield return null;
-		ProcBase.ShowMsg("In-app purchases are disabled in this build.", MessageView.MsgIcon.alert);
-	}
-
-	private IEnumerator WaitForStoreInit()
-	{
-		yield return 1;
-		if (PlusType.isPlus)
-		{
-			if (StoreType.store == StoreType.Store.tstore)
-			{
-				Request_BuyItem_In_TStore("OA00289500", productID_TStore_Plus[(int)prodType][prodIndex]);
-				StartCoroutine("CheckResponse", 1f);
-			}
-			else if (StoreType.store == StoreType.Store.olleh)
-			{
-				Request_BuyItem_In_Olleh("810105ED", productID_Olleh_Plus[(int)prodType][prodIndex]);
-				StartCoroutine("CheckResponse", 1f);
-			}
-			else if (StoreType.store == StoreType.Store.android)
-			{
-				Request_BuyItem_In_Google(productID_Google_Plus[(int)prodType][prodIndex], "1");
-				StartCoroutine("CheckResponse", 1f);
-			}
-			else if (StoreType.store == StoreType.Store.samsung)
-			{
-				Request_BuyItem_In_Samsung("100000025797", productID_Samsung_Plus[(int)prodType][prodIndex]);
-				StartCoroutine("CheckResponse", 1f);
-			}
-		}
-		else if (StoreType.store == StoreType.Store.tstore)
-		{
-			Request_BuyItem_In_TStore("OA00282959", productID_TStore[(int)prodType][prodIndex]);
-			StartCoroutine("CheckResponse", 1f);
-		}
-		else if (StoreType.store == StoreType.Store.olleh)
-		{
-			Request_BuyItem_In_Olleh("8100FC4A", productID_Olleh[(int)prodType][prodIndex]);
-			StartCoroutine("CheckResponse", 1f);
-		}
-		else if (StoreType.store == StoreType.Store.android)
-		{
-			Request_BuyItem_In_Google(productID_Google[(int)prodType][prodIndex], "1");
-			StartCoroutine("CheckResponse", 1f);
-		}
-		else if (StoreType.store == StoreType.Store.samsung)
-		{
-			Request_BuyItem_In_Samsung("100000025796", productID_Samsung[(int)prodType][prodIndex]);
-			StartCoroutine("CheckResponse", 1f);
-		}
-	}
-
-	private IEnumerator WaitForPurchase(ProductType type, int idx)
-	{
-		yield break;
+		bool validProduct = (type == ProductType.cmdpts || type == ProductType.gem ||
+			type == ProductType.gold) && idx >= 0 && idx < 2;
+		proc?.Invoke(validProduct, type, idx);
 	}
 
 	public void InitAd()
@@ -304,21 +235,4 @@ public class StoreLib : PlugInNetServer
 		}
 	}
 
-	public override void Response_Purchased()
-	{
-		Debug.Log("Purchased : " + responsePurchaseState);
-		onResult(true, prodType, prodIndex);
-	}
-
-	public override void Response_NotPurchased()
-	{
-		Debug.Log("Not Purchased : " + responsePurchaseState);
-		onResult(false, prodType, prodIndex);
-	}
-
-	public override void Response_CanceledRequest()
-	{
-		Debug.Log("Canceld Request : " + responseRequestCode);
-		onResult(false, prodType, prodIndex);
-	}
 }

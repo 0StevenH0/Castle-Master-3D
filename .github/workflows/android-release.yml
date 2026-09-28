@@ -18,23 +18,17 @@ jobs:
   build-test:
     if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
 
       - name: Check Unity credentials
         env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         shell: bash
         run: |
           missing=0
-          if [[ -z "$UNITY_LICENSE" && -z "$UNITY_SERIAL" ]]; then
-            echo '::error::Configure a usable UNITY_LICENSE or UNITY_SERIAL in repository Actions secrets. See docs/android-build.md.'
-            missing=1
-          fi
           for name in UNITY_EMAIL UNITY_PASSWORD; do
             if [[ -z "${!name}" ]]; then
               echo "::error::Missing repository Actions secret: $name"
@@ -54,24 +48,30 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "code=$code" >> "$GITHUB_OUTPUT"
 
-      - name: Build and run validation
-        # Pinned because this third-party action receives Unity account credentials.
-        uses: game-ci/unity-builder@4423ee75828dff56037d1d1cfdac6b68e3a6ba00
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      - name: Install Unity and Android support
+        id: unity
+        uses: buildalon/unity-setup@30fcbcb56c10ea5d64298e970d952b8d29bc268b
         with:
-          # Pin the CLI too; unity-builder otherwise follows "latest".
-          cliVersion: v0.1.69
-          targetPlatform: Android
-          unityVersion: auto
-          buildName: Castle-Master-3D
-          versioning: Custom
-          version: ${{ steps.version.outputs.version }}
-          androidVersionCode: ${{ steps.version.outputs.code }}
-          androidExportType: androidPackage
+          version-file: ProjectSettings/ProjectVersion.txt
+          build-targets: Android
+          cache-installation: true
+
+      - name: Activate Unity Personal
+        uses: buildalon/activate-unity-license@e0d245d0787b7b9931b56ccbde3b508f6b70f1af
+        with:
+          license: personal
+          username: ${{ secrets.UNITY_EMAIL }}
+          password: ${{ secrets.UNITY_PASSWORD }}
+          license-version: 6.x
+
+      - name: Build and run validation
+        uses: buildalon/unity-action@2d420bea0f47fbe01377601fa3231bcf4de04f3a
+        with:
+          editor-path: ${{ steps.unity.outputs.unity-editor-path }}
+          project-path: ${{ steps.unity.outputs.unity-project-path }}
+          build-target: Android
+          log-name: Android-Test-Build
+          args: -quit -batchmode -nographics -executeMethod AndroidBuild.Build
 
       - name: Verify APK and checksum
         shell: bash
@@ -79,6 +79,7 @@ jobs:
           apk=build/Android/Castle-Master-3D.apk
           test -s "$apk"
           apksigner=$(find "$ANDROID_HOME/build-tools" -name apksigner -type f | sort -V | tail -1)
+          test -n "$apksigner"
           "$apksigner" verify --verbose --print-certs "$apk"
           cd build/Android
           sha256sum Castle-Master-3D.apk > Castle-Master-3D.apk.sha256
@@ -94,16 +95,13 @@ jobs:
   build-release:
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     runs-on: ubuntu-latest
-    timeout-minutes: 60
-    # Put the Android signing secrets in this environment, not repository-wide.
+    timeout-minutes: 90
     environment: release
     steps:
       - uses: actions/checkout@v4
 
       - name: Check release credentials
         env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
@@ -113,10 +111,6 @@ jobs:
         shell: bash
         run: |
           missing=0
-          if [[ -z "$UNITY_LICENSE" && -z "$UNITY_SERIAL" ]]; then
-            echo '::error::Configure a usable UNITY_LICENSE or UNITY_SERIAL in repository Actions secrets. See docs/android-build.md.'
-            missing=1
-          fi
           for name in UNITY_EMAIL UNITY_PASSWORD ANDROID_KEYSTORE_BASE64 ANDROID_KEYSTORE_PASS ANDROID_KEYALIAS_NAME ANDROID_KEYALIAS_PASS; do
             if [[ -z "${!name}" ]]; then
               echo "::error::Missing Actions secret: $name"
@@ -134,35 +128,51 @@ jobs:
           [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
           [[ "$code" =~ ^[0-9]+$ ]]
           if [[ "$GITHUB_REF_NAME" != "v$version" ]]; then
-            echo '::error::Release tag must match bundleVersion.'
+            echo "::error::Release tag $GITHUB_REF_NAME must match bundleVersion v$version."
             exit 1
           fi
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "code=$code" >> "$GITHUB_OUTPUT"
 
-      - name: Build signed release APK and run validation
-        # Pinned because this third-party action receives Unity and signing credentials.
-        uses: game-ci/unity-builder@4423ee75828dff56037d1d1cfdac6b68e3a6ba00
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      - name: Install Unity and Android support
+        id: unity
+        uses: buildalon/unity-setup@30fcbcb56c10ea5d64298e970d952b8d29bc268b
         with:
-          # Pin the CLI too; unity-builder otherwise follows "latest".
-          cliVersion: v0.1.69
-          targetPlatform: Android
-          unityVersion: auto
-          buildName: Castle-Master-3D
-          versioning: Custom
-          version: ${{ steps.version.outputs.version }}
-          androidVersionCode: ${{ steps.version.outputs.code }}
-          androidExportType: androidPackage
-          androidKeystoreName: release.keystore
-          androidKeystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-          androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS }}
-          androidKeyaliasName: ${{ secrets.ANDROID_KEYALIAS_NAME }}
-          androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS }}
+          version-file: ProjectSettings/ProjectVersion.txt
+          build-targets: Android
+          cache-installation: true
+
+      - name: Activate Unity Personal
+        uses: buildalon/activate-unity-license@e0d245d0787b7b9931b56ccbde3b508f6b70f1af
+        with:
+          license: personal
+          username: ${{ secrets.UNITY_EMAIL }}
+          password: ${{ secrets.UNITY_PASSWORD }}
+          license-version: 6.x
+
+      - name: Decode Android release keystore
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        shell: bash
+        run: |
+          keystore="$RUNNER_TEMP/castle-master-release.keystore"
+          printf '%s' "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$keystore"
+          test -s "$keystore"
+          chmod 600 "$keystore"
+          echo "ANDROID_KEYSTORE_PATH=$keystore" >> "$GITHUB_ENV"
+
+      - name: Build signed release APK and run validation
+        uses: buildalon/unity-action@2d420bea0f47fbe01377601fa3231bcf4de04f3a
+        env:
+          ANDROID_KEYSTORE_PASS: ${{ secrets.ANDROID_KEYSTORE_PASS }}
+          ANDROID_KEYALIAS_NAME: ${{ secrets.ANDROID_KEYALIAS_NAME }}
+          ANDROID_KEYALIAS_PASS: ${{ secrets.ANDROID_KEYALIAS_PASS }}
+        with:
+          editor-path: ${{ steps.unity.outputs.unity-editor-path }}
+          project-path: ${{ steps.unity.outputs.unity-project-path }}
+          build-target: Android
+          log-name: Android-Release-Build
+          args: -quit -batchmode -nographics -executeMethod AndroidBuild.Build
 
       - name: Verify APK and checksum
         shell: bash
@@ -170,6 +180,7 @@ jobs:
           apk=build/Android/Castle-Master-3D.apk
           test -s "$apk"
           apksigner=$(find "$ANDROID_HOME/build-tools" -name apksigner -type f | sort -V | tail -1)
+          test -n "$apksigner"
           "$apksigner" verify --verbose --print-certs "$apk"
           cd build/Android
           sha256sum Castle-Master-3D.apk > Castle-Master-3D.apk.sha256
@@ -181,6 +192,11 @@ jobs:
             build/Android/Castle-Master-3D.apk
             build/Android/Castle-Master-3D.apk.sha256
           if-no-files-found: error
+
+      - name: Remove decoded keystore
+        if: always()
+        shell: bash
+        run: rm -f "$RUNNER_TEMP/castle-master-release.keystore"
 
   release:
     needs: build-release

@@ -17,7 +17,7 @@ concurrency:
 jobs:
   build-test:
     if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
@@ -48,18 +48,13 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "code=$code" >> "$GITHUB_OUTPUT"
 
-      - name: Prepare Unity Hub compatibility path
-        shell: bash
-        run: |
-          sudo mkdir -p /opt/unityhub
-          sudo ln -sf /usr/bin/unityhub /opt/unityhub/unityhub
-
       - name: Install Unity and Android support
         id: unity
         uses: buildalon/unity-setup@30fcbcb56c10ea5d64298e970d952b8d29bc268b
         with:
           version-file: ProjectSettings/ProjectVersion.txt
           build-targets: Android
+          hub-version: 3.12.0
           cache-installation: true
 
       - name: Activate Unity Personal
@@ -100,7 +95,7 @@ jobs:
 
   build-release:
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 90
     environment: release
     steps:
@@ -140,18 +135,13 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "code=$code" >> "$GITHUB_OUTPUT"
 
-      - name: Prepare Unity Hub compatibility path
-        shell: bash
-        run: |
-          sudo mkdir -p /opt/unityhub
-          sudo ln -sf /usr/bin/unityhub /opt/unityhub/unityhub
-
       - name: Install Unity and Android support
         id: unity
         uses: buildalon/unity-setup@30fcbcb56c10ea5d64298e970d952b8d29bc268b
         with:
           version-file: ProjectSettings/ProjectVersion.txt
           build-targets: Android
+          hub-version: 3.12.0
           cache-installation: true
 
       - name: Activate Unity Personal
@@ -213,7 +203,7 @@ jobs:
   release:
     needs: build-release
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: write
     steps:

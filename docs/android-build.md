@@ -8,7 +8,7 @@ Use **Unity 6000.5.9f1**, matching `ProjectSettings/ProjectVersion.txt`, with An
 2. Switch the build target to Android. Configure the existing app's signing keystore in Player Settings if installing this APK as an update. A different key cannot update the installed app.
 3. Choose **Castle Master > Build Android APK**. This builds `build/Android/Castle-Master-3D.apk` and runs the offline-shop and fullscreen validation first.
 
-Batch equivalent (after configuring Android signing in the editor):
+Batch equivalent:
 
 ```sh
 Unity -batchmode -nographics -quit -projectPath . -buildTarget Android -executeMethod AndroidBuild.Build -logFile build.log
@@ -18,50 +18,70 @@ Unity -batchmode -nographics -quit -projectPath . -buildTarget Android -executeM
 
 The `Android APK release` workflow runs on `v*` tags, pull requests to `main`, or manually.
 
-- Pull requests and manual runs build a **test APK** using Unity's default Android signing path. They need Unity credentials, but they do **not** receive the release keystore.
-- A `v*` tag runs the **release build** inside the GitHub Environment named `release`. Only that job receives the Android release-signing secrets.
-- A successful release build publishes the APK and checksum to GitHub Releases.
-- The GameCI action is pinned to commit `4423ee75828dff56037d1d1cfdac6b68e3a6ba00`, and its CLI is pinned to `v0.1.69`, so those credential-bearing components do not silently follow moving `v4` / `latest` references.
+The GitHub-hosted runner now:
+
+1. Installs the Unity version from `ProjectSettings/ProjectVersion.txt`.
+2. Installs Android Build Support.
+3. Activates Unity Personal using your Unity ID credentials.
+4. Runs `AndroidBuild.Build`.
+5. Verifies the APK signature and creates a SHA-256 checksum.
+6. On a `v*` tag, publishes the APK to GitHub Releases.
+
+The credential-bearing third-party actions are pinned to exact commits:
+
+- `buildalon/unity-setup` v2.6.0: `30fcbcb56c10ea5d64298e970d952b8d29bc268b`
+- `buildalon/activate-unity-license` v2.2.2: `e0d245d0787b7b9931b56ccbde3b508f6b70f1af`
+- `buildalon/unity-action` v3.1.0: `2d420bea0f47fbe01377601fa3231bcf4de04f3a`
 
 ### Repository Actions secrets
 
-Configure the Unity activation credentials under **Settings → Secrets and variables → Actions**. Never commit them:
+Go to **Settings → Secrets and variables → Actions** and add:
 
-- A supported `UNITY_LICENSE` **or** `UNITY_SERIAL`.
-- `UNITY_EMAIL`.
-- `UNITY_PASSWORD`.
+- `UNITY_EMAIL`: your Unity ID email.
+- `UNITY_PASSWORD`: your Unity ID password.
 
-Follow [GameCI activation](https://game.ci/docs/github/activation/). A Unity Personal account alone is not a serial; current Personal licensing can require an already activated local Unity installation instead of hosted CI.
+For this Unity Personal workflow you do **not** need:
 
-These secrets are needed for PR/manual builds as well as release builds, so they remain repository-level Actions secrets.
+- `UNITY_LICENSE`
+- `UNITY_SERIAL`
+- a local `.ulf` file
 
-### Release environment and signing secrets
+### Release environment and Android signing
 
-Create a GitHub Environment named **`release`** under **Settings → Environments → New environment**.
+Create a GitHub Environment named **`release`** under **Settings → Environments**.
 
-Store the Android release-signing values as **environment secrets**, not repository-wide secrets:
+Add these environment secrets:
 
-- `ANDROID_KEYSTORE_BASE64`: base64 contents of the release keystore.
-- `ANDROID_KEYSTORE_PASS`.
-- `ANDROID_KEYALIAS_NAME`.
-- `ANDROID_KEYALIAS_PASS`.
+- `ANDROID_KEYSTORE_BASE64`: the complete Base64-encoded contents of your `release.keystore`.
+- `ANDROID_KEYSTORE_PASS`: the keystore password you entered when creating it.
+- `ANDROID_KEYALIAS_NAME`: the alias used when creating the key, for example `castle-master`.
+- `ANDROID_KEYALIAS_PASS`: the password for that alias/key.
 
-If you previously stored those four values as repository Actions secrets, remove the repository-level copies after adding them to the `release` environment.
+The workflow decodes the keystore only into the GitHub runner's temporary directory. `AndroidBuild.Build` reads these values from environment variables and configures release signing only inside GitHub Actions. The temporary keystore is deleted afterward.
 
-For extra protection, configure the `release` environment to require your approval before deployment where your GitHub plan/repository settings support it. That makes possession of write access to a branch insufficient by itself to use the release signing key.
+Manual and pull-request builds do not receive the release keystore and use Android debug signing instead.
 
-The builder uses the matching Unity Android image. If that editor image is not yet available in GameCI, use the local build above rather than changing the project's editor version blindly.
+For extra protection, you can configure the `release` environment to require approval before the release job can access its secrets.
 
-After configuration, re-run the workflow. For subsequent releases, increase `bundleVersion` and `AndroidBundleVersionCode` in Player Settings, update release notes, commit, and push a matching `v<bundleVersion>` tag.
+## Create a release
 
-To publish a locally built APK for an existing tag:
+The release tag must match the Unity `bundleVersion`.
+
+The current project version is `1.0.9`, so the matching tag is:
 
 ```sh
-cd build/Android
-sha256sum Castle-Master-3D.apk > Castle-Master-3D.apk.sha256
-cd ../..
-gh release create v1.0.9 build/Android/Castle-Master-3D.apk build/Android/Castle-Master-3D.apk.sha256 --verify-tag --title 'Castle Master 3D v1.0.9' --notes-file docs/release-notes.md
+git tag v1.0.9
+git push origin v1.0.9
 ```
+
+A successful tag build publishes:
+
+- `Castle-Master-3D.apk`
+- `Castle-Master-3D.apk.sha256`
+
+to GitHub Releases.
+
+Before later releases, increment both `bundleVersion` and `AndroidBundleVersionCode`, update `docs/release-notes.md`, commit, and then push the matching tag.
 
 ## Device checks before relying on this build
 

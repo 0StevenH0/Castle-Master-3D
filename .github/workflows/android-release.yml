@@ -48,6 +48,12 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "code=$code" >> "$GITHUB_OUTPUT"
 
+      - name: Prepare Unity Hub compatibility path
+        shell: bash
+        run: |
+          sudo mkdir -p /opt/unityhub
+          sudo ln -sf /usr/bin/unityhub /opt/unityhub/unityhub
+
       - name: Install Unity and Android support
         id: unity
         uses: buildalon/unity-setup@30fcbcb56c10ea5d64298e970d952b8d29bc268b
@@ -133,6 +139,12 @@ jobs:
           fi
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "code=$code" >> "$GITHUB_OUTPUT"
+
+      - name: Prepare Unity Hub compatibility path
+        shell: bash
+        run: |
+          sudo mkdir -p /opt/unityhub
+          sudo ln -sf /usr/bin/unityhub /opt/unityhub/unityhub
 
       - name: Install Unity and Android support
         id: unity

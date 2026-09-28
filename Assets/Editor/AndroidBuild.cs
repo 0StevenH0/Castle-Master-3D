@@ -23,6 +23,8 @@ public sealed class AndroidBuild : IPreprocessBuildWithReport
         Directory.CreateDirectory("build/Android");
         EditorUserBuildSettings.buildAppBundle = false;
         EditorUserBuildSettings.exportAsGoogleAndroidProject = false;
+        ConfigureAndroidSigningForGitHubActions();
+
         var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
         {
             scenes = EditorBuildSettings.scenes.Where(s => s.enabled).Select(s => s.path).ToArray(),
@@ -32,6 +34,40 @@ public sealed class AndroidBuild : IPreprocessBuildWithReport
         });
         if (report.summary.result != BuildResult.Succeeded)
             throw new BuildFailedException("Android APK build failed: " + report.summary.result);
+    }
+
+    private static void ConfigureAndroidSigningForGitHubActions()
+    {
+        if (!string.Equals(Environment.GetEnvironmentVariable("GITHUB_ACTIONS"), "true",
+                StringComparison.OrdinalIgnoreCase))
+            return;
+
+        var keystorePath = Environment.GetEnvironmentVariable("ANDROID_KEYSTORE_PATH");
+        if (string.IsNullOrWhiteSpace(keystorePath))
+        {
+            // Test/PR builds use Unity's debug signing instead of the project's release keystore setting.
+            PlayerSettings.Android.useCustomKeystore = false;
+            Debug.Log("GitHub Actions test build: using Android debug signing.");
+            return;
+        }
+
+        if (!File.Exists(keystorePath))
+            throw new BuildFailedException("Android release keystore was not found.");
+
+        PlayerSettings.Android.useCustomKeystore = true;
+        PlayerSettings.Android.keystoreName = Path.GetFullPath(keystorePath);
+        PlayerSettings.Android.keystorePass = RequireEnvironment("ANDROID_KEYSTORE_PASS");
+        PlayerSettings.Android.keyaliasName = RequireEnvironment("ANDROID_KEYALIAS_NAME");
+        PlayerSettings.Android.keyaliasPass = RequireEnvironment("ANDROID_KEYALIAS_PASS");
+        Debug.Log("GitHub Actions release build: Android signing configured.");
+    }
+
+    private static string RequireEnvironment(string name)
+    {
+        var value = Environment.GetEnvironmentVariable(name);
+        if (string.IsNullOrWhiteSpace(value))
+            throw new BuildFailedException("Missing required environment variable: " + name);
+        return value;
     }
 
     [MenuItem("Castle Master/Validate offline shop and fullscreen")]
